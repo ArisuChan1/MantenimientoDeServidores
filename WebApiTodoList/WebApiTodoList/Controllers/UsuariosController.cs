@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApiTodoList.Contexts;
 using WebApiTodoList.Models;
 
@@ -104,5 +108,25 @@ namespace WebApiTodoList.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+
+        // POST: api/Usuarios/Login
+        [HttpPost("Login")]
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] LoginModel model)
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Alias == model.Alias && u.Password == model.Password);
+
+            if (usuario == null)
+                return NotFound(new { message = "Usuario o contraseña incorrectos" });
+
+            return new
+            {
+                usuario
+            };
+        }
+    }
+    public class LoginModel
+    {
+        public required string Alias { get; set; }
+        public required string Password { get; set; }
     }
 }
