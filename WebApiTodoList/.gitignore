@@ -1,0 +1,40 @@
+# Carpeta binaria generada al compilar el proyecto
+bin/
+obj/
+
+# Archivos generados automáticamente
+*.user
+*.vscode
+*.suo
+*.cache
+*.log
+*.dll
+*.exe
+*.pdb
+*.ide
+
+# Archivos y directorios específicos de Visual Studio
+.vs/
+.vscode/
+*.sln.cache
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Paquetes NuGet
+*.nuget.props
+*.lock.json
+*.nuget.targets
+paket-files/
+*.paket.restore.log
+
+# Carpeta de salida de la documentación
+docs/
+
+# Carpeta de salida de pruebas
+TestResults/
+
+# Otros archivos generados automáticamente
+*.DS_Store
+Thumbs.db
