@@ -1,0 +1,50 @@
+<main class="w-screen h-screen grid place-content-center bg-primary-500">
+    <article
+        class="bg-gray-200 rounded-md shadow-md p-3 flex flex-col gap-4 items-center"
+    >
+        <img
+            src="assets/logos/occidente-logo.png"
+            alt="Logo"
+            class="w-24 flex-shrink-0"
+        />
+        <div class="flex flex-col gap-2">
+            <span class="flex flex-col">
+                <label for="username" class="text-primary-700">
+                    Nombre de Usuario
+                </label>
+                <input
+                    pInputText
+                    type="text"
+                    id="username"
+                    [(ngModel)]="alias"
+                    placeholder="Nombre de Usuario"
+                    class="p-2"
+                />
+            </span>
+            <span class="flex flex-col">
+                <label for="password" class="text-primary-700">
+                    Contraseña
+                </label>
+                <p-password
+                    id="password"
+                    [(ngModel)]="password"
+                    placeholder="Contraseña"
+                    [toggleMask]="true"
+                    styleClass="mb-5"
+                    [feedback]="true"
+                    promptLabel="Ingrese su contraseña"
+                    mediumLabel="Medio"
+                    strongLabel="Fuerte"
+                    weakLabel="Débil"
+                    inputStyleClass="w-full p-3 md:w-30rem"
+                ></p-password>
+            </span>
+            <button
+                pButton
+                label="Iniciar Sesión"
+                class="bg-primary-500 text-white w-full p-3 rounded-md hover:bg-primary-400 transition-colors duration-300 ease-in-out"
+                (click)="login()"
+            ></button>
+        </div>
+    </article>
+</main>
