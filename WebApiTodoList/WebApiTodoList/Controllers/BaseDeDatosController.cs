@@ -25,14 +25,25 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BaseDeDatos>>> GetBasesDeDatos()
         {
-            return await _context.BasesDeDatos.ToListAsync();
+            return await _context.BasesDeDatos
+                .Include(bd => bd.Motor)
+                .Include(bd => bd.Ambiente)
+                .Include(bd => bd.Estado)
+                .Include(bd => bd.Servidor)
+                .ToListAsync();
         }
 
         // GET: api/BaseDeDatos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BaseDeDatos>> GetBaseDeDatos(int id)
         {
-            var baseDeDatos = await _context.BasesDeDatos.FindAsync(id);
+            var baseDeDatos = await _context.BasesDeDatos
+                .Include(bd => bd.Motor)
+                .Include(bd => bd.Ambiente)
+                .Include(bd => bd.Estado)
+                .Include(bd => bd.Servidor)
+                .Where(bd => bd.Id == id)
+                .SingleAsync();
 
             if (baseDeDatos == null)
             {

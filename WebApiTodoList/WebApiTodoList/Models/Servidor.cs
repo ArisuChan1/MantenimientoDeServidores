@@ -12,22 +12,22 @@ namespace WebApiTodoList.Models
         public required int IdCiudad { get; set; }
         // Propiedad de navegación
         [ForeignKey("IdCiudad")]
-        public Ciudad? Ciudad { get; set; }
+        public required Ciudad Ciudad { get; set; }
         public required int IdSistemaOperativo { get; set; }
         // Propiedad de navegación
         [ForeignKey("IdSistemaOperativo")]
-        public SistemaOperativo? SistemaOperativo { get; set; }
+        public required SistemaOperativo SistemaOperativo { get; set; }
         public required int IdTipo { get; set; }
         // Propiedad de navegación
         [ForeignKey("IdTipo")]
-        public TipoServidor? TipoServidor { get; set; }
+        public required TipoServidor TipoServidor { get; set; }
         public required int IdAmbiente { get; set; }
         // Propiedad de navegación
         [ForeignKey("IdAmbiente")]
-        public Ambiente? Ambiente { get; set; }
+        public required Ambiente Ambiente { get; set; }
         public required int IdEstado { get; set; }
         // Propiedad de navegación
         [ForeignKey("IdEstado")]
-        public Estado? Estado { get; set; }
+        public required Estado Estado { get; set; }
     }
 }

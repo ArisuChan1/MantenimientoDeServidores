@@ -25,14 +25,23 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RolesXPermisos>>> GetRolesXPermisos()
         {
-            return await _context.RolesXPermisos.ToListAsync();
+            return await _context.RolesXPermisos
+            .Include(rxp => rxp.Rol)
+            .Include(rxp => rxp.Permiso)
+            .Include(rxp => rxp.Usuario)
+            .ToListAsync();
         }
 
         // GET: api/RolesXPermisos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RolesXPermisos>> GetRolesXPermisos(int id)
         {
-            var rolesXPermisos = await _context.RolesXPermisos.FindAsync(id);
+            var rolesXPermisos = await _context.RolesXPermisos
+            .Include(rxp => rxp.Rol)
+            .Include(rxp => rxp.Permiso)
+            .Include(rxp => rxp.Usuario)
+            .Where(rxp => rxp.Id == id)
+            .SingleAsync();
 
             if (rolesXPermisos == null)
             {

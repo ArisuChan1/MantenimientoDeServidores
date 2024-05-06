@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using WebApiTodoList.Contexts;
 using WebApiTodoList.Models;
 
@@ -12,27 +8,22 @@ namespace WebApiTodoList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegionesController : ControllerBase
+    public class RegionesController(AppDbContext context) : ControllerBase
     {
-        private readonly AppDbContext _context;
-
-        public RegionesController(AppDbContext context)
-        {
-            _context = context;
-        }
+        private readonly AppDbContext _context = context;
 
         // GET: api/Regiones
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Region>>> GetRegiones()
         {
-            return await _context.Regiones.ToListAsync();
+            return await _context.Regiones.Include(r => r.Pais).ToListAsync();
         }
 
         // GET: api/Regiones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Region>> GetRegion(int id)
         {
-            var region = await _context.Regiones.FindAsync(id);
+            var region = await _context.Regiones.Include(r => r.Pais).Where(r => r.Id == id).SingleAsync();
 
             if (region == null)
             {

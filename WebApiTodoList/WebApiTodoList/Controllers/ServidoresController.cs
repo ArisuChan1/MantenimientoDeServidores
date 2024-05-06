@@ -25,14 +25,27 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servidor>>> GetServidores()
         {
-            return await _context.Servidores.ToListAsync();
+            return await _context.Servidores
+            .Include(s => s.Ciudad)
+            .Include(s => s.SistemaOperativo)
+            .Include(s => s.TipoServidor)
+            .Include(s => s.Ambiente)
+            .Include(s => s.Estado)
+            .ToListAsync();
         }
 
         // GET: api/Servidores/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Servidor>> GetServidor(int id)
         {
-            var servidor = await _context.Servidores.FindAsync(id);
+            var servidor = await _context.Servidores
+            .Include(s => s.Ciudad)
+            .Include(s => s.SistemaOperativo)
+            .Include(s => s.TipoServidor)
+            .Include(s => s.Ambiente)
+            .Include(s => s.Estado)
+            .Where(s => s.Id == id)
+            .SingleAsync();
 
             if (servidor == null)
             {

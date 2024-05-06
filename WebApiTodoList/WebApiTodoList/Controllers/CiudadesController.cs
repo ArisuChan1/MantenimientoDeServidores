@@ -25,14 +25,19 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ciudad>>> GetCiudades()
         {
-            return await _context.Ciudades.ToListAsync();
+            return await _context.Ciudades
+            .Include(c => c.Region)
+            .ToListAsync();
         }
 
         // GET: api/Ciudades/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ciudad>> GetCiudad(int id)
         {
-            var ciudad = await _context.Ciudades.FindAsync(id);
+            var ciudad = await _context.Ciudades
+            .Include(c => c.Region)
+            .Where(c => c.Id == id)
+            .SingleAsync();
 
             if (ciudad == null)
             {

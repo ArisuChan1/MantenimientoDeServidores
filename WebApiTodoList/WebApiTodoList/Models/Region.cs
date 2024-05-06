@@ -10,6 +10,6 @@ namespace WebApiTodoList.Models
 
         // Propiedad de navegación
         [ForeignKey("IdPais")]
-        public Pais? Pais { get; set; }
+        public required Pais Pais { get; set; }
     }
 }
