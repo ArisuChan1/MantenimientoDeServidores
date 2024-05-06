@@ -12,6 +12,11 @@ const URL = `${WEB_API_URL}/Usuarios`;
 export class AuthService {
     constructor(private http: HttpClient, private router: Router) {}
 
+    getUsuario() {
+        const user = sessionStorage.getItem(SESSION_KEY_USER);
+        return user ? (JSON.parse(user) as Usuario) : null;
+    }
+
     login(alias: string, password: string) {
         const url = `${URL}/Login`;
         return this.http.post<{ usuario: Usuario }>(url, {

@@ -31,6 +31,9 @@ export class LoginComponent {
             next: ({ usuario }) => {
                 if (usuario) {
                     this.alerta.success(`Hola ${usuario.nombreCompleto}`);
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 1000);
                     sessionStorage.setItem(
                         SESSION_KEY_USER,
                         JSON.stringify(usuario)
