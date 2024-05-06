@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import {
     Ambiente,
     AmbientePostOrUpdate,
@@ -81,8 +82,9 @@ export class GeneralService {
     constructor(private http: HttpClient, private router: Router) {}
 
     AMBIENTES = {
-        get: () => this.http.get(URL_AMBIENTES),
-        getById: (id: number) => this.http.get(`${URL_AMBIENTES}/${id}`),
+        get: () => this.http.get<Ambiente[]>(URL_AMBIENTES),
+        getById: (id: number) =>
+            this.http.get<Ambiente>(`${URL_AMBIENTES}/${id}`),
         post: (ambiente: Ambiente) => this.http.post(URL_AMBIENTES, ambiente),
         put: (id: number, ambiente: AmbientePostOrUpdate) =>
             this.http.put(`${URL_AMBIENTES}/${id}`, ambiente),
@@ -90,8 +92,9 @@ export class GeneralService {
     };
 
     BASE_DE_DATOS = {
-        get: () => this.http.get(URL_BASE_DE_DATOS),
-        getById: (id: number) => this.http.get(`${URL_BASE_DE_DATOS}/${id}`),
+        get: () => this.http.get<BaseDeDatos[]>(URL_BASE_DE_DATOS),
+        getById: (id: number) =>
+            this.http.get<BaseDeDatos>(`${URL_BASE_DE_DATOS}/${id}`),
         post: (baseDeDatos: BaseDeDatos) =>
             this.http.post(URL_BASE_DE_DATOS, baseDeDatos),
         put: (id: number, baseDeDatos: BaseDeDatosPostOrUpdate) =>
@@ -99,9 +102,19 @@ export class GeneralService {
         delete: (id: number) => this.http.delete(`${URL_BASE_DE_DATOS}/${id}`),
     };
 
+    BASES_DE_DATOS_BY_SERVIDOR = {
+        get: async (idServidor: number) => {
+            const baseDeDatos = await firstValueFrom(this.BASE_DE_DATOS.get());
+            const baseDeDatosByServidor = baseDeDatos.filter(
+                (baseDeDato) => baseDeDato.idServidor === idServidor
+            );
+            return baseDeDatosByServidor;
+        },
+    };
+
     CIUDADES = {
-        get: () => this.http.get(URL_CIUDADES),
-        getById: (id: number) => this.http.get(`${URL_CIUDADES}/${id}`),
+        get: () => this.http.get<Ciudad[]>(URL_CIUDADES),
+        getById: (id: number) => this.http.get<Ciudad>(`${URL_CIUDADES}/${id}`),
         post: (ciudad: Ciudad) => this.http.post(URL_CIUDADES, ciudad),
         put: (id: number, ciudad: CiudadPostOrUpdate) =>
             this.http.put(`${URL_CIUDADES}/${id}`, ciudad),
@@ -109,8 +122,8 @@ export class GeneralService {
     };
 
     ESTADOS = {
-        get: () => this.http.get(URL_ESTADOS),
-        getById: (id: number) => this.http.get(`${URL_ESTADOS}/${id}`),
+        get: () => this.http.get<Estado[]>(URL_ESTADOS),
+        getById: (id: number) => this.http.get<Estado>(`${URL_ESTADOS}/${id}`),
         post: (estado: Estado) => this.http.post(URL_ESTADOS, estado),
         put: (id: number, estado: EstadoPostOrUpdate) =>
             this.http.put(`${URL_ESTADOS}/${id}`, estado),
@@ -118,9 +131,12 @@ export class GeneralService {
     };
 
     ESTADOS_MANTENIMIENTO = {
-        get: () => this.http.get(URL_ESTADOS_MANTENIMIENTO),
+        get: () =>
+            this.http.get<EstadoMantenimiento[]>(URL_ESTADOS_MANTENIMIENTO),
         getById: (id: number) =>
-            this.http.get(`${URL_ESTADOS_MANTENIMIENTO}/${id}`),
+            this.http.get<EstadoMantenimiento>(
+                `${URL_ESTADOS_MANTENIMIENTO}/${id}`
+            ),
         post: (estadoMantenimiento: EstadoMantenimiento) =>
             this.http.post(URL_ESTADOS_MANTENIMIENTO, estadoMantenimiento),
         put: (
@@ -136,8 +152,9 @@ export class GeneralService {
     };
 
     MANTENIMIENTOS = {
-        get: () => this.http.get(URL_MANTENIMIENTOS),
-        getById: (id: number) => this.http.get(`${URL_MANTENIMIENTOS}/${id}`),
+        get: () => this.http.get<Mantenimiento[]>(URL_MANTENIMIENTOS),
+        getById: (id: number) =>
+            this.http.get<Mantenimiento>(`${URL_MANTENIMIENTOS}/${id}`),
         post: (mantenimiento: Mantenimiento) =>
             this.http.post(URL_MANTENIMIENTOS, mantenimiento),
         put: (id: number, mantenimiento: Mantenimiento) =>
@@ -145,9 +162,33 @@ export class GeneralService {
         delete: (id: number) => this.http.delete(`${URL_MANTENIMIENTOS}/${id}`),
     };
 
+    MANTENIMIENTOS_BY_SERVIDOR = {
+        get: async (idServidor: number) => {
+            const mantenimientos = await firstValueFrom(
+                this.MANTENIMIENTOS.get()
+            );
+            const mantenimientosByServidor = mantenimientos.filter(
+                (mantenimiento) => mantenimiento.idServidor === idServidor
+            );
+            return mantenimientosByServidor;
+        },
+    };
+
+    MANTENIMIENTOS_BY_USUARIO = {
+        get: async (idUsuario: number) => {
+            const mantenimientos = await firstValueFrom(
+                this.MANTENIMIENTOS.get()
+            );
+            const mantenimientosByUsuario = mantenimientos.filter(
+                (mantenimiento) => mantenimiento.idUsuario === idUsuario
+            );
+            return mantenimientosByUsuario;
+        },
+    };
+
     MOTORES = {
-        get: () => this.http.get(URL_MOTORES),
-        getById: (id: number) => this.http.get(`${URL_MOTORES}/${id}`),
+        get: () => this.http.get<Motor[]>(URL_MOTORES),
+        getById: (id: number) => this.http.get<Motor>(`${URL_MOTORES}/${id}`),
         post: (motor: Motor) => this.http.post(URL_MOTORES, motor),
         put: (id: number, motor: MotorPostOrUpdate) =>
             this.http.put(`${URL_MOTORES}/${id}`, motor),
@@ -155,8 +196,8 @@ export class GeneralService {
     };
 
     PAISES = {
-        get: () => this.http.get(URL_PAISES),
-        getById: (id: number) => this.http.get(`${URL_PAISES}/${id}`),
+        get: () => this.http.get<Pais[]>(URL_PAISES),
+        getById: (id: number) => this.http.get<Pais>(`${URL_PAISES}/${id}`),
         post: (pais: Pais) => this.http.post(URL_PAISES, pais),
         put: (id: number, pais: PaisPostOrUpdate) =>
             this.http.put(`${URL_PAISES}/${id}`, pais),
@@ -164,8 +205,9 @@ export class GeneralService {
     };
 
     PERMISOS = {
-        get: () => this.http.get(URL_PERMISOS),
-        getById: (id: number) => this.http.get(`${URL_PERMISOS}/${id}`),
+        get: () => this.http.get<Permiso[]>(URL_PERMISOS),
+        getById: (id: number) =>
+            this.http.get<Permiso>(`${URL_PERMISOS}/${id}`),
         post: (permiso: Permiso) => this.http.post(URL_PERMISOS, permiso),
         put: (id: number, permiso: PermisoPostOrUpdate) =>
             this.http.put(`${URL_PERMISOS}/${id}`, permiso),
@@ -173,8 +215,8 @@ export class GeneralService {
     };
 
     RAZONES = {
-        get: () => this.http.get(URL_RAZONES),
-        getById: (id: number) => this.http.get(`${URL_RAZONES}/${id}`),
+        get: () => this.http.get<Razon[]>(URL_RAZONES),
+        getById: (id: number) => this.http.get<Razon>(`${URL_RAZONES}/${id}`),
         post: (razon: Razon) => this.http.post(URL_RAZONES, razon),
         put: (id: number, razon: RazonPostOrUpdate) =>
             this.http.put(`${URL_RAZONES}/${id}`, razon),
@@ -182,8 +224,8 @@ export class GeneralService {
     };
 
     REGIONES = {
-        get: () => this.http.get(URL_REGIONES),
-        getById: (id: number) => this.http.get(`${URL_REGIONES}/${id}`),
+        get: () => this.http.get<Region[]>(URL_REGIONES),
+        getById: (id: number) => this.http.get<Region>(`${URL_REGIONES}/${id}`),
         post: (region: Region) => this.http.post(URL_REGIONES, region),
         put: (id: number, region: RegionPostOrUpdate) =>
             this.http.put(`${URL_REGIONES}/${id}`, region),
@@ -191,8 +233,8 @@ export class GeneralService {
     };
 
     ROLES = {
-        get: () => this.http.get(URL_ROLES),
-        getById: (id: number) => this.http.get(`${URL_ROLES}/${id}`),
+        get: () => this.http.get<Rol[]>(URL_ROLES),
+        getById: (id: number) => this.http.get<Rol>(`${URL_ROLES}/${id}`),
         post: (rol: Rol) => this.http.post(URL_ROLES, rol),
         put: (id: number, rol: RolPostOrUpdate) =>
             this.http.put(`${URL_ROLES}/${id}`, rol),
@@ -200,8 +242,9 @@ export class GeneralService {
     };
 
     ROLES_X_PERMISOS = {
-        get: () => this.http.get(URL_ROLES_X_PERMISOS),
-        getById: (id: number) => this.http.get(`${URL_ROLES_X_PERMISOS}/${id}`),
+        get: () => this.http.get<RolXPermiso[]>(URL_ROLES_X_PERMISOS),
+        getById: (id: number) =>
+            this.http.get<RolXPermiso>(`${URL_ROLES_X_PERMISOS}/${id}`),
         post: (rolXPermiso: RolXPermiso) =>
             this.http.post(URL_ROLES_X_PERMISOS, rolXPermiso),
         put: (id: number, rolXPermiso: RolXPermisoPostOrUpdate) =>
@@ -211,8 +254,9 @@ export class GeneralService {
     };
 
     SERVIDORES = {
-        get: () => this.http.get(URL_SERVIDORES),
-        getById: (id: number) => this.http.get(`${URL_SERVIDORES}/${id}`),
+        get: () => this.http.get<Servidor[]>(URL_SERVIDORES),
+        getById: (id: number) =>
+            this.http.get<Servidor>(`${URL_SERVIDORES}/${id}`),
         post: (servidor: Servidor) => this.http.post(URL_SERVIDORES, servidor),
         put: (id: number, servidor: ServidorPostOrUpdate) =>
             this.http.put(`${URL_SERVIDORES}/${id}`, servidor),
@@ -220,9 +264,9 @@ export class GeneralService {
     };
 
     SISTEMAS_OPERATIVOS = {
-        get: () => this.http.get(URL_SISTEMAS_OPERATIVOS),
+        get: () => this.http.get<SistemaOperativo[]>(URL_SISTEMAS_OPERATIVOS),
         getById: (id: number) =>
-            this.http.get(`${URL_SISTEMAS_OPERATIVOS}/${id}`),
+            this.http.get<SistemaOperativo>(`${URL_SISTEMAS_OPERATIVOS}/${id}`),
         post: (sistemaOperativo: SistemaOperativo) =>
             this.http.post(URL_SISTEMAS_OPERATIVOS, sistemaOperativo),
         put: (id: number, sistemaOperativo: SistemaOperativoPostOrUpdate) =>
@@ -232,8 +276,9 @@ export class GeneralService {
     };
 
     TIPOS_SERVIDORES = {
-        get: () => this.http.get(URL_TIPOS_SERVIDORES),
-        getById: (id: number) => this.http.get(`${URL_TIPOS_SERVIDORES}/${id}`),
+        get: () => this.http.get<TipoServidor[]>(URL_TIPOS_SERVIDORES),
+        getById: (id: number) =>
+            this.http.get<TipoServidor>(`${URL_TIPOS_SERVIDORES}/${id}`),
         post: (tipoServidor: TipoServidor) =>
             this.http.post(URL_TIPOS_SERVIDORES, tipoServidor),
         put: (id: number, tipoServidor: TipoServidorPostOrUpdate) =>
@@ -243,10 +288,10 @@ export class GeneralService {
     };
 
     USUARIOS = {
-        get: () => this.http.get(URL_USUARIOS),
-        getById: (id: number) => this.http.get(`${URL_USUARIOS}/${id}`),
-        post: (usuario: UsuarioPostOrUpdate) =>
-            this.http.post(URL_USUARIOS, usuario),
+        get: () => this.http.get<Usuario[]>(URL_USUARIOS),
+        getById: (id: number) =>
+            this.http.get<Usuario>(`${URL_USUARIOS}/${id}`),
+        post: (usuario: Usuario) => this.http.post(URL_USUARIOS, usuario),
         put: (id: number, usuario: UsuarioPostOrUpdate) =>
             this.http.put(`${URL_USUARIOS}/${id}`, usuario),
         delete: (id: number) => this.http.delete(`${URL_USUARIOS}/${id}`),

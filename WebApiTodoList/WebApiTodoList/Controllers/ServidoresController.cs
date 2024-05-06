@@ -27,6 +27,8 @@ namespace WebApiTodoList.Controllers
         {
             return await _context.Servidores
             .Include(s => s.Ciudad)
+            .Include(s => s.Ciudad.Region)
+            .Include(s => s.Ciudad.Region.Pais)
             .Include(s => s.SistemaOperativo)
             .Include(s => s.TipoServidor)
             .Include(s => s.Ambiente)
@@ -40,6 +42,8 @@ namespace WebApiTodoList.Controllers
         {
             var servidor = await _context.Servidores
             .Include(s => s.Ciudad)
+            .Include(s => s.Ciudad.Region)
+            .Include(s => s.Ciudad.Region.Pais)
             .Include(s => s.SistemaOperativo)
             .Include(s => s.TipoServidor)
             .Include(s => s.Ambiente)

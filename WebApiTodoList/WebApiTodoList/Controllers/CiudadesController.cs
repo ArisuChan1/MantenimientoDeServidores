@@ -27,6 +27,7 @@ namespace WebApiTodoList.Controllers
         {
             return await _context.Ciudades
             .Include(c => c.Region)
+            .Include(c => c.Region.Pais)
             .ToListAsync();
         }
 
@@ -36,6 +37,7 @@ namespace WebApiTodoList.Controllers
         {
             var ciudad = await _context.Ciudades
             .Include(c => c.Region)
+            .Include(c => c.Region.Pais)
             .Where(c => c.Id == id)
             .SingleAsync();
 

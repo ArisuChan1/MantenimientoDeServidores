@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Usuario } from 'src/app/interfaces/Usuario';
+import { Usuario } from 'src/app/interfaces/types';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
