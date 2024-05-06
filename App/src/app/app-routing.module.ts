@@ -1,20 +1,29 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SessionGuard } from './guards/auth.guard';
+import { routesConfig } from './routes/routesConfig';
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'servidores',
+        redirectTo: routesConfig.DASHBOARD,
         pathMatch: 'full',
     },
     {
-        path: 'auth',
+        path: routesConfig.AUTH,
         loadChildren: () =>
             import('./modules/auth/auth.module').then((m) => m.AuthModule),
     },
     {
-        path: 'servidores',
+        path: routesConfig.DASHBOARD,
+        loadChildren: () =>
+            import('./modules/dashboard/dashboard.module').then(
+                (m) => m.DashboardModule
+            ),
+        canActivate: [SessionGuard],
+    },
+    {
+        path: routesConfig.SERVIDORES,
         loadChildren: () =>
             import('./modules/servidores/servidores.module').then(
                 (m) => m.ServidoresModule

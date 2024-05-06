@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using WebApiTodoList.Contexts;
 using WebApiTodoList.Models;
 
@@ -123,10 +119,11 @@ namespace WebApiTodoList.Controllers
                 usuario
             };
         }
-    }
-    public class LoginModel
-    {
-        public required string Alias { get; set; }
-        public required string Password { get; set; }
+
+        public class LoginModel
+        {
+            public required string Alias { get; set; }
+            public required string Password { get; set; }
+        }
     }
 }

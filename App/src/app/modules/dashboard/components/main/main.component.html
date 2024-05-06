@@ -1,0 +1,31 @@
+<app-layout>
+    <main class="flex gap-4 justify-between px-4">
+        <img
+            class="rounded-2xl shadow-xl object-cover w-1/2"
+            src="assets/layout/suc-occidente.png"
+            alt="Sucursal de Banco de Occidente"
+        />
+        <section class="flex flex-col gap-3 w-1/2 items-center">
+            <p>Te damos la bienvenida al Mantenimiento de Servidores</p>
+            <small>
+                En esta aplicación podrás llevar un control de los
+                mantenimientos realizados a los servidores de Banco de
+                Occidente.
+            </small>
+            <small> Para comenzar, selecciona una de las opciones </small>
+            <div class="flex flex-wrap gap-3">
+                <button
+                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 transition-colors duration-300 ease-in-out"
+                >
+                    <a [routerLink]="'/' + routes.SERVIDORES">Servidores</a>
+                </button>
+                <button
+                    [disabled]="true"
+                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <a>Usuarios</a>
+                </button>
+            </div>
+        </section>
+    </main>
+</app-layout>

@@ -1,4 +1,6 @@
-﻿namespace WebApiTodoList.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebApiTodoList.Models
 {
     public class Usuario
     {
@@ -8,5 +10,8 @@
         public required string Correo { get; set; }
         public required string NombreCompleto { get; set; }
         public required int IdRol { get; set; }
+        // Propiedad de navegación
+        [ForeignKey("IdRol")]
+        public Rol? Rol { get; set; }
     }
 }

@@ -12,23 +12,23 @@ namespace WebApiTodoList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstadosMantenimientosController : ControllerBase
+    public class EstadosMantenimientoController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public EstadosMantenimientosController(AppDbContext context)
+        public EstadosMantenimientoController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/EstadosMantenimientos
+        // GET: api/EstadosMantenimiento
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EstadoMantenimiento>>> GetEstadosMantenimiento()
         {
             return await _context.EstadosMantenimiento.ToListAsync();
         }
 
-        // GET: api/EstadosMantenimientos/5
+        // GET: api/EstadosMantenimiento/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EstadoMantenimiento>> GetEstadoMantenimiento(int id)
         {
@@ -42,7 +42,7 @@ namespace WebApiTodoList.Controllers
             return estadoMantenimiento;
         }
 
-        // PUT: api/EstadosMantenimientos/5
+        // PUT: api/EstadosMantenimiento/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEstadoMantenimiento(int id, EstadoMantenimiento estadoMantenimiento)
@@ -73,7 +73,7 @@ namespace WebApiTodoList.Controllers
             return NoContent();
         }
 
-        // POST: api/EstadosMantenimientos
+        // POST: api/EstadosMantenimiento
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<EstadoMantenimiento>> PostEstadoMantenimiento(EstadoMantenimiento estadoMantenimiento)
@@ -84,7 +84,7 @@ namespace WebApiTodoList.Controllers
             return CreatedAtAction("GetEstadoMantenimiento", new { id = estadoMantenimiento.Id }, estadoMantenimiento);
         }
 
-        // DELETE: api/EstadosMantenimientos/5
+        // DELETE: api/EstadosMantenimiento/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEstadoMantenimiento(int id)
         {
