@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/interfaces/Usuario';
+import { Usuario } from 'src/app/interfaces/types';
 import { SESSION_KEY_USER, WEB_API_URL } from 'src/config/config';
 
 const URL = `${WEB_API_URL}/Usuarios`;
