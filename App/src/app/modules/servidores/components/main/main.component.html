@@ -1,3 +1,99 @@
 <app-layout>
-    Prueba
+    <section class="px-4 flex flex-col gap-4">
+        <header class="flex justify-between">
+            <h1 class="text-2xl font-semibold">Servidores</h1>
+            <button
+                (click)="openDialogCreateServidor()"
+                pButton
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            >
+                Nuevo servidor
+            </button>
+        </header>
+        <main class="flex flex-col gap-3">
+            @for (item of listaServidores; track $index) {
+            <div>
+                <h1 class="bg-primary-400 rounded-md p-2 text-white mb-4">
+                    {{ item.ciudad.descripcion }}
+                </h1>
+                <div class="pl-5 flex flex-col gap-4">
+                    @for (servidor of item.servidores; track $index) {
+                    <span
+                        class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
+                    >
+                        <span class="flex flex-wrap gap-4">
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500"
+                                    >Nombre</span
+                                >
+                                <span class="text-lg font-semibold">{{
+                                    servidor.nombre
+                                }}</span>
+                            </span>
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500"
+                                    >Dominio</span
+                                >
+                                <span class="text-lg font-semibold">{{
+                                    servidor.dominio
+                                }}</span>
+                            </span>
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500"
+                                    >Ciudad</span
+                                >
+                                <span class="text-lg font-semibold">{{
+                                    getCiudadById(servidor.idCiudad)
+                                        ?.descripcion
+                                }}</span>
+                            </span>
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500"
+                                    >Ambiente</span
+                                >
+                                <span class="text-lg font-semibold">{{
+                                    getAmbienteById(servidor.idAmbiente)
+                                        ?.descripcion
+                                }}</span>
+                            </span>
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500">Tipo</span>
+                                <span class="text-lg font-semibold">{{
+                                    getTipoById(servidor.idTipo)?.descripcion
+                                }}</span>
+                            </span>
+                            <span class="flex flex-col">
+                                <span class="text-sm text-gray-500"
+                                    >Sistema Operativo</span
+                                >
+                                <span class="text-lg font-semibold">{{
+                                    getSistemaOperativoById(
+                                        servidor.idSistemaOperativo
+                                    )?.descripcion
+                                }}</span>
+                            </span>
+                            <span class="flex gap-4">
+                                <button
+                                    (click)="openDialogUpdateServidor(servidor)"
+                                    pButton
+                                    class="bg-primary-500 p-2 text-white rounded-lg"
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    (click)="deleteServidor(servidor.id)"
+                                    pButton
+                                    class="bg-red-500 p-2 text-white rounded-lg"
+                                >
+                                    Eliminar
+                                </button>
+                            </span>
+                        </span>
+                    </span>
+                    }
+                </div>
+            </div>
+            }
+        </main>
+    </section>
 </app-layout>

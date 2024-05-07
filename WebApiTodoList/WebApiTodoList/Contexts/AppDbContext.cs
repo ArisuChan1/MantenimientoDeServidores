@@ -23,14 +23,14 @@ namespace WebApiTodoList.Contexts
         public DbSet<TipoServidor> TiposServidores { get; set;}
         public DbSet<Usuario> Usuarios { get; set;}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
-        }
+        //    foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+        //    {
+        //        relationship.DeleteBehavior = DeleteBehavior.Restrict;
+        //    }
+        //}
     }
 }

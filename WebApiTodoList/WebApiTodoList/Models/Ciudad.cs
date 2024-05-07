@@ -7,9 +7,5 @@ namespace WebApiTodoList.Models
         public int Id { get; set; }
         public required string Descripcion { get; set; }
         public required int IdRegion { get; set; }
-
-        // Propiedad de navegación
-        [ForeignKey("IdRegion")]
-        public required Region Region { get; set; }
     }
 }

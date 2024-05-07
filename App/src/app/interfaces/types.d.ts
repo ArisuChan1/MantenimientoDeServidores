@@ -5,7 +5,6 @@ export interface Usuario {
     correo: string;
     nombreCompleto: string;
     idRol: number;
-    rol: Rol;
 }
 
 export interface Base {
@@ -24,11 +23,9 @@ export interface Razon extends Base {}
 export interface Pais extends Base {}
 export interface Region extends Base {
     idPais: number;
-    pais: Pais;
 }
 export interface Ciudad extends Base {
     idRegion: number;
-    region: Region;
 }
 export interface Estado extends Base {
     ocupado: boolean;
@@ -44,15 +41,10 @@ export interface Servidor {
     descripcion: string;
     aplicaMantenimiento: boolean;
     idCiudad: number;
-    ciudad: Ciudad;
     idSistemaOperativo: number;
-    sistemaOperativo: SistemaOperativo;
     idTipo: number;
-    tipoServidor: TipoServidor;
     idAmbiente: number;
-    ambiente: Ambiente;
     idEstado: number;
-    estado: Estado;
 }
 
 export interface BaseDeDatos {
@@ -60,47 +52,36 @@ export interface BaseDeDatos {
     idServidor: number;
     servidor: Servidor;
     idMotor: number;
-    motor: Motor;
     nombre: string;
     descripcion: string;
     collation: string;
     idAmbiente: number;
-    ambiente: Ambiente;
     aplicaMantenimiento: boolean;
     idEstado: number;
-    estado: Estado;
 }
 
 export interface Mantenimiento {
     id: number;
     idRazon: number;
-    razon: Razon;
     idBaseDeDatos: number | null;
-    baseDeDatos: BaseDeDatos | null;
     idServidor: number | null;
-    servidor: Servidor | null;
     descripcion: string;
     fechaInicio: Date;
     fechaFin: Date;
     idUsuario: number;
-    usuario: Usuario;
     idEstado: number;
-    estadoMantenimiento: EstadoMantenimiento;
 }
 
 export interface RolXPermiso {
     id: 0;
     idRol: 0;
-    rol: Rol;
     idPermiso: 0;
-    permiso: Permiso;
-    tmpAsignado: '2024-05-06T02:40:18.119Z';
+    tmpAsignado: Date;
     idUsuarioAsigno: 0;
-    usuario: Usuario;
 }
 
 // Interfaces para Post or Put
-export type UsuarioPostOrUpdate = Omit<Usuario, 'id' | 'rol'>;
+export type UsuarioPostOrUpdate = Omit<Usuario, 'id'>;
 export type RolPostOrUpdate = Omit<Rol, 'id'>;
 export type PermisoPostOrUpdate = Omit<Permiso, 'id'>;
 export type MotorPostOrUpdate = Omit<Motor, 'id'>;

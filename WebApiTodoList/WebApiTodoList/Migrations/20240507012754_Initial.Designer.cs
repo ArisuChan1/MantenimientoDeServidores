@@ -12,8 +12,8 @@ using WebApiTodoList.Contexts;
 namespace WebApiTodoList.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240506015444_Initial2")]
-    partial class Initial2
+    [Migration("20240507012754_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,14 +79,6 @@ namespace WebApiTodoList.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdAmbiente");
-
-                    b.HasIndex("IdEstado");
-
-                    b.HasIndex("IdMotor");
-
-                    b.HasIndex("IdServidor");
-
                     b.ToTable("BasesDeDatos");
                 });
 
@@ -106,8 +98,6 @@ namespace WebApiTodoList.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdRegion");
 
                     b.ToTable("Ciudades");
                 });
@@ -185,16 +175,6 @@ namespace WebApiTodoList.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdBaseDeDatos");
-
-                    b.HasIndex("IdEstado");
-
-                    b.HasIndex("IdRazon");
-
-                    b.HasIndex("IdServidor");
-
-                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Mantenimientos");
                 });
@@ -284,8 +264,6 @@ namespace WebApiTodoList.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPais");
-
                     b.ToTable("Regiones");
                 });
 
@@ -327,12 +305,6 @@ namespace WebApiTodoList.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdPermiso");
-
-                    b.HasIndex("IdRol");
-
-                    b.HasIndex("IdUsuarioAsigno");
 
                     b.ToTable("RolesXPermisos");
                 });
@@ -376,16 +348,6 @@ namespace WebApiTodoList.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdAmbiente");
-
-                    b.HasIndex("IdCiudad");
-
-                    b.HasIndex("IdEstado");
-
-                    b.HasIndex("IdSistemaOperativo");
-
-                    b.HasIndex("IdTipo");
 
                     b.ToTable("Servidores");
                 });
@@ -453,188 +415,7 @@ namespace WebApiTodoList.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdRol");
-
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.BaseDeDatos", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Ambiente", "Ambiente")
-                        .WithMany()
-                        .HasForeignKey("IdAmbiente")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Estado", "Estado")
-                        .WithMany()
-                        .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Motor", "Motor")
-                        .WithMany()
-                        .HasForeignKey("IdMotor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Servidor", "Servidor")
-                        .WithMany()
-                        .HasForeignKey("IdServidor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Ambiente");
-
-                    b.Navigation("Estado");
-
-                    b.Navigation("Motor");
-
-                    b.Navigation("Servidor");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.Ciudad", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("IdRegion")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Region");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.Mantenimiento", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.BaseDeDatos", "BaseDeDatos")
-                        .WithMany()
-                        .HasForeignKey("IdBaseDeDatos")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebApiTodoList.Models.EstadoMantenimiento", "EstadoMantenimiento")
-                        .WithMany()
-                        .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Razon", "Razon")
-                        .WithMany()
-                        .HasForeignKey("IdRazon")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Servidor", "Servidor")
-                        .WithMany()
-                        .HasForeignKey("IdServidor")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebApiTodoList.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BaseDeDatos");
-
-                    b.Navigation("EstadoMantenimiento");
-
-                    b.Navigation("Razon");
-
-                    b.Navigation("Servidor");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.Region", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Pais", "Pais")
-                        .WithMany()
-                        .HasForeignKey("IdPais")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Pais");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.RolesXPermisos", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Permiso", "Permiso")
-                        .WithMany()
-                        .HasForeignKey("IdPermiso")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuarioAsigno")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Permiso");
-
-                    b.Navigation("Rol");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.Servidor", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Ambiente", "Ambiente")
-                        .WithMany()
-                        .HasForeignKey("IdAmbiente")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("IdCiudad")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.Estado", "Estado")
-                        .WithMany()
-                        .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.SistemaOperativo", "SistemaOperativo")
-                        .WithMany()
-                        .HasForeignKey("IdSistemaOperativo")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("WebApiTodoList.Models.TipoServidor", "TipoServidor")
-                        .WithMany()
-                        .HasForeignKey("IdTipo")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Ambiente");
-
-                    b.Navigation("Ciudad");
-
-                    b.Navigation("Estado");
-
-                    b.Navigation("SistemaOperativo");
-
-                    b.Navigation("TipoServidor");
-                });
-
-            modelBuilder.Entity("WebApiTodoList.Models.Usuario", b =>
-                {
-                    b.HasOne("WebApiTodoList.Models.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Rol");
                 });
 #pragma warning restore 612, 618
         }

@@ -257,9 +257,10 @@ export class GeneralService {
         get: () => this.http.get<Servidor[]>(URL_SERVIDORES),
         getById: (id: number) =>
             this.http.get<Servidor>(`${URL_SERVIDORES}/${id}`),
-        post: (servidor: Servidor) => this.http.post(URL_SERVIDORES, servidor),
+        post: (servidor: ServidorPostOrUpdate) =>
+            this.http.post(URL_SERVIDORES, servidor),
         put: (id: number, servidor: ServidorPostOrUpdate) =>
-            this.http.put(`${URL_SERVIDORES}/${id}`, servidor),
+            this.http.put(`${URL_SERVIDORES}/${id}`, { id, ...servidor }),
         delete: (id: number) => this.http.delete(`${URL_SERVIDORES}/${id}`),
     };
 

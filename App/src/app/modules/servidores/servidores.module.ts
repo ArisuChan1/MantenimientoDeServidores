@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { MainComponent } from './components/main/main.component';
 import { SharedModule } from '../shared/shared.module';
+import { CreateServidorComponent } from './components/create-servidor/create-servidor.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     imports: [
@@ -17,7 +19,7 @@ import { SharedModule } from '../shared/shared.module';
         HttpClientModule,
         SharedModule,
     ],
-    providers: [AlertaService],
-    declarations: [MainComponent],
+    providers: [AlertaService, DialogService],
+    declarations: [MainComponent, CreateServidorComponent],
 })
 export class ServidoresModule {}

@@ -26,7 +26,6 @@ namespace WebApiTodoList.Controllers
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios
-                .Include(u => u.Rol)
                 .ToListAsync();
         }
 
@@ -34,10 +33,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var usuario = await _context.Usuarios
-                .Include(u => u.Rol)
-                .Where(u => u.Id == id)
-                .SingleAsync();
+            var usuario = await _context.Usuarios.FindAsync(id);
 
             if (usuario == null)
             {

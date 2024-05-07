@@ -16,14 +16,14 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Region>>> GetRegiones()
         {
-            return await _context.Regiones.Include(r => r.Pais).ToListAsync();
+            return await _context.Regiones.ToListAsync();
         }
 
         // GET: api/Regiones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Region>> GetRegion(int id)
         {
-            var region = await _context.Regiones.Include(r => r.Pais).Where(r => r.Id == id).SingleAsync();
+            var region = await _context.Regiones.FindAsync(id);
 
             if (region == null)
             {

@@ -26,11 +26,6 @@ namespace WebApiTodoList.Controllers
         public async Task<ActionResult<IEnumerable<Mantenimiento>>> GetMantenimientos()
         {
             return await _context.Mantenimientos
-                .Include(m => m.Razon)
-                .Include(m => m.BaseDeDatos)
-                .Include(m => m.Servidor)
-                .Include(m => m.Usuario)
-                .Include(m => m.EstadoMantenimiento)
                 .ToListAsync();
         }
 
@@ -38,14 +33,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Mantenimiento>> GetMantenimiento(int id)
         {
-            var mantenimiento = await _context.Mantenimientos
-                .Include(m => m.Razon)
-                .Include(m => m.BaseDeDatos)
-                .Include(m => m.Servidor)
-                .Include(m => m.Usuario)
-                .Include(m => m.EstadoMantenimiento)
-                .Where(m => m.Id == id)
-                .SingleAsync();
+            var mantenimiento = await _context.Mantenimientos.FindAsync(id);
 
             if (mantenimiento == null)
             {

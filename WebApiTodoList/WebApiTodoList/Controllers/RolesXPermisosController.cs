@@ -26,9 +26,6 @@ namespace WebApiTodoList.Controllers
         public async Task<ActionResult<IEnumerable<RolesXPermisos>>> GetRolesXPermisos()
         {
             return await _context.RolesXPermisos
-            .Include(rxp => rxp.Rol)
-            .Include(rxp => rxp.Permiso)
-            .Include(rxp => rxp.Usuario)
             .ToListAsync();
         }
 
@@ -36,12 +33,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RolesXPermisos>> GetRolesXPermisos(int id)
         {
-            var rolesXPermisos = await _context.RolesXPermisos
-            .Include(rxp => rxp.Rol)
-            .Include(rxp => rxp.Permiso)
-            .Include(rxp => rxp.Usuario)
-            .Where(rxp => rxp.Id == id)
-            .SingleAsync();
+            var rolesXPermisos = await _context.RolesXPermisos.FindAsync(id);
 
             if (rolesXPermisos == null)
             {
