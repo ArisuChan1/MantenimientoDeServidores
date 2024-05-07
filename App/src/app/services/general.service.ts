@@ -36,6 +36,7 @@ import {
     TipoServidorPostOrUpdate,
     Usuario,
     UsuarioPostOrUpdate,
+    MantenimientoPostOrUpdate,
 } from 'src/app/interfaces/types';
 import { SESSION_KEY_USER, WEB_API_URL } from 'src/config/config';
 
@@ -155,10 +156,13 @@ export class GeneralService {
         get: () => this.http.get<Mantenimiento[]>(URL_MANTENIMIENTOS),
         getById: (id: number) =>
             this.http.get<Mantenimiento>(`${URL_MANTENIMIENTOS}/${id}`),
-        post: (mantenimiento: Mantenimiento) =>
+        post: (mantenimiento: MantenimientoPostOrUpdate) =>
             this.http.post(URL_MANTENIMIENTOS, mantenimiento),
-        put: (id: number, mantenimiento: Mantenimiento) =>
-            this.http.put(`${URL_MANTENIMIENTOS}/${id}`, mantenimiento),
+        put: (id: number, mantenimiento: MantenimientoPostOrUpdate) =>
+            this.http.put(`${URL_MANTENIMIENTOS}/${id}`, {
+                id,
+                ...mantenimiento,
+            }),
         delete: (id: number) => this.http.delete(`${URL_MANTENIMIENTOS}/${id}`),
     };
 

@@ -9,6 +9,8 @@ import { MainComponent } from './components/main/main.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateServidorComponent } from './components/create-servidor/create-servidor.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { MantenimientoServidorComponent } from './components/mantenimiento-servidor/mantenimiento-servidor.component';
+import { CreateMantenimientoComponent } from './components/create-mantenimiento/create-mantenimiento.component';
 
 @NgModule({
     imports: [
@@ -20,6 +22,11 @@ import { DialogService } from 'primeng/dynamicdialog';
         SharedModule,
     ],
     providers: [AlertaService, DialogService],
-    declarations: [MainComponent, CreateServidorComponent],
+    declarations: [
+        MainComponent,
+        CreateServidorComponent,
+        MantenimientoServidorComponent,
+        CreateMantenimientoComponent,
+    ],
 })
 export class ServidoresModule {}

@@ -1,0 +1,81 @@
+<header class="flex justify-between gap-2">
+    <h1 class="text-2xl font-semibold"></h1>
+    <button
+        (click)="openDialogCreateMantenimiento()"
+        pButton
+        class="bg-primary-500 p-2 text-white rounded-lg"
+    >
+        Nuevo mantenimiento
+    </button>
+</header>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4">
+    @for (mantenimiento of manteniemientosByServidor; track $index) {
+    <div class="flex flex-col gap-4 bg-gray-200 p-1 rounded-md">
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Razón</span>
+            <span class="text-lg font-semibold">{{
+                getRazonById(mantenimiento.idRazon)?.descripcion
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Base de datos</span>
+            <span class="text-lg font-semibold">{{
+                getBaseDeDatosById(mantenimiento.idBaseDeDatos)?.nombre
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Servidor</span>
+            <span class="text-lg font-semibold">{{
+                getServidorById(mantenimiento.idServidor)?.nombre
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Descripción</span>
+            <span class="text-lg font-semibold">{{
+                mantenimiento.descripcion
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Fecha de inicio</span>
+            <span class="text-lg font-semibold">{{
+                mantenimiento.fechaInicio | date : "dd/MM/yyyy"
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Fecha de fin</span>
+            <span class="text-lg font-semibold">{{
+                mantenimiento.fechaFin | date : "dd/MM/yyyy"
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Usuario</span>
+            <span class="text-lg font-semibold">{{
+                getUsuarioById(mantenimiento.idUsuario)?.nombreCompleto
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Estado</span>
+            <span class="text-lg font-semibold">{{
+                getEstadoMantenimientoById(mantenimiento.idEstado)?.descripcion
+            }}</span>
+        </div>
+        <div class="flex gap-4">
+            <button
+                (click)="openDialogUpdateMantenimiento(mantenimiento)"
+                pButton
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            >
+                Editar
+            </button>
+            <button
+                (click)="deleteMantenimiento(mantenimiento.id)"
+                pButton
+                class="bg-red-500 p-2 text-white rounded-lg"
+            >
+                Eliminar
+            </button>
+        </div>
+    </div>
+    }
+</div>

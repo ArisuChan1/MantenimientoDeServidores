@@ -1,0 +1,101 @@
+<article class="flex flex-col gap-3">
+    <div class="flex flex-col gap-1">
+        <label for="">Descripción</label>
+        <textarea
+            pInputText
+            [(ngModel)]="newMantenimiento.descripcion"
+            type="text"
+            placeholder="Descripción del mantenimiento"
+            class="p-2 border border-gray-300 rounded-lg"
+        ></textarea>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <label for="">Servidor</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="servidores"
+            [(ngModel)]="newMantenimiento.idServidor"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Servidor"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <label for="">Razon</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="razones"
+            [(ngModel)]="newMantenimiento.idRazon"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Razón"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+
+    @if (data?.id) {
+    <div class="flex flex-col gap-1">
+        <label for="">Estado</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="estados"
+            [(ngModel)]="newMantenimiento.idEstado"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Estado"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    }
+
+    <div class="flex flex-col gap-1">
+        <label for="">Fecha de Inicio</label>
+        <p-calendar
+            appendTo="body"
+            [(ngModel)]="newMantenimiento.fechaInicio"
+            styleClass="w-full border border-gray-300 rounded-lg p-2"
+            placeholder="Seleccionar Fecha de Inicio"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-calendar>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Fecha de Finalización</label>
+        <p-calendar
+            appendTo="body"
+            [(ngModel)]="newMantenimiento.fechaFin"
+            styleClass="w-full border border-gray-300 rounded-lg p-2"
+            placeholder="Seleccionar Fecha de Finalización"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-calendar>
+    </div>
+    <!-- Botones de Agregar -->
+    <div class="flex justify-end gap-2">
+        <button
+            (click)="close()"
+            pButton
+            label="Cancelar"
+            class="bg-gray-300 p-2 text-black rounded-lg"
+        ></button>
+
+        @if (data.id) {
+        <button
+            (click)="createOrUpdateMantenimiento()"
+            pButton
+            label="Actualizar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        } @else {
+        <button
+            (click)="createOrUpdateMantenimiento()"
+            pButton
+            label="Agregar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        }
+    </div>
+</article>

@@ -9,6 +9,7 @@ import {
 import { GeneralService } from 'src/app/services/general.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CreateServidorComponent } from '../create-servidor/create-servidor.component';
+import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
 
 @Component({
     selector: 'app-main',
@@ -89,6 +90,20 @@ export class MainComponent {
     openDialogUpdateServidor(servidor: Servidor) {
         const dialog = this.dialogService.open(CreateServidorComponent, {
             header: 'Crear servidor',
+            data: {
+                id: servidor.id,
+                servidor: servidor,
+            },
+        });
+        dialog.onClose.subscribe(() => {
+            this.getServidores();
+        });
+    }
+
+    openDialogMantenimientos(servidor: Servidor) {
+        const dialog = this.dialogService.open(MantenimientoServidorComponent, {
+            header: 'Mantenimientos',
+            width: '70%',
             data: {
                 id: servidor.id,
                 servidor: servidor,
