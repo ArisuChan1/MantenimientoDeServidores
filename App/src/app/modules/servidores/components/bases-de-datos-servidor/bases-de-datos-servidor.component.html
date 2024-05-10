@@ -1,0 +1,69 @@
+<header class="flex justify-between gap-2">
+    <h1 class="text-2xl font-semibold"></h1>
+    <button
+        (click)="openCreateBaseDeDatosDialog()"
+        pButton
+        class="bg-primary-500 p-2 text-white rounded-lg"
+    >
+        Nueva base de datos
+    </button>
+</header>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4">
+    @for (baseDeDatos of basesDeDatosByServidor; track $index) {
+    <div class="flex flex-col gap-4 bg-gray-200 p-1 rounded-md">
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Nombre</span>
+            <span class="text-lg font-semibold">{{ baseDeDatos.nombre }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Collation</span>
+            <span class="text-lg font-semibold">{{
+                baseDeDatos.collation
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Descripción</span>
+            <span class="text-lg font-semibold">{{
+                baseDeDatos.descripcion
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Ambiente</span>
+            <span class="text-lg font-semibold">{{
+                getAmbienteById(baseDeDatos.idAmbiente)?.descripcion
+            }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-sm text-gray-500">Motor</span>
+            <span class="text-lg font-semibold">{{
+                getMotorById(baseDeDatos.idMotor)?.descripcion
+            }}</span>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <button
+                (click)="openDialogMantenimientos(baseDeDatos)"
+                pButton
+                class="bg-purple-500 p-2 text-white rounded-lg"
+            >
+                Mantenimientos
+            </button>
+            <button
+                (click)="openUpdateBaseDeDatosDialog(baseDeDatos)"
+                pButton
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            >
+                Editar
+            </button>
+            <button
+                (click)="deleteBaseDeDatos(baseDeDatos)"
+                pButton
+                class="bg-red-500 p-2 text-white rounded-lg"
+            >
+                Eliminar
+            </button>
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,97 @@
+<article class="flex flex-col gap-3">
+    <div class="flex justify-between gap-2">
+        <div class="flex flex-col gap-1 w-1/2">
+            <label for="">Nombre</label>
+            <input
+                pInputText
+                [(ngModel)]="newBaseDeDatos.nombre"
+                type="text"
+                placeholder="Nombre de la base de datos"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div class="flex flex-col gap-1 w-1/2">
+            <label for="">Collation</label>
+            <input
+                pInputText
+                [(ngModel)]="newBaseDeDatos.collation"
+                type="text"
+                placeholder="Collation de la Base de Datos"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Descripción</label>
+        <textarea
+            pInputText
+            [(ngModel)]="newBaseDeDatos.descripcion"
+            type="text"
+            placeholder="Descripción de la base de datos"
+            class="p-2 border border-gray-300 rounded-lg"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Ambiente</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="ambientes"
+            [(ngModel)]="newBaseDeDatos.idAmbiente"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Ambiente"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    @if (newBaseDeDatos.id) {
+    <div class="flex flex-col gap-1">
+        <label for="">Estado</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="estados"
+            [(ngModel)]="newBaseDeDatos.idEstado"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Estado"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    }
+    <div class="flex flex-col gap-1">
+        <label for="">Motor</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="motores"
+            [(ngModel)]="newBaseDeDatos.idMotor"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Motor"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    <!-- Botones de Agregar -->
+    <div class="flex justify-end gap-2">
+        <button
+            (click)="close()"
+            pButton
+            label="Cancelar"
+            class="bg-gray-300 p-2 text-black rounded-lg"
+        ></button>
+        @if (data) {
+        <button
+            (click)="handleActionButton()"
+            pButton
+            label="Actualizar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        } @else {
+
+        <button
+            (click)="handleActionButton()"
+            pButton
+            label="Agregar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        }
+    </div>
+</article>

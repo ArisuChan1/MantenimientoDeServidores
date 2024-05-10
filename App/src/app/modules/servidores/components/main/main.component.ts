@@ -10,6 +10,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CreateServidorComponent } from '../create-servidor/create-servidor.component';
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
+import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
 
 @Component({
     selector: 'app-main',
@@ -101,8 +102,23 @@ export class MainComponent {
     }
 
     openDialogMantenimientos(servidor: Servidor) {
+        const header = `Mantenimientos de ${servidor.nombre}`;
         const dialog = this.dialogService.open(MantenimientoServidorComponent, {
-            header: 'Mantenimientos',
+            header,
+            width: '70%',
+            data: {
+                id: servidor.id,
+                servidor: servidor,
+            },
+        });
+        dialog.onClose.subscribe(() => {
+            this.getServidores();
+        });
+    }
+
+    openDialogBasesDeDatos(servidor: Servidor) {
+        const dialog = this.dialogService.open(BasesDeDatosServidorComponent, {
+            header: 'Bases de datos',
             width: '70%',
             data: {
                 id: servidor.id,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
+    BaseDeDatos,
     EstadoMantenimiento,
     Mantenimiento,
     MantenimientoPostOrUpdate,
@@ -29,11 +30,25 @@ export class CreateMantenimientoComponent {
     };
     estados: EstadoMantenimiento[] = [];
     razones: Razon[] = [];
+    opciones = [
+        {
+            label: 'Servidor',
+            value: 'servidor',
+        },
+        {
+            label: 'Base de datos',
+            value: 'baseDeDatos',
+        },
+    ];
+    opcionSeleccionada: (typeof this.opciones)[0] = this.opciones[0];
+
     servidores: Servidor[] = [];
+    basesDeDatos: BaseDeDatos[] = [];
 
     data: {
         id: number;
         idServidor: number;
+        idBaseDeDatos: number;
         mantenimiento: Mantenimiento;
     } | null = null;
 
@@ -46,6 +61,7 @@ export class CreateMantenimientoComponent {
         this.getRazones();
         this.getEstados();
         this.getServidores();
+        this.getBasesDeDatos();
         this.getDataFromConfig();
     }
 
@@ -67,27 +83,35 @@ export class CreateMantenimientoComponent {
         });
     }
 
+    getBasesDeDatos() {
+        this.generalService.BASE_DE_DATOS.get().subscribe((res) => {
+            this.basesDeDatos = res;
+        });
+    }
+
     getDataFromConfig() {
         this.data = this.dialogConfig.data;
 
         if (this.data?.idServidor) {
             this.newMantenimiento.idServidor = this.data.idServidor;
+            this.opcionSeleccionada = this.opciones[0];
         }
-        console.log(
-            '🚀 ~ file: create-mantenimiento.component.ts ~ line 86 ~ CreateMantenimientoComponent ~ getDataFromConfig ~ this.data',
-            this.data
-        );
+
+        if (this.data?.idBaseDeDatos) {
+            this.newMantenimiento.idBaseDeDatos = this.data.idBaseDeDatos;
+            this.opcionSeleccionada = this.opciones[1];
+        }
 
         if (this.data?.mantenimiento) {
             this.newMantenimiento = {
                 descripcion: this.data.mantenimiento.descripcion,
                 idServidor: this.data.mantenimiento.idServidor,
+                idBaseDeDatos: this.data.mantenimiento.idBaseDeDatos,
                 idEstado: this.data.mantenimiento.idEstado,
                 idRazon: this.data.mantenimiento.idRazon,
                 fechaInicio: new Date(this.data.mantenimiento.fechaInicio),
                 fechaFin: new Date(this.data.mantenimiento.fechaFin),
                 idUsuario: this.data.mantenimiento.idUsuario,
-                idBaseDeDatos: this.data.mantenimiento.idBaseDeDatos,
             };
         }
     }
@@ -125,6 +149,14 @@ export class CreateMantenimientoComponent {
             this.newMantenimiento.idServidor || null;
         this.newMantenimiento.idBaseDeDatos =
             this.newMantenimiento.idBaseDeDatos || null;
+
+        if (this.opcionSeleccionada.value === 'servidor') {
+            this.newMantenimiento.idBaseDeDatos = null;
+        }
+
+        if (this.opcionSeleccionada.value === 'baseDeDatos') {
+            this.newMantenimiento.idServidor = null;
+        }
 
         console.log(
             '🚀 ~ file: create-mantenimiento.component.ts ~ line 123 ~ CreateMantenimientoComponent ~ createOrUpdateMantenimiento ~ this.newMantenimiento',

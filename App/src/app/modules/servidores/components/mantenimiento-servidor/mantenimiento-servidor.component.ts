@@ -39,7 +39,8 @@ export class MantenimientoServidorComponent {
 
     data: {
         id: number;
-        servidor: Servidor;
+        servidor: Servidor | null;
+        baseDeDatos: BaseDeDatos | null;
     } | null = null;
 
     constructor(
@@ -119,7 +120,7 @@ export class MantenimientoServidorComponent {
     getMantenimientos() {
         this.generalService.MANTENIMIENTOS.get().subscribe((res) => {
             this.mantenimientos = res;
-            this.setMantenimientosByServidor();
+            this.setMantenimientos();
         });
     }
 
@@ -133,9 +134,24 @@ export class MantenimientoServidorComponent {
         return this.estadosManteniemiento.find((estado) => estado.id === id);
     }
 
+    setMantenimientos() {
+        if (this.data?.servidor) {
+            this.setMantenimientosByServidor();
+        } else {
+            this.setMantenimientosByBaseDeDatos();
+        }
+    }
+
     setMantenimientosByServidor() {
         this.manteniemientosByServidor = this.mantenimientos.filter(
             (mantenimiento) => mantenimiento.idServidor === this.data?.id
+        );
+    }
+
+    setMantenimientosByBaseDeDatos() {
+        this.manteniemientosByServidor = this.mantenimientos.filter(
+            (mantenimiento) =>
+                mantenimiento.idBaseDeDatos === this.data?.baseDeDatos?.id
         );
     }
 
@@ -144,6 +160,7 @@ export class MantenimientoServidorComponent {
             header: 'Crear mantenimiento',
             data: {
                 idServidor: this.data?.id,
+                idBaseDeDatos: this.data?.baseDeDatos?.id,
             },
         });
         dialog.onClose.subscribe(() => {

@@ -50,7 +50,6 @@ export interface Servidor {
 export interface BaseDeDatos {
     id: number;
     idServidor: number;
-    servidor: Servidor;
     idMotor: number;
     nombre: string;
     descripcion: string;

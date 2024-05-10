@@ -74,9 +74,16 @@
                             </span>
                             <span class="flex gap-4">
                                 <button
-                                    (click)="openDialogMantenimientos(servidor)"
+                                    (click)="openDialogBasesDeDatos(servidor)"
                                     pButton
                                     class="bg-blue-500 p-2 text-white rounded-lg"
+                                >
+                                    Bases de Datos
+                                </button>
+                                <button
+                                    (click)="openDialogMantenimientos(servidor)"
+                                    pButton
+                                    class="bg-purple-500 p-2 text-white rounded-lg"
                                 >
                                     Mantenimiento
                                 </button>

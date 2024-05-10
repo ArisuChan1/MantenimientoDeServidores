@@ -11,6 +11,8 @@ import { CreateServidorComponent } from './components/create-servidor/create-ser
 import { DialogService } from 'primeng/dynamicdialog';
 import { MantenimientoServidorComponent } from './components/mantenimiento-servidor/mantenimiento-servidor.component';
 import { CreateMantenimientoComponent } from './components/create-mantenimiento/create-mantenimiento.component';
+import { BasesDeDatosServidorComponent } from './components/bases-de-datos-servidor/bases-de-datos-servidor.component';
+import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/create-base-de-datos.component';
 
 @NgModule({
     imports: [
@@ -27,6 +29,8 @@ import { CreateMantenimientoComponent } from './components/create-mantenimiento/
         CreateServidorComponent,
         MantenimientoServidorComponent,
         CreateMantenimientoComponent,
+        BasesDeDatosServidorComponent,
+        CreateBaseDeDatosComponent,
     ],
 })
 export class ServidoresModule {}

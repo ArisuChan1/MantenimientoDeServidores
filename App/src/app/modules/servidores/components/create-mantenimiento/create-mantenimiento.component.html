@@ -10,6 +10,20 @@
         ></textarea>
     </div>
 
+    <!-- Seleccionar servidor o base de datos -->
+    <div class="flex flex-col gap-1">
+        <label for="">Tipo de Mantenimiento</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="opciones"
+            [(ngModel)]="opcionSeleccionada"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Tipo de Mantenimiento"
+            optionLabel="label"
+        ></p-dropdown>
+    </div>
+
+    @if (opcionSeleccionada?.value === 'servidor') {
     <div class="flex flex-col gap-1">
         <label for="">Servidor</label>
         <p-dropdown
@@ -22,6 +36,20 @@
             optionValue="id"
         ></p-dropdown>
     </div>
+    }@else {
+    <div class="flex flex-col gap-1">
+        <label for="">Base de Datos</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="basesDeDatos"
+            [(ngModel)]="newMantenimiento.idBaseDeDatos"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Base de Datos"
+            optionLabel="nombre"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    }
 
     <div class="flex flex-col gap-1">
         <label for="">Razon</label>
