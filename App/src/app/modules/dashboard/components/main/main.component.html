@@ -15,15 +15,14 @@
             <small> Para comenzar, selecciona una de las opciones </small>
             <div class="flex flex-wrap gap-3">
                 <button
-                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 transition-colors duration-300 ease-in-out"
+                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out"
                 >
                     <a [routerLink]="'/' + routes.SERVIDORES">Servidores</a>
                 </button>
                 <button
-                    [disabled]="true"
-                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <a>Usuarios</a>
+                    <a [routerLink]="'/' + routes.USUARIOS">Usuarios</a>
                 </button>
             </div>
         </section>

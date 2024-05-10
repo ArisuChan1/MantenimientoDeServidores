@@ -1,0 +1,86 @@
+<article class="flex flex-col gap-3">
+    <div class="flex flex-col gap-1">
+        <label for="">Nombre Completo</label>
+        <input
+            pInputText
+            [(ngModel)]="newUsuario.nombreCompleto"
+            type="text"
+            placeholder="Nombre completo del usuario "
+            class="p-2 border border-gray-300 rounded-lg"
+        />
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Alias</label>
+        <input
+            pInputText
+            [(ngModel)]="newUsuario.alias"
+            type="text"
+            placeholder="Alias del usuario"
+            class="p-2 border border-gray-300 rounded-lg"
+        />
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Correo</label>
+        <input
+            pInputText
+            [(ngModel)]="newUsuario.correo"
+            type="text"
+            placeholder="e-Mail del usuario"
+            class="p-2 border border-gray-300 rounded-lg"
+        />
+    </div>
+    <div class="flex flex-col gap-1 w-full">
+        <label for="">Contraseña</label>
+        <p-password
+            id="password"
+            [(ngModel)]="newUsuario.password"
+            placeholder="Contraseña"
+            [toggleMask]="true"
+            styleClass="w-full"
+            [feedback]="true"
+            promptLabel="Ingrese su contraseña"
+            mediumLabel="Medio"
+            strongLabel="Fuerte"
+            weakLabel="Débil"
+            inputStyleClass="w-full p-2 border-gray-300 border rounded-lg"
+        ></p-password>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Rol</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="roles"
+            [(ngModel)]="newUsuario.idRol"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Rol"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+
+    <!-- Botones de Agregar -->
+    <div class="flex justify-end gap-2">
+        <button
+            (click)="close()"
+            pButton
+            label="Cancelar"
+            class="bg-gray-300 p-2 text-black rounded-lg"
+        ></button>
+        @if (data) {
+        <button
+            (click)="update()"
+            pButton
+            label="Actualizar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        } @else {
+
+        <button
+            (click)="save()"
+            pButton
+            label="Agregar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        }
+    </div>
+</article>

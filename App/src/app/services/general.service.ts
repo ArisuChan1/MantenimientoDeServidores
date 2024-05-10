@@ -296,9 +296,10 @@ export class GeneralService {
         get: () => this.http.get<Usuario[]>(URL_USUARIOS),
         getById: (id: number) =>
             this.http.get<Usuario>(`${URL_USUARIOS}/${id}`),
-        post: (usuario: Usuario) => this.http.post(URL_USUARIOS, usuario),
+        post: (usuario: UsuarioPostOrUpdate) =>
+            this.http.post(URL_USUARIOS, usuario),
         put: (id: number, usuario: UsuarioPostOrUpdate) =>
-            this.http.put(`${URL_USUARIOS}/${id}`, usuario),
+            this.http.put(`${URL_USUARIOS}/${id}`, { ...usuario, id }),
         delete: (id: number) => this.http.delete(`${URL_USUARIOS}/${id}`),
     };
 }

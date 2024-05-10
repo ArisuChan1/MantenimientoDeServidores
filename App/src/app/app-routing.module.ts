@@ -30,6 +30,14 @@ const routes: Routes = [
             ),
         canActivate: [SessionGuard],
     },
+    {
+        path: routesConfig.USUARIOS,
+        loadChildren: () =>
+            import('./modules/usuarios/usuarios.module').then(
+                (m) => m.UsuariosModule
+            ),
+        canActivate: [SessionGuard],
+    },
     { path: '**', redirectTo: '/auth' },
 ];
 

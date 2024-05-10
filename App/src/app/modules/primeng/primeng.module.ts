@@ -48,6 +48,7 @@ import { PasswordModule } from 'primeng/password';
 
 import { PrimeNGConfig } from 'primeng/api';
 import { TRADUCCION_ESP } from './traduccion';
+import { FocusTrapModule } from 'primeng/focustrap';
 @NgModule({
     exports: [
         ButtonModule,
@@ -95,6 +96,7 @@ import { TRADUCCION_ESP } from './traduccion';
         InputSwitchModule,
         OverlayPanelModule,
         PasswordModule,
+        FocusTrapModule,
     ],
 })
 export class PrimeNgModule {
