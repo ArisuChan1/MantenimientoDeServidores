@@ -3,4 +3,5 @@ export const routesConfig = {
     DASHBOARD: 'dashboard',
     SERVIDORES: 'servidores',
     USUARIOS: 'usuarios',
+    CRUDS: 'cruds',
 };

@@ -1,0 +1,1408 @@
+<!-- export interface Ciudad {
+    id: number;
+    descripcion: string;
+} -->
+
+<app-layout>
+    <section class="px-4 flex flex-col gap-4">
+        <header class="flex justify-between">
+            <h1 class="text-2xl font-semibold">CRUDs</h1>
+        </header>
+        <main class="flex flex-wrap gap-4">
+            <!-- ! TABLA DE AMBIENTES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Ambientes</h2>
+                    <button
+                        pButton
+                        (click)="openCreateAmbiente()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo ambiente
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ambiente of ambientes; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ ambiente.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ ambiente.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="openUpdateAmbiente(ambiente)"
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteAmbiente(ambiente)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE CIUDADES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Ciudades</h2>
+                    <button
+                        pButton
+                        (click)="openCreateCiudad()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nueva ciudad
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ciudad of ciudades; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ ciudad.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ ciudad.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        (click)="openUpdateCiudad(ciudad)"
+                                        pButton
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteCiudad(ciudad)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE ROLES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Roles</h2>
+                    <button
+                        pButton
+                        (click)="openCreateRol()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo rol
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (rol of roles; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ rol.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ rol.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="openUpdateRol(rol)"
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteRol(rol)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE SISTEMAS OPERATIVOS -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Sistemas operativos</h2>
+                    <button
+                        pButton
+                        (click)="openCreateSistemaOperativo()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo S.O
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (so of sistemasOperativos; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ so.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ so.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="openUpdateSistemaOperativo(so)"
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteSistemaOperativo(so)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE TIPOS DE SERVIDORES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Tipos de servidores</h2>
+                    <button
+                        pButton
+                        (click)="openCreateTipoServidor()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo tipo
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (tipoServidor of tiposServidores; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ tipoServidor.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ tipoServidor.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        (click)="
+                                            openUpdateTipoServidor(tipoServidor)
+                                        "
+                                        pButton
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        (click)="
+                                            deleteTipoServidor(tipoServidor)
+                                        "
+                                        pButton
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE ESTADOS -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Estados</h2>
+                    <button
+                        pButton
+                        (click)="openCreateEstado()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo estado
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Ocupado
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (estado of estados; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ estado.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ estado.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <p-checkbox
+                                    [binary]="true"
+                                    [readonly]="true"
+                                    [(ngModel)]="estado.ocupado"
+                                    inputId="id"
+                                ></p-checkbox>
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        (click)="openUpdateEstado(estado)"
+                                        pButton
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteEstado(estado)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE ESTADOS MANTENIMIENTO -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">
+                        Estados de mantenimiento
+                    </h2>
+                    <button
+                        pButton
+                        (click)="openCreateEstadoMantenimiento()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo Estado
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Terminado
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (estadoMantenimiento of estadosMantenimiento; track
+                        $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ estadoMantenimiento.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ estadoMantenimiento.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <p-checkbox
+                                    [binary]="true"
+                                    [readonly]="true"
+                                    [(ngModel)]="estadoMantenimiento.terminado"
+                                    inputId="id"
+                                ></p-checkbox>
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="
+                                            openUpdateEstadoMantenimiento(
+                                                estadoMantenimiento
+                                            )
+                                        "
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="
+                                            deleteEstadoMantenimiento(
+                                                estadoMantenimiento
+                                            )
+                                        "
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE MOTORES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Motores</h2>
+                    <button
+                        pButton
+                        (click)="openCreateMotor()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nuevo motor
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (motor of motores; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ motor.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ motor.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="openUpdateMotor(motor)"
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteMotor(motor)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ! TABLA DE RAZONES -->
+            <article class="flex flex-col gap-3">
+                <header class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Razones</h2>
+                    <button
+                        pButton
+                        (click)="openCreateRazon()"
+                        class="bg-primary-500 p-1 text-white rounded-lg text-sm"
+                    >
+                        Nueva razón
+                    </button>
+                </header>
+                <table
+                    class="table-auto rounded-lg overflow-hidden border border-gray-400"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Id
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Descripción
+                            </th>
+                            <th
+                                class="p-1 px-3 font-bold uppercase bg-primary-200 text-primary-800 border border-gray-300"
+                            >
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (razon of razones; track $index) {
+                        <tr>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ razon.id }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                {{ razon.descripcion }}
+                            </td>
+                            <td
+                                class="p-1 px-3 bg-primary-100 text-primary-700 border border-gray-300"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 w-full"
+                                >
+                                    <button
+                                        pButton
+                                        (click)="openUpdateRazon(razon)"
+                                        class="bg-primary-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path
+                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+                                            />
+                                            <path d="M13.5 6.5l4 4" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        pButton
+                                        (click)="deleteRazon(razon)"
+                                        class="bg-red-500 p-1 text-white rounded-lg"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash size-4"
+                                        >
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M4 7l16 0" />
+                                            <path d="M10 11l0 6" />
+                                            <path d="M14 11l0 6" />
+                                            <path
+                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                            />
+                                            <path
+                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </article>
+        </main>
+    </section>
+</app-layout>
+
+<!-- DIALOGOS -->
+<!-- ! Dialogo de Crear, Editar Ambiente -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.AMBIENTE.value" header="Ambiente">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newAmbiente.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addAmbiente()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Ciudad -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.CIUDAD.value" header="Ciudad">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newCiudad.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addCiudad()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Rol -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.ROL.value" header="Rol">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newRol.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addRol()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Sistema Operativo -->
+<p-dialog
+    [(visible)]="VISIBLE_DIALOGS.SISTEMA_OPERATIVO.value"
+    header="Sistema Operativo"
+>
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newSistemaOperativo.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addSistemaOperativo()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Tipo de Servidor -->
+<p-dialog
+    [(visible)]="VISIBLE_DIALOGS.TIPO_SERVIDOR.value"
+    header="Tipo de Servidor"
+>
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newTipoServidor.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addTipoServidor()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Estado -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.ESTADO.value" header="Estado">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newEstado.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div class="flex flex-col gap-1">
+            <label for="">Ocupado</label>
+            <p-checkbox
+                [binary]="true"
+                [(ngModel)]="newEstado.ocupado"
+                inputId="id"
+            ></p-checkbox>
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addEstado()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Estado de Mantenimiento -->
+<p-dialog
+    [(visible)]="VISIBLE_DIALOGS.ESTADO_MANTENIMIENTO.value"
+    header="Estado de Mantenimiento"
+>
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newEstadoMantenimiento.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div class="flex flex-col gap-1">
+            <label for="">Terminado</label>
+            <p-checkbox
+                [binary]="true"
+                [(ngModel)]="newEstadoMantenimiento.terminado"
+                inputId="id"
+            ></p-checkbox>
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addEstadoMantenimiento()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Motor -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.MOTOR.value" header="Motor">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newMotor.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addMotor()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>
+
+<!-- ! Dialogo de Crear, Editar Razon -->
+<p-dialog [(visible)]="VISIBLE_DIALOGS.RAZON.value" header="Razon">
+    <main class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <input
+                pInputText
+                [(ngModel)]="newRazon.descripcion"
+                type="text"
+                placeholder="Descripción"
+                class="p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+        <div>
+            <button
+                pButton
+                class="bg-primary-500 text-white p-1 rounded-lg"
+                (click)="addRazon()"
+            >
+                Guardar
+            </button>
+        </div>
+    </main>
+</p-dialog>

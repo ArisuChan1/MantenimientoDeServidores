@@ -1,13 +1,5 @@
 import { Component } from '@angular/core';
-import {
-    Ambiente,
-    Ciudad,
-    Rol,
-    Servidor,
-    SistemaOperativo,
-    TipoServidor,
-    Usuario,
-} from 'src/app/interfaces/types';
+import { Rol, Usuario } from 'src/app/interfaces/types';
 import { GeneralService } from 'src/app/services/general.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CreateUsuarioComponent } from '../create-usuario/create-usuario.component';

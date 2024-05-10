@@ -38,6 +38,12 @@ const routes: Routes = [
             ),
         canActivate: [SessionGuard],
     },
+    {
+        path: routesConfig.CRUDS,
+        loadChildren: () =>
+            import('./modules/cruds/cruds.module').then((m) => m.CrudsModule),
+        canActivate: [SessionGuard],
+    },
     { path: '**', redirectTo: '/auth' },
 ];
 
