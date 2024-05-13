@@ -38,7 +38,7 @@ describe('Crear un usuario y eliminarlo', () => {
     it('Crea un usuario', () => {
         login('dev', 'dev');
         cy.contains('a', 'Usuarios').click();
-        cy.get('button').contains('Nuevo Usuario').click();
+        cy.get('button').contains('Nuevo usuario').click();
         // Llena el formulario
         cy.get('input[id="nombreCompleto"]').type('Test User');
         cy.get('input[id="alias"]').type('test');
@@ -49,5 +49,44 @@ describe('Crear un usuario y eliminarlo', () => {
         cy.get('p-dropdown').click();
         cy.get('li').contains('Developer').click();
         cy.contains('button', 'Agregar').click();
+        cy.get('article[id="user-test"]').should('exist');
+    });
+
+    it('Elimina un usuario', () => {
+        login('dev', 'dev');
+        cy.contains('a', 'Usuarios').click();
+        cy.get('button[id="btn-delete-usuario-test"]').click();
+    });
+});
+
+describe('Crear un servidor y eliminar un servidor', () => {
+    it('Crea un servidor', () => {
+        login('dev', 'dev');
+        cy.contains('a', 'Servidores').click();
+        cy.get('button').contains('Nuevo servidor').click();
+        // Llena el formulario
+        cy.get('input[id="nombre"]').type('Test Server');
+        cy.get('input[id="dominio"]').type('test.com');
+        cy.get('textarea').type('Test Description');
+
+        cy.get('p-dropdown[id="ciudad"]').click();
+        cy.get('li').contains('San Pedro Sula').click();
+
+        cy.get('p-dropdown[id="ambiente"]').click();
+        cy.get('li').contains('Pruebas').click();
+
+        cy.get('p-dropdown[id="tipo"]').click();
+        cy.get('li').contains('APIs').click();
+
+        cy.get('p-dropdown[id="so"]').click();
+        cy.get('li').contains('Debian').click();
+
+        cy.contains('button', 'Agregar').click();
+    });
+
+    it('Elimina un servidor', () => {
+        login('dev', 'dev');
+        cy.contains('a', 'Servidores').click();
+        cy.get('button[id="btn-delete-servidor-Test-Server"]').click();
     });
 });

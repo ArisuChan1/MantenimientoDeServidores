@@ -13,6 +13,7 @@
         <main class="flex flex-wrap gap-3">
             @for (usuario of usuarios; track $index) {
             <article
+                [id]="'user-' + usuario.alias"
                 class="flex flex-col gap-2 rounded-lg shadow-xl border border-gray-400 w-max p-3 bg-gray-50"
             >
                 <div class="flex flex-col">
@@ -56,6 +57,7 @@
                     </button>
                     <button
                         pButton
+                        [id]="'btn-delete-usuario-' + usuario.alias"
                         (click)="deleteUsuario(usuario)"
                         class="bg-red-500 p-2 text-white rounded-lg"
                     >

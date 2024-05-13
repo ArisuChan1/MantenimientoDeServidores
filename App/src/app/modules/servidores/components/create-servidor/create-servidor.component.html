@@ -3,6 +3,7 @@
         <div class="flex flex-col gap-1 w-1/2">
             <label for="">Nombre</label>
             <input
+                id="nombre"
                 pInputText
                 [(ngModel)]="newServidor.nombre"
                 type="text"
@@ -13,6 +14,7 @@
         <div class="flex flex-col gap-1 w-1/2">
             <label for="">Dominio</label>
             <input
+                id="dominio"
                 pInputText
                 [(ngModel)]="newServidor.dominio"
                 type="text"
@@ -25,6 +27,7 @@
         <label for="">Descripción</label>
         <textarea
             pInputText
+            id="descripcion"
             [(ngModel)]="newServidor.descripcion"
             type="text"
             placeholder="Descripción del servidor"
@@ -35,6 +38,7 @@
         <label for="">Ciudad</label>
         <p-dropdown
             appendTo="body"
+            id="ciudad"
             [options]="ciudades"
             [(ngModel)]="newServidor.idCiudad"
             styleClass="w-full border border-gray-300 rounded-lg"
@@ -46,6 +50,7 @@
     <div class="flex flex-col gap-1">
         <label for="">Ambiente</label>
         <p-dropdown
+            id="ambiente"
             appendTo="body"
             [options]="ambientes"
             [(ngModel)]="newServidor.idAmbiente"
@@ -58,6 +63,7 @@
     <div class="flex flex-col gap-1">
         <label for="">Tipo de servidor</label>
         <p-dropdown
+            id="tipo"
             appendTo="body"
             [options]="tipos"
             [(ngModel)]="newServidor.idTipo"
@@ -70,6 +76,7 @@
     <div class="flex flex-col gap-1">
         <label for="">Sistema Operativo</label>
         <p-dropdown
+            id="so"
             appendTo="body"
             [options]="sistemasOperativos"
             [(ngModel)]="newServidor.idSistemaOperativo"

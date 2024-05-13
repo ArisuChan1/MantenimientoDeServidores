@@ -12,13 +12,14 @@
         </header>
         <main class="flex flex-col gap-3">
             @for (item of listaServidores; track $index) {
-            <div>
+            <article>
                 <h1 class="bg-primary-400 rounded-md p-2 text-white mb-4">
                     {{ item.ciudad.descripcion }}
                 </h1>
                 <div class="pl-5 flex flex-col gap-4">
                     @for (servidor of item.servidores; track $index) {
-                    <span
+                    <article
+                        [id]="'servidor-' + servidor.nombre"
                         class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
                     >
                         <span class="flex flex-wrap gap-4">
@@ -98,16 +99,20 @@
                                 <button
                                     (click)="deleteServidor(servidor.id)"
                                     pButton
+                                    [id]="
+                                        'btn-delete-servidor-' +
+                                        servidor.nombre.replace(' ', '-')
+                                    "
                                     class="bg-red-500 p-2 text-white rounded-lg"
                                 >
                                     Eliminar
                                 </button>
                             </span>
                         </span>
-                    </span>
+                    </article>
                     }
                 </div>
-            </div>
+            </article>
             }
         </main>
     </section>
