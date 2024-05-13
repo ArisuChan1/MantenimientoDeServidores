@@ -3,6 +3,7 @@
         <label for="">Nombre Completo</label>
         <input
             pInputText
+            id="nombreCompleto"
             [(ngModel)]="newUsuario.nombreCompleto"
             type="text"
             placeholder="Nombre completo del usuario "
@@ -13,6 +14,7 @@
         <label for="">Alias</label>
         <input
             pInputText
+            id="alias"
             [(ngModel)]="newUsuario.alias"
             type="text"
             placeholder="Alias del usuario"
@@ -23,8 +25,9 @@
         <label for="">Correo</label>
         <input
             pInputText
+            id="correo"
             [(ngModel)]="newUsuario.correo"
-            type="text"
+            type="email"
             placeholder="e-Mail del usuario"
             class="p-2 border border-gray-300 rounded-lg"
         />

@@ -21,6 +21,7 @@ export class CreateServidorComponent {
     ambientes: Ambiente[] = [];
     ciudades: Ciudad[] = [];
     tipos: TipoServidor[] = [];
+    servidores: Servidor[] = [];
 
     data: {
         id: number;
@@ -37,6 +38,7 @@ export class CreateServidorComponent {
         idEstado: 4,
         idSistemaOperativo: 0,
         idTipo: 0,
+        requierePerfil: false,
     };
 
     constructor(
@@ -50,6 +52,7 @@ export class CreateServidorComponent {
         this.getAmbientes();
         this.getCiudades();
         this.getTipos();
+        this.getServidores();
     }
 
     getDataFromConfig() {
@@ -65,6 +68,7 @@ export class CreateServidorComponent {
                 idEstado: this.data.servidor.idEstado,
                 idSistemaOperativo: this.data.servidor.idSistemaOperativo,
                 idTipo: this.data.servidor.idTipo,
+                requierePerfil: this.data.servidor.requierePerfil,
             };
         }
     }
@@ -93,21 +97,40 @@ export class CreateServidorComponent {
         });
     }
 
+    getServidores() {
+        this.generalService.SERVIDORES.get().subscribe((res) => {
+            this.servidores = res;
+        });
+    }
+
     validateForm() {
-        return (
+        if (
+            this.servidores
+                .map((s) => s.nombre)
+                .includes(this.newServidor.nombre)
+        ) {
+            this.alerta.warn('Ya existe un servidor con ese nombre');
+            return false;
+        }
+
+        const valido =
             this.newServidor.nombre &&
             this.newServidor.descripcion &&
             this.newServidor.dominio &&
             this.newServidor.idAmbiente &&
             this.newServidor.idCiudad &&
             this.newServidor.idSistemaOperativo &&
-            this.newServidor.idTipo
-        );
+            this.newServidor.idTipo;
+
+        if (!valido) {
+            this.alerta.warn('Todos los campos son requeridos');
+        }
+
+        return valido;
     }
 
     createServidor() {
         if (!this.validateForm()) {
-            this.alerta.warn('Todos los campos son requeridos');
             return;
         }
         this.generalService.SERVIDORES.post(this.newServidor).subscribe(

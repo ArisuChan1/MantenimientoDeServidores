@@ -4,4 +4,5 @@ export const routesConfig = {
     SERVIDORES: 'servidores',
     USUARIOS: 'usuarios',
     CRUDS: 'cruds',
+    REPORTE_MANTENIMIENTOS: 'reporte-mantenimientos',
 };

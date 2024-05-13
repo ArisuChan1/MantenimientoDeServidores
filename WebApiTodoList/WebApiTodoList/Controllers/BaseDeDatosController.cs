@@ -25,8 +25,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BaseDeDatos>>> GetBasesDeDatos()
         {
-            return await _context.BasesDeDatos
-                .ToListAsync();
+            return await _context.BasesDeDatos.ToListAsync();
         }
 
         // GET: api/BaseDeDatos/5

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApiTodoList.Models
@@ -14,5 +15,7 @@ namespace WebApiTodoList.Models
         public required int IdAmbiente { get; set; }
         public required bool AplicaMantenimiento { get; set; }
         public required int IdEstado { get; set; }
+        [DefaultValue(false)]
+        public required bool RequierePerfil { get; set; }
     }
 }

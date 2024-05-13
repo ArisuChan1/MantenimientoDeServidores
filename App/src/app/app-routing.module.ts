@@ -44,6 +44,14 @@ const routes: Routes = [
             import('./modules/cruds/cruds.module').then((m) => m.CrudsModule),
         canActivate: [SessionGuard],
     },
+    {
+        path: routesConfig.REPORTE_MANTENIMIENTOS,
+        loadChildren: () =>
+            import(
+                './modules/reporte-mantenimientos/reporte-mantenimientos.module'
+            ).then((m) => m.ReporteMantenimientosModule),
+        canActivate: [SessionGuard],
+    },
     { path: '**', redirectTo: '/auth' },
 ];
 

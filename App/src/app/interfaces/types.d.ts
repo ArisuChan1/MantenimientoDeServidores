@@ -45,6 +45,7 @@ export interface Servidor {
     idTipo: number;
     idAmbiente: number;
     idEstado: number;
+    requierePerfil: boolean;
 }
 
 export interface BaseDeDatos {
@@ -57,6 +58,7 @@ export interface BaseDeDatos {
     idAmbiente: number;
     aplicaMantenimiento: boolean;
     idEstado: number;
+    requierePerfil: boolean;
 }
 
 export interface Mantenimiento {
@@ -69,6 +71,8 @@ export interface Mantenimiento {
     fechaFin: Date;
     idUsuario: number;
     idEstado: number;
+    automatica: boolean;
+    requierePerfil: boolean;
 }
 
 export interface RolXPermiso {

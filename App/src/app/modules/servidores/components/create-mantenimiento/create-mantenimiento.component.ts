@@ -27,6 +27,8 @@ export class CreateMantenimientoComponent {
         fechaFin: new Date(),
         idUsuario: 0,
         idBaseDeDatos: 0,
+        automatica: false,
+        requierePerfil: false,
     };
     estados: EstadoMantenimiento[] = [];
     razones: Razon[] = [];
@@ -112,6 +114,8 @@ export class CreateMantenimientoComponent {
                 fechaInicio: new Date(this.data.mantenimiento.fechaInicio),
                 fechaFin: new Date(this.data.mantenimiento.fechaFin),
                 idUsuario: this.data.mantenimiento.idUsuario,
+                automatica: this.data.mantenimiento.automatica,
+                requierePerfil: this.data.mantenimiento.requierePerfil,
             };
         }
     }
@@ -138,11 +142,6 @@ export class CreateMantenimientoComponent {
             sessionStorage.getItem(SESSION_KEY_USER) || '{}'
         ) as Usuario;
 
-        console.log(
-            '🚀 ~ file: create-mantenimiento.component.ts ~ line 113 ~ CreateMantenimientoComponent ~ createOrUpdateMantenimiento ~ usuario',
-            usuario
-        );
-
         this.newMantenimiento.idUsuario = usuario.id;
 
         this.newMantenimiento.idServidor =
@@ -167,11 +166,6 @@ export class CreateMantenimientoComponent {
             this.alerta.warn('Faltan campos por llenar');
             return;
         }
-
-        console.log(
-            '🚀 ~ file: create-mantenimiento.component.ts ~ line 138 ~ CreateMantenimientoComponent ~ createOrUpdateMantenimiento ~ this.newMantenimiento',
-            this.newMantenimiento
-        );
 
         if (this.data.id) {
             this.generalService.MANTENIMIENTOS.put(

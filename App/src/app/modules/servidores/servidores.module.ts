@@ -23,7 +23,7 @@ import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/cr
         HttpClientModule,
         SharedModule,
     ],
-    providers: [AlertaService, DialogService],
+    providers: [DialogService, AlertaService],
     declarations: [
         MainComponent,
         CreateServidorComponent,

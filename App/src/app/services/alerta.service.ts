@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Message, MessageService } from 'primeng/api';
 
 @Injectable({
-    providedIn: 'platform',
+    providedIn: 'any',
 })
 export class AlertaService {
     private KEY = 'general-alert';
@@ -36,6 +36,11 @@ export class AlertaService {
     }
 
     warn(mensaje: string) {
+        console.log(
+            '🚀 ~ file: alerta.service.ts ~ line 33 ~ AlertaService ~ warn ~ mensaje',
+            mensaje
+        );
+
         this.messageService.add({
             severity: 'warn',
             summary: 'Advertencia',

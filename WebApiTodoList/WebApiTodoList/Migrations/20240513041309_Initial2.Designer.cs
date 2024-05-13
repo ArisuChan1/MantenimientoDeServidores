@@ -12,8 +12,8 @@ using WebApiTodoList.Contexts;
 namespace WebApiTodoList.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240507012754_Initial")]
-    partial class Initial
+    [Migration("20240513041309_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,9 @@ namespace WebApiTodoList.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RequierePerfil")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -150,6 +153,9 @@ namespace WebApiTodoList.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Automatica")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
@@ -173,6 +179,9 @@ namespace WebApiTodoList.Migrations
 
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
+
+                    b.Property<bool>("RequierePerfil")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -346,6 +355,9 @@ namespace WebApiTodoList.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RequierePerfil")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

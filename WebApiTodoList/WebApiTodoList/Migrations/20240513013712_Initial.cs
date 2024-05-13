@@ -99,7 +99,8 @@ namespace WebApiTodoList.Migrations
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdUsuario = table.Column<int>(type: "int", nullable: false),
-                    IdEstado = table.Column<int>(type: "int", nullable: false)
+                    IdEstado = table.Column<int>(type: "int", nullable: false),
+                    Automatica = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -6,6 +6,7 @@ import { PrimeNgModule } from './modules/primeng/primeng.module';
 import { MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertaService } from './services/alerta.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
+        AlertaService,
         MessageService,
     ],
     bootstrap: [AppComponent],

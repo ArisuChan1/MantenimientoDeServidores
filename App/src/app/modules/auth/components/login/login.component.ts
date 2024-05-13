@@ -42,7 +42,12 @@ export class LoginComponent {
                 }
             },
             error: (error) => {
-                this.alerta.error(error.message);
+                if (error?.status === 404) {
+                    this.alerta.error('Usuario o contraseña incorrecta');
+                    return;
+                }
+
+                this.alerta.error('Error al iniciar sesión');
             },
         });
     }

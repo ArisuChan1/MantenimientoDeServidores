@@ -29,11 +29,13 @@ export class CreateBaseDeDatosComponent {
         idEstado: 4,
         idMotor: 0,
         idServidor: 0,
+        requierePerfil: false,
     };
 
     ambientes: Ambiente[] = [];
     motores: Motor[] = [];
     estados: Estado[] = [];
+    basesDeDatos: BaseDeDatos[] = [];
 
     data: {
         id: number;
@@ -44,13 +46,14 @@ export class CreateBaseDeDatosComponent {
     constructor(
         private dialogRef: DynamicDialogRef,
         private dialogConfig: DynamicDialogConfig,
-        private alertaService: AlertaService,
+        private alerta: AlertaService,
         private generalService: GeneralService
     ) {
         this.getDataFromConfig();
         this.getAmbientes();
         this.getMotores();
         this.getEstados();
+        this.getBasesDeDatos();
     }
 
     getDataFromConfig() {
@@ -83,16 +86,36 @@ export class CreateBaseDeDatosComponent {
         });
     }
 
+    getBasesDeDatos() {
+        this.generalService.BASE_DE_DATOS.get().subscribe((res) => {
+            this.basesDeDatos = res;
+        });
+    }
+
     validateForm() {
-        return (
+        if (
+            this.basesDeDatos
+                .map((bd) => bd.nombre)
+                .includes(this.newBaseDeDatos.nombre)
+        ) {
+            this.alerta.warn('Ya existe una base de datos con ese nombre');
+            return false;
+        }
+
+        const valido =
             this.newBaseDeDatos.nombre &&
             this.newBaseDeDatos.collation &&
             this.newBaseDeDatos.descripcion &&
             this.newBaseDeDatos.idAmbiente &&
             this.newBaseDeDatos.idEstado &&
             this.newBaseDeDatos.idMotor &&
-            this.newBaseDeDatos.idServidor
-        );
+            this.newBaseDeDatos.idServidor;
+
+        if (!valido) {
+            this.alerta.warn('Algunos campos son inválidos');
+        }
+
+        return valido;
     }
 
     handleActionButton() {
@@ -102,12 +125,12 @@ export class CreateBaseDeDatosComponent {
         });
 
         if (!this.validateForm()) {
-            this.alertaService.warn('Todos los campos son requeridos');
+            this.alerta.warn('Algunos campos son inválidos');
             return;
         }
 
         if (!this.data) {
-            this.alertaService.warn('No se ha seleccionado un servidor');
+            this.alerta.warn('No se ha seleccionado un servidor');
             return;
         }
 
@@ -120,13 +143,11 @@ export class CreateBaseDeDatosComponent {
     save() {
         this.generalService.BASE_DE_DATOS.post(this.newBaseDeDatos).subscribe(
             () => {
-                this.alertaService.success(
-                    'Base de datos creada correctamente'
-                );
+                this.alerta.success('Base de datos creada correctamente');
                 this.dialogRef.close();
             },
             () => {
-                this.alertaService.error('Error al crear la base de datos');
+                this.alerta.error('Error al crear la base de datos');
             }
         );
     }
@@ -137,15 +158,11 @@ export class CreateBaseDeDatosComponent {
             this.newBaseDeDatos
         ).subscribe(
             () => {
-                this.alertaService.success(
-                    'Base de datos actualizada correctamente'
-                );
+                this.alerta.success('Base de datos actualizada correctamente');
                 this.dialogRef.close();
             },
             () => {
-                this.alertaService.error(
-                    'Error al actualizar la base de datos'
-                );
+                this.alerta.error('Error al actualizar la base de datos');
             }
         );
     }

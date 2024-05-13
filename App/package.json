@@ -5,6 +5,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
+        "cy": "cypress open",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
@@ -27,6 +28,7 @@
         "@fullcalendar/interaction": "^6.0.3",
         "@fullcalendar/timegrid": "^6.0.3",
         "chart.js": "^3.3.2",
+        "cypress": "^13.9.0",
         "primeicons": "6.0.1",
         "primeng": "17.2.0",
         "prismjs": "^1.29.0",

@@ -25,8 +25,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mantenimiento>>> GetMantenimientos()
         {
-            return await _context.Mantenimientos
-                .ToListAsync();
+            return await _context.Mantenimientos.ToListAsync();
         }
 
         // GET: api/Mantenimientos/5

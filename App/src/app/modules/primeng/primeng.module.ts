@@ -44,6 +44,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 
 import { PrimeNGConfig } from 'primeng/api';
@@ -95,6 +96,7 @@ import { FocusTrapModule } from 'primeng/focustrap';
         TooltipModule,
         InputSwitchModule,
         OverlayPanelModule,
+        RadioButtonModule,
         PasswordModule,
         FocusTrapModule,
     ],

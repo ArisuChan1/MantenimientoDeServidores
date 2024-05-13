@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApiTodoList.Models
@@ -14,5 +15,9 @@ namespace WebApiTodoList.Models
         public required DateTime FechaFin { get; set; }
         public required int IdUsuario { get; set; }
         public required int IdEstado { get; set; }
+        [DefaultValue(false)]
+        public required bool Automatica { get; set; }
+        [DefaultValue(false)]
+        public required bool RequierePerfil { get; set; }
     }
 }

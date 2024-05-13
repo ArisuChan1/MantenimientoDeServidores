@@ -79,6 +79,10 @@
             optionValue="id"
         ></p-dropdown>
     </div>
+    <div class="flex flex-col gap-1">
+        <label for="">¿Requiere perfil?</label>
+        <p-inputSwitch [(ngModel)]="newServidor.requierePerfil"></p-inputSwitch>
+    </div>
     <!-- Botones de Agregar -->
     <div class="flex justify-end gap-2">
         <button

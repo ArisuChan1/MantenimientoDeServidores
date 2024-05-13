@@ -25,8 +25,7 @@ namespace WebApiTodoList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servidor>>> GetServidores()
         {
-            return await _context.Servidores
-            .ToListAsync();
+            return await _context.Servidores.ToListAsync();
         }
 
         // GET: api/Servidores/5
