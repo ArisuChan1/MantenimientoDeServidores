@@ -24,7 +24,7 @@ export class LoginComponent {
 
     async login() {
         if (!this.alias || !this.password) {
-            this.alerta.warn('Debe ingresar usuario y contraseña');
+            alert('Debe ingresar usuario y contraseña');
             return;
         }
         this.authService.login(this.alias, this.password).subscribe({

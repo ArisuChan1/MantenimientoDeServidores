@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import {
     DialogService,
     DynamicDialogConfig,
@@ -59,7 +60,7 @@ export class CreateBaseDeDatosComponent {
     getDataFromConfig() {
         this.data = this.dialogConfig.data;
 
-        if (this.data) {
+        if (this.data?.servidor) {
             this.newBaseDeDatos.idServidor = this.data.servidor.id;
         }
 
@@ -95,10 +96,11 @@ export class CreateBaseDeDatosComponent {
     validateForm() {
         if (
             this.basesDeDatos
+                .filter((bd) => bd.id !== this.newBaseDeDatos.id)
                 .map((bd) => bd.nombre)
                 .includes(this.newBaseDeDatos.nombre)
         ) {
-            this.alerta.warn('Ya existe una base de datos con ese nombre');
+            alert('Ya existe una base de datos con ese nombre');
             return false;
         }
 
@@ -112,25 +114,19 @@ export class CreateBaseDeDatosComponent {
             this.newBaseDeDatos.idServidor;
 
         if (!valido) {
-            this.alerta.warn('Algunos campos son inválidos');
+            alert('Todos los campos son requeridos');
         }
 
         return valido;
     }
 
     handleActionButton() {
-        console.log({
-            newBaseDeDatos: this.newBaseDeDatos,
-            data: this.data,
-        });
-
         if (!this.validateForm()) {
-            this.alerta.warn('Algunos campos son inválidos');
             return;
         }
 
         if (!this.data) {
-            this.alerta.warn('No se ha seleccionado un servidor');
+            alert('No se ha seleccionado un servidor');
             return;
         }
 
@@ -138,6 +134,19 @@ export class CreateBaseDeDatosComponent {
 
         if (this.newBaseDeDatos.id) this.update();
         else this.save();
+    }
+
+    validateCharactersFor(str: string, type: 1 | 2 | 3) {
+        // 1. Nombre de Base de Datos (letras, números, guiones y guiones bajos)
+        // 2. Collation (letras, números y guiones)
+        // 3. Descripción (letras, números, guiones, guiones bajos y espacios)
+        const regex = [
+            /^[a-zA-Z0-9-_]+$/,
+            /^[a-zA-Z0-9-]+$/,
+            /^[a-zA-Z0-9-_ ]+$/,
+        ];
+
+        return regex[type - 1].test(str);
     }
 
     save() {
@@ -162,6 +171,7 @@ export class CreateBaseDeDatosComponent {
                 this.dialogRef.close();
             },
             () => {
+                alert('Error al actualizar la base de datos');
                 this.alerta.error('Error al actualizar la base de datos');
             }
         );

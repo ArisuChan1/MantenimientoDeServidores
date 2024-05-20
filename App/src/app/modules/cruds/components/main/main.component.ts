@@ -186,7 +186,7 @@ export class MainComponent {
     addAmbiente(): void {
         // 1. Validar
         if (!this.newAmbiente.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -205,7 +205,7 @@ export class MainComponent {
     addCiudad(): void {
         // 1. Validar
         if (!this.newCiudad.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -225,7 +225,7 @@ export class MainComponent {
     addRol(): void {
         // 1. Validar
         if (!this.newRol.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -245,7 +245,7 @@ export class MainComponent {
     addSistemaOperativo(): void {
         // 1. Validar
         if (!this.newSistemaOperativo.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -267,7 +267,7 @@ export class MainComponent {
     addTipoServidor(): void {
         // 1. Validar
         if (!this.newTipoServidor.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -289,7 +289,7 @@ export class MainComponent {
     addEstado(): void {
         // 1. Validar
         if (!this.newEstado.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -309,7 +309,7 @@ export class MainComponent {
     addEstadoMantenimiento(): void {
         // 1. Validar
         if (!this.newEstadoMantenimiento.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -331,7 +331,7 @@ export class MainComponent {
     addMotor(): void {
         // 1. Validar
         if (!this.newMotor.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 
@@ -351,7 +351,7 @@ export class MainComponent {
     addRazon(): void {
         // 1. Validar
         if (!this.newRazon.descripcion) {
-            this.alerta.warn('Debe ingresar una descripción');
+            alert('Debe ingresar una descripción');
             return;
         }
 

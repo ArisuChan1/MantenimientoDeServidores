@@ -7,8 +7,18 @@
                 [(ngModel)]="newBaseDeDatos.nombre"
                 type="text"
                 placeholder="Nombre de la base de datos"
-                class="p-2 border border-gray-300 rounded-lg"
+                class="p-2 border border-gray-300 rounded-lg {{
+                    !validateCharactersFor(newBaseDeDatos.nombre, 1)
+                        ? 'border-red-500'
+                        : ''
+                }}"
             />
+            @if (!validateCharactersFor(newBaseDeDatos.nombre, 1)) {
+            <small class="text-red-500">
+                El nombre debe contener únicamente: letras, números, guiones y
+                guiones bajos
+            </small>
+            }
         </div>
         <div class="flex flex-col gap-1 w-1/2">
             <label for="">Collation</label>
@@ -17,8 +27,18 @@
                 [(ngModel)]="newBaseDeDatos.collation"
                 type="text"
                 placeholder="Collation de la Base de Datos"
-                class="p-2 border border-gray-300 rounded-lg"
+                class="p-2 border border-gray-300 rounded-lg {{
+                    !validateCharactersFor(newBaseDeDatos.collation, 2)
+                        ? 'border-red-500'
+                        : ''
+                }}"
             />
+            @if (!validateCharactersFor(newBaseDeDatos.collation, 2)) {
+            <small class="text-red-500">
+                La collation debe contener únicamente: letras, números, guiones
+                y guiones bajos
+            </small>
+            }
         </div>
     </div>
     <div class="flex flex-col gap-1">
@@ -28,8 +48,18 @@
             [(ngModel)]="newBaseDeDatos.descripcion"
             type="text"
             placeholder="Descripción de la base de datos"
-            class="p-2 border border-gray-300 rounded-lg"
+            class="p-2 border border-gray-300 rounded-lg {{
+                !validateCharactersFor(newBaseDeDatos.descripcion, 3)
+                    ? 'border-red-500'
+                    : ''
+            }}"
         ></textarea>
+        @if (!validateCharactersFor(newBaseDeDatos.descripcion, 3)) {
+        <small class="text-red-500">
+            La descripción debe contener únicamente: letras, números, guiones y
+            guiones bajos
+        </small>
+        }
     </div>
     <div class="flex flex-col gap-1">
         <label for="">Ambiente</label>
@@ -37,7 +67,9 @@
             appendTo="body"
             [options]="ambientes"
             [(ngModel)]="newBaseDeDatos.idAmbiente"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                !newBaseDeDatos.idAmbiente ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Ambiente"
             optionLabel="descripcion"
             optionValue="id"
@@ -50,7 +82,9 @@
             appendTo="body"
             [options]="estados"
             [(ngModel)]="newBaseDeDatos.idEstado"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                !newBaseDeDatos.idEstado ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Estado"
             optionLabel="descripcion"
             optionValue="id"
@@ -63,7 +97,9 @@
             appendTo="body"
             [options]="motores"
             [(ngModel)]="newBaseDeDatos.idMotor"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                !newBaseDeDatos.idMotor ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Motor"
             optionLabel="descripcion"
             optionValue="id"
@@ -77,6 +113,16 @@
         >
         </p-inputSwitch>
     </div>
+
+    <!-- Mensaje de que debe llenar todos los campos -->
+    @if ( !validateCharactersFor(newBaseDeDatos.nombre, 1) ||
+    !validateCharactersFor(newBaseDeDatos.collation, 2) ||
+    !validateCharactersFor(newBaseDeDatos.descripcion, 3) ||
+    !newBaseDeDatos.idAmbiente || !newBaseDeDatos.idMotor ) {
+    <small class="text-red-500">
+        Debe llenar todos los campos para poder agregar o editar una base de datos
+    </small>
+    }
     <!-- Botones de Agregar -->
     <div class="flex justify-end gap-2">
         <button
@@ -85,21 +131,11 @@
             label="Cancelar"
             class="bg-gray-300 p-2 text-black rounded-lg"
         ></button>
-        @if (data) {
         <button
             (click)="handleActionButton()"
             pButton
-            label="Actualizar"
+            [label]="data?.baseDeDatos ? 'Actualizar' : 'Agregar'"
             class="bg-primary-500 p-2 text-white rounded-lg"
         ></button>
-        } @else {
-
-        <button
-            (click)="handleActionButton()"
-            pButton
-            label="Agregar"
-            class="bg-primary-500 p-2 text-white rounded-lg"
-        ></button>
-        }
     </div>
 </article>

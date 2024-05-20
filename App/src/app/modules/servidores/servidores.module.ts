@@ -4,15 +4,14 @@ import { ServidoresRoutingModule } from './servidores.module.routing';
 import { FormsModule } from '@angular/forms';
 import { PrimeNgModule } from '../primeng/primeng.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AlertaService } from 'src/app/services/alerta.service';
 import { MainComponent } from './components/main/main.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateServidorComponent } from './components/create-servidor/create-servidor.component';
-import { DialogService } from 'primeng/dynamicdialog';
 import { MantenimientoServidorComponent } from './components/mantenimiento-servidor/mantenimiento-servidor.component';
 import { CreateMantenimientoComponent } from './components/create-mantenimiento/create-mantenimiento.component';
 import { BasesDeDatosServidorComponent } from './components/bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/create-base-de-datos.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     imports: [
@@ -23,7 +22,6 @@ import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/cr
         HttpClientModule,
         SharedModule,
     ],
-    providers: [DialogService, AlertaService],
     declarations: [
         MainComponent,
         CreateServidorComponent,
@@ -32,5 +30,6 @@ import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/cr
         BasesDeDatosServidorComponent,
         CreateBaseDeDatosComponent,
     ],
+    providers: [DialogService],
 })
 export class ServidoresModule {}

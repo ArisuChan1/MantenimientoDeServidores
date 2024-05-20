@@ -11,6 +11,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { CreateServidorComponent } from '../create-servidor/create-servidor.component';
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
 import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
+import { AlertaService } from 'src/app/services/alerta.service';
 
 @Component({
     selector: 'app-main',
@@ -27,13 +28,15 @@ export class MainComponent {
 
     constructor(
         private generalService: GeneralService,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private alerta: AlertaService
     ) {
         this.getServidores();
         this.getCiudades();
         this.getSistemasOperativos();
         this.getAmbientes();
         this.getTipos();
+        this.alerta.info('Seleccione un servidor para ver más detalles');
     }
 
     getServidores() {

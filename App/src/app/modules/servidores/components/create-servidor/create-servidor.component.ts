@@ -106,10 +106,11 @@ export class CreateServidorComponent {
     validateForm() {
         if (
             this.servidores
+                .filter((s) => s.id !== this.data?.id)
                 .map((s) => s.nombre)
                 .includes(this.newServidor.nombre)
         ) {
-            this.alerta.warn('Ya existe un servidor con ese nombre');
+            alert('Ya existe un servidor con ese nombre');
             return false;
         }
 
@@ -123,7 +124,7 @@ export class CreateServidorComponent {
             this.newServidor.idTipo;
 
         if (!valido) {
-            this.alerta.warn('Todos los campos son requeridos');
+            alert('Todos los campos son requeridos');
         }
 
         return valido;
@@ -143,7 +144,7 @@ export class CreateServidorComponent {
 
     updateServidor() {
         if (!this.validateForm()) {
-            this.alerta.warn('Todos los campos son requeridos');
+            alert('Todos los campos son requeridos');
             return;
         }
         if (!this.data) return this.createServidor();

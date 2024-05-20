@@ -8,8 +8,13 @@
                 [(ngModel)]="newServidor.nombre"
                 type="text"
                 placeholder="Nombre del servidor"
-                class="p-2 border border-gray-300 rounded-lg"
+                class="p-2 border border-gray-300 rounded-lg {{
+                    newServidor.nombre.length === 0 ? 'border-red-500' : ''
+                }}"
             />
+            <small class="text-red-500" *ngIf="newServidor.nombre.length === 0">
+                El nombre es requerido
+            </small>
         </div>
         <div class="flex flex-col gap-1 w-1/2">
             <label for="">Dominio</label>
@@ -19,8 +24,16 @@
                 [(ngModel)]="newServidor.dominio"
                 type="text"
                 placeholder="Dominio del servidor"
-                class="p-2 border border-gray-300 rounded-lg"
+                class="p-2 border border-gray-300 rounded-lg {{
+                    newServidor.dominio.length === 0 ? 'border-red-500' : ''
+                }}"
             />
+            <small
+                class="text-red-500"
+                *ngIf="newServidor.dominio.length === 0"
+            >
+                El dominio es requerido
+            </small>
         </div>
     </div>
     <div class="flex flex-col gap-1">
@@ -31,8 +44,16 @@
             [(ngModel)]="newServidor.descripcion"
             type="text"
             placeholder="Descripción del servidor"
-            class="p-2 border border-gray-300 rounded-lg"
+            class="p-2 border border-gray-300 rounded-lg {{
+                newServidor.descripcion.length === 0 ? 'border-red-500' : ''
+            }}"
         ></textarea>
+        <small
+            class="text-red-500"
+            *ngIf="newServidor.descripcion.length === 0"
+        >
+            La descripción es requerida
+        </small>
     </div>
     <div class="flex flex-col gap-1">
         <label for="">Ciudad</label>
@@ -41,11 +62,16 @@
             id="ciudad"
             [options]="ciudades"
             [(ngModel)]="newServidor.idCiudad"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                newServidor.idCiudad === 0 ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Ciudad"
             optionLabel="descripcion"
             optionValue="id"
         ></p-dropdown>
+        @if (newServidor.idCiudad === 0) {
+        <small class="text-red-500">La ciudad es requerida</small>
+        }
     </div>
     <div class="flex flex-col gap-1">
         <label for="">Ambiente</label>
@@ -54,11 +80,16 @@
             appendTo="body"
             [options]="ambientes"
             [(ngModel)]="newServidor.idAmbiente"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                newServidor.idAmbiente === 0 ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Ambiente"
             optionLabel="descripcion"
             optionValue="id"
         ></p-dropdown>
+        @if (newServidor.idAmbiente === 0) {
+        <small class="text-red-500">El ambiente es requerido</small>
+        }
     </div>
     <div class="flex flex-col gap-1">
         <label for="">Tipo de servidor</label>
@@ -67,11 +98,16 @@
             appendTo="body"
             [options]="tipos"
             [(ngModel)]="newServidor.idTipo"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                newServidor.idTipo === 0 ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar Tipo de Servidor"
             optionLabel="descripcion"
             optionValue="id"
         ></p-dropdown>
+        @if (newServidor.idTipo === 0) {
+        <small class="text-red-500">El tipo de servidor es requerido</small>
+        }
     </div>
     <div class="flex flex-col gap-1">
         <label for="">Sistema Operativo</label>
@@ -80,16 +116,27 @@
             appendTo="body"
             [options]="sistemasOperativos"
             [(ngModel)]="newServidor.idSistemaOperativo"
-            styleClass="w-full border border-gray-300 rounded-lg"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                newServidor.idSistemaOperativo === 0 ? 'border-red-500' : ''
+            }}"
             placeholder="Seleccionar SO"
             optionLabel="descripcion"
             optionValue="id"
         ></p-dropdown>
+        @if (newServidor.idSistemaOperativo === 0) {
+        <small class="text-red-500">El sistema operativo es requerido</small>
+        }
     </div>
     <div class="flex flex-col gap-1">
         <label for="">¿Requiere perfil?</label>
         <p-inputSwitch [(ngModel)]="newServidor.requierePerfil"></p-inputSwitch>
     </div>
+    <!-- Texto de Valicación -->
+    @if (!newServidor.nombre || !newServidor.dominio || !newServidor.descripcion
+    || !newServidor.idCiudad || !newServidor.idAmbiente || !newServidor.idTipo
+    || !newServidor.idSistemaOperativo) {
+    <small class="text-red-500"> Todos los campos son requeridos </small>
+    }
     <!-- Botones de Agregar -->
     <div class="flex justify-end gap-2">
         <button

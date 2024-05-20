@@ -163,7 +163,7 @@ export class CreateMantenimientoComponent {
         );
 
         if (!this.validateForm()) {
-            this.alerta.warn('Faltan campos por llenar');
+            alert('Faltan campos por llenar');
             return;
         }
 

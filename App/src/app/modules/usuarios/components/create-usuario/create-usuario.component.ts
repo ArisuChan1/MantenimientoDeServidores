@@ -76,7 +76,7 @@ export class CreateUsuarioComponent {
 
     update() {
         if (!this.data) {
-            this.alerta.warn('No se ha seleccionado un usuario');
+            alert('No se ha seleccionado un usuario');
             return;
         }
         this.generalService.USUARIOS.put(
