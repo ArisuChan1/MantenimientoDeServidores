@@ -62,12 +62,14 @@ export class MainComponent {
     getBasesDeDatos() {
         this.generalService.BASE_DE_DATOS.get().subscribe((res) => {
             this.basesDeDatos = res;
+            this.setMantenimientosByBaseDeDatos();
         });
     }
 
     getServidores() {
         this.generalService.SERVIDORES.get().subscribe((res) => {
             this.servidores = res;
+            this.setMantenimientosByServidor();
         });
     }
 
