@@ -24,6 +24,10 @@ export class MainComponent {
     servidores: Servidor[] = [];
     usuarios: Usuario[] = [];
 
+    // Listas
+    listaServidores: ItemListServidor[] = [];
+    listaBasesDeDatos: ItemListBaseDeDatos[] = [];
+
     constructor(private generalService: GeneralService) {
         this.getRazones();
         this.getBasesDeDatos();
@@ -45,6 +49,8 @@ export class MainComponent {
                 new Date(mantenimiento.fechaInicio).getFullYear() ===
                 this.fechaSeleccionada.getFullYear()
         );
+        this.setMantenimientosByServidor();
+        this.setMantenimientosByBaseDeDatos();
     }
 
     getRazones() {
@@ -96,4 +102,36 @@ export class MainComponent {
     getEstadoMantenimientoById(id: number) {
         return this.estadosMantenimiento.find((estado) => estado.id === id);
     }
+
+    setMantenimientosByServidor() {
+        const lista: ItemListServidor[] = [];
+        this.servidores.forEach((servidor) => {
+            const mantenimientos = this.mantenimientosByYear.filter(
+                (mantenimiento) => mantenimiento.idServidor === servidor.id
+            );
+            lista.push({ servidor, mantenimientos });
+        });
+        this.listaServidores = lista;
+    }
+
+    setMantenimientosByBaseDeDatos() {
+        const lista: ItemListBaseDeDatos[] = [];
+        this.basesDeDatos.forEach((base) => {
+            const mantenimientos = this.mantenimientosByYear.filter(
+                (mantenimiento) => mantenimiento.idBaseDeDatos === base.id
+            );
+            lista.push({ baseDeDatos: base, mantenimientos });
+        });
+        this.listaBasesDeDatos = lista;
+    }
+}
+
+interface ItemListServidor {
+    servidor: Servidor;
+    mantenimientos: Mantenimiento[];
+}
+
+interface ItemListBaseDeDatos {
+    baseDeDatos: BaseDeDatos;
+    mantenimientos: Mantenimiento[];
 }
