@@ -1,83 +1,86 @@
 <article class="flex flex-col gap-3">
-    <div class="flex flex-col gap-1">
-        <label for="">Descripción</label>
-        <textarea
-            pInputText
-            [(ngModel)]="newMantenimiento.descripcion"
-            type="text"
-            placeholder="Descripción del mantenimiento"
-            class="p-2 border border-gray-300 rounded-lg"
-        ></textarea>
+    <div class="flex justify-between gap-2">
+        <div class="flex flex-col gap-1">
+            <label for="">Descripción</label>
+            <textarea
+                pInputText
+                [(ngModel)]="newMantenimiento.descripcion"
+                type="text"
+                placeholder="Descripción del mantenimiento"
+                class="p-2 border border-gray-300 rounded-lg h-full"
+            ></textarea>
+        </div>
+        <div class="flex flex-col gap-1">
+            <!-- Seleccionar servidor o base de datos -->
+            <div class="flex flex-col gap-1">
+                <label for="">Tipo de Mantenimiento</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="opciones"
+                    [(ngModel)]="opcionSeleccionada"
+                    styleClass="w-full border border-gray-300 rounded-lg"
+                    placeholder="Seleccionar Tipo de Mantenimiento"
+                    optionLabel="label"
+                ></p-dropdown>
+            </div>
+            @if (opcionSeleccionada?.value === 'servidor') {
+            <div class="flex flex-col gap-1">
+                <label for="">Servidor</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="servidores"
+                    [(ngModel)]="newMantenimiento.idServidor"
+                    styleClass="w-full border border-gray-300 rounded-lg"
+                    placeholder="Seleccionar Servidor"
+                    optionLabel="descripcion"
+                    optionValue="id"
+                ></p-dropdown>
+            </div>
+            }@else {
+            <div class="flex flex-col gap-1">
+                <label for="">Base de Datos</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="basesDeDatos"
+                    [(ngModel)]="newMantenimiento.idBaseDeDatos"
+                    styleClass="w-full border border-gray-300 rounded-lg"
+                    placeholder="Seleccionar Base de Datos"
+                    optionLabel="nombre"
+                    optionValue="id"
+                ></p-dropdown>
+            </div>
+            }
+        </div>
     </div>
 
-    <!-- Seleccionar servidor o base de datos -->
-    <div class="flex flex-col gap-1">
-        <label for="">Tipo de Mantenimiento</label>
-        <p-dropdown
-            appendTo="body"
-            [options]="opciones"
-            [(ngModel)]="opcionSeleccionada"
-            styleClass="w-full border border-gray-300 rounded-lg"
-            placeholder="Seleccionar Tipo de Mantenimiento"
-            optionLabel="label"
-        ></p-dropdown>
+    <div class="flex gap-1 justify-between w-full">
+        <div class="flex flex-col gap-1 {{ !data?.id ? 'w-full' : '' }}">
+            <label for="">Razon</label>
+            <p-dropdown
+                appendTo="body"
+                [options]="razones"
+                [(ngModel)]="newMantenimiento.idRazon"
+                styleClass="w-full border border-gray-300 rounded-lg"
+                placeholder="Seleccionar Razón"
+                optionLabel="descripcion"
+                optionValue="id"
+            ></p-dropdown>
+        </div>
+        @if (data?.id) {
+        <div class="flex flex-col gap-1">
+            <label for="">Estado</label>
+            <p-dropdown
+                appendTo="body"
+                [options]="estados"
+                [(ngModel)]="newMantenimiento.idEstado"
+                styleClass="w-full border border-gray-300 rounded-lg"
+                placeholder="Seleccionar Estado"
+                optionLabel="descripcion"
+                optionValue="id"
+            ></p-dropdown>
+        </div>
+        }
     </div>
-
-    @if (opcionSeleccionada?.value === 'servidor') {
-    <div class="flex flex-col gap-1">
-        <label for="">Servidor</label>
-        <p-dropdown
-            appendTo="body"
-            [options]="servidores"
-            [(ngModel)]="newMantenimiento.idServidor"
-            styleClass="w-full border border-gray-300 rounded-lg"
-            placeholder="Seleccionar Servidor"
-            optionLabel="descripcion"
-            optionValue="id"
-        ></p-dropdown>
-    </div>
-    }@else {
-    <div class="flex flex-col gap-1">
-        <label for="">Base de Datos</label>
-        <p-dropdown
-            appendTo="body"
-            [options]="basesDeDatos"
-            [(ngModel)]="newMantenimiento.idBaseDeDatos"
-            styleClass="w-full border border-gray-300 rounded-lg"
-            placeholder="Seleccionar Base de Datos"
-            optionLabel="nombre"
-            optionValue="id"
-        ></p-dropdown>
-    </div>
-    }
-
-    <div class="flex flex-col gap-1">
-        <label for="">Razon</label>
-        <p-dropdown
-            appendTo="body"
-            [options]="razones"
-            [(ngModel)]="newMantenimiento.idRazon"
-            styleClass="w-full border border-gray-300 rounded-lg"
-            placeholder="Seleccionar Razón"
-            optionLabel="descripcion"
-            optionValue="id"
-        ></p-dropdown>
-    </div>
-
-    @if (data?.id) {
-    <div class="flex flex-col gap-1">
-        <label for="">Estado</label>
-        <p-dropdown
-            appendTo="body"
-            [options]="estados"
-            [(ngModel)]="newMantenimiento.idEstado"
-            styleClass="w-full border border-gray-300 rounded-lg"
-            placeholder="Seleccionar Estado"
-            optionLabel="descripcion"
-            optionValue="id"
-        ></p-dropdown>
-    </div>
-    }
 
     <div class="flex flex-col gap-1">
         <label for="">Fecha y Hora de Inicio</label>
@@ -99,6 +102,7 @@
             placeholder="Seleccionar Fecha de Finalización"
             [showTime]="true"
             hourFormat="12"
+            [minDate]="newMantenimiento.fechaInicio"
         ></p-calendar>
     </div>
     <div class="flex flex-col gap-1">

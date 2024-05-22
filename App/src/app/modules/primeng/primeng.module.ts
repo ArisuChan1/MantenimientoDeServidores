@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -99,6 +100,7 @@ import { FocusTrapModule } from 'primeng/focustrap';
         RadioButtonModule,
         PasswordModule,
         FocusTrapModule,
+        MultiSelectModule,
     ],
 })
 export class PrimeNgModule {

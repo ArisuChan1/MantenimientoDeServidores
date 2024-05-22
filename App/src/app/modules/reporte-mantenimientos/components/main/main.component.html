@@ -10,15 +10,30 @@
                     Selecciona un año para ver los mantenimientos realizados
                 </small>
             </span>
-            <p-calendar
-                [(ngModel)]="fechaSeleccionada"
-                (ngModelChange)="filterMantenimientosByYear()"
-                appendTo="body"
-                styleClass="bg-gray-200"
-                inputStyleClass="border border-gray-400 rounded-md p-2"
-                dateFormat="yy"
-                view="year"
-            ></p-calendar>
+            <span class="flex flex-col gap-2">
+                <p-calendar
+                    [(ngModel)]="fechaSeleccionada"
+                    (ngModelChange)="filterMantenimientos()"
+                    appendTo="body"
+                    styleClass="bg-gray-200"
+                    inputStyleClass="border border-gray-400 rounded-md p-2"
+                    dateFormat="yy"
+                    view="year"
+                ></p-calendar>
+                <p-multiSelect
+                    [options]="estadosMantenimiento"
+                    [(ngModel)]="estadosSeleccionados"
+                    (ngModelChange)="filterMantenimientos()"
+                    placeholder="Filtrar por Estado"
+                    optionLabel="descripcion"
+                    appendTo="body"
+                    styleClass="bg-gray-200 w-full"
+                    inputStyleClass="border border-gray-200 rounded-md p-2"
+                    selectedItemsLabel="{0} estados seleccionados"
+                    emptyFilterMessage="No hay estados disponibles"
+                    emptyMessage="No hay estados disponibles"
+                ></p-multiSelect>
+            </span>
         </header>
         @if (listaServidores.length) {
         <h1>Mantenimientos para Servidores</h1>
@@ -30,13 +45,15 @@
             <div class="pl-5 flex flex-col gap-4">
                 @for (mantenimiento of item.mantenimientos; track $index) {
                 <article
+                    pTooltip="Doble Click para ver detalles del mantenimiento"
+                    (dblclick)="openModalMantenimiento(mantenimiento)"
                     [id]="'mantenimiento-' + mantenimiento.id"
                     class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
                 >
                     <span class="flex flex-wrap gap-4">
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Razón</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getRazonById(mantenimiento.idRazon)?.descripcion
                             }}</span>
                         </span>
@@ -44,14 +61,14 @@
                             <span class="text-sm text-gray-500"
                                 >Base de datos</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getBaseDeDatosById(mantenimiento.idBaseDeDatos)
                                     ?.nombre
                             }}</span>
                         </span> -->
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Servidor</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getServidorById(mantenimiento.idServidor)
                                     ?.nombre
                             }}</span>
@@ -60,7 +77,7 @@
                             <span class="text-sm text-gray-500"
                                 >Descripción</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 mantenimiento.descripcion
                             }}</span>
                         </span>
@@ -68,21 +85,23 @@
                             <span class="text-sm text-gray-500"
                                 >Fecha de inicio</span
                             >
-                            <span class="text-lg font-semibold">{{
-                                mantenimiento.fechaInicio | date : "dd/MM/yyyy"
+                            <span class="text-md font-semibold">{{
+                                mantenimiento.fechaInicio
+                                    | date : "dd/MM/yyyy HH:mm a"
                             }}</span>
                         </span>
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500"
                                 >Fecha de fin</span
                             >
-                            <span class="text-lg font-semibold">{{
-                                mantenimiento.fechaFin | date : "dd/MM/yyyy"
+                            <span class="text-md font-semibold">{{
+                                mantenimiento.fechaFin
+                                    | date : "dd/MM/yyyy HH:mm a"
                             }}</span>
                         </span>
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Usuario</span>
-                            <span class="text-lg font-semibold">
+                            <span class="text-md font-semibold">
                                 {{
                                     getUsuarioById(mantenimiento.idUsuario)
                                         ?.nombreCompleto
@@ -91,7 +110,7 @@
                         </span>
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Estado</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getEstadoMantenimientoById(
                                     mantenimiento.idEstado
                                 )?.descripcion
@@ -116,13 +135,15 @@
             <div class="pl-5 flex flex-col gap-4">
                 @for (mantenimiento of item.mantenimientos; track $index) {
                 <article
+                    pTooltip="Doble Click para ver detalles del mantenimiento"
+                    (dblclick)="openModalMantenimiento(mantenimiento)"
                     [id]="'mantenimiento-' + mantenimiento.id"
                     class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
                 >
                     <span class="flex flex-wrap gap-4">
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Razón</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getRazonById(mantenimiento.idRazon)?.descripcion
                             }}</span>
                         </span>
@@ -130,14 +151,14 @@
                             <span class="text-sm text-gray-500"
                                 >Base de datos</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getBaseDeDatosById(mantenimiento.idBaseDeDatos)
                                     ?.nombre
                             }}</span>
                         </span>
                         <!-- <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Servidor</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getServidorById(mantenimiento.idServidor)
                                     ?.nombre
                             }}</span>
@@ -146,7 +167,7 @@
                             <span class="text-sm text-gray-500"
                                 >Descripción</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 mantenimiento.descripcion
                             }}</span>
                         </span>
@@ -154,7 +175,7 @@
                             <span class="text-sm text-gray-500"
                                 >Fecha de inicio</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 mantenimiento.fechaInicio | date : "dd/MM/yyyy"
                             }}</span>
                         </span>
@@ -162,13 +183,13 @@
                             <span class="text-sm text-gray-500"
                                 >Fecha de fin</span
                             >
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 mantenimiento.fechaFin | date : "dd/MM/yyyy"
                             }}</span>
                         </span>
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Usuario</span>
-                            <span class="text-lg font-semibold">
+                            <span class="text-md font-semibold">
                                 {{
                                     getUsuarioById(mantenimiento.idUsuario)
                                         ?.nombreCompleto
@@ -177,7 +198,7 @@
                         </span>
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Estado</span>
-                            <span class="text-lg font-semibold">{{
+                            <span class="text-md font-semibold">{{
                                 getEstadoMantenimientoById(
                                     mantenimiento.idEstado
                                 )?.descripcion

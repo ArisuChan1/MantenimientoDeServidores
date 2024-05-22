@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 import {
     BaseDeDatos,
     EstadoMantenimiento,
@@ -7,8 +8,8 @@ import {
     Servidor,
     Usuario,
 } from 'src/app/interfaces/types';
+import { CreateMantenimientoComponent } from 'src/app/modules/servidores/components/create-mantenimiento/create-mantenimiento.component';
 import { GeneralService } from 'src/app/services/general.service';
-import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
     selector: 'app-main',
@@ -19,6 +20,7 @@ export class MainComponent {
     mantenimientos: Mantenimiento[] = [];
     mantenimientosByYear: Mantenimiento[] = [];
     estadosMantenimiento: EstadoMantenimiento[] = [];
+    estadosSeleccionados: EstadoMantenimiento[] = [];
     razones: Razon[] = [];
     basesDeDatos: BaseDeDatos[] = [];
     servidores: Servidor[] = [];
@@ -28,27 +30,40 @@ export class MainComponent {
     listaServidores: ItemListServidor[] = [];
     listaBasesDeDatos: ItemListBaseDeDatos[] = [];
 
-    constructor(private generalService: GeneralService) {
+    constructor(
+        private generalService: GeneralService,
+        private dialogService: DialogService
+    ) {
         this.getRazones();
         this.getBasesDeDatos();
         this.getServidores();
         this.getEstadosMantenimiento();
         this.getMantenimientos();
+        this.getUsuarios();
     }
 
     getMantenimientos() {
         this.generalService.MANTENIMIENTOS.get().subscribe((res) => {
             this.mantenimientos = res;
-            this.filterMantenimientosByYear();
+            this.filterMantenimientos();
         });
     }
 
-    filterMantenimientosByYear() {
-        this.mantenimientosByYear = this.mantenimientos.filter(
-            (mantenimiento) =>
-                new Date(mantenimiento.fechaInicio).getFullYear() ===
-                this.fechaSeleccionada.getFullYear()
-        );
+    filterMantenimientos() {
+        this.mantenimientosByYear = this.mantenimientos
+            .filter(
+                (mantenimiento) =>
+                    new Date(mantenimiento.fechaInicio).getFullYear() ===
+                    this.fechaSeleccionada.getFullYear()
+            )
+            .filter((mantenimiento) => {
+                if (this.estadosSeleccionados.length === 0) {
+                    return true;
+                }
+                return this.estadosSeleccionados.includes(
+                    this.getEstadoMantenimientoById(mantenimiento.idEstado)
+                );
+            });
         this.setMantenimientosByServidor();
         this.setMantenimientosByBaseDeDatos();
     }
@@ -125,6 +140,19 @@ export class MainComponent {
             lista.push({ baseDeDatos: base, mantenimientos });
         });
         this.listaBasesDeDatos = lista;
+    }
+
+    openModalMantenimiento(mantenimiento: Mantenimiento) {
+        const dialog = this.dialogService.open(CreateMantenimientoComponent, {
+            header: 'Editar mantenimiento',
+            data: {
+                id: mantenimiento.id,
+                mantenimiento: mantenimiento,
+            },
+        });
+        dialog.onClose.subscribe(() => {
+            this.getMantenimientos();
+        });
     }
 }
 
