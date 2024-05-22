@@ -19,6 +19,7 @@ export class MainComponent {
     fechaSeleccionada = new Date();
     mantenimientos: Mantenimiento[] = [];
     mantenimientosByYear: Mantenimiento[] = [];
+    mantenimientoSeleccionado: Mantenimiento | null = null;
     estadosMantenimiento: EstadoMantenimiento[] = [];
     estadosSeleccionados: EstadoMantenimiento[] = [];
     razones: Razon[] = [];

@@ -13,7 +13,7 @@
                 Occidente.
             </small>
             <small> Para comenzar, selecciona una de las opciones </small>
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap justify-center gap-3">
                 <button
                     class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out"
                 >
@@ -27,13 +27,15 @@
                 <button
                     class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <a [routerLink]="'/' + routes.CRUDS">CRUDs</a>
+                    <a [routerLink]="'/' + routes.CRUDS"
+                        >Configuración de Parámetros</a
+                    >
                 </button>
                 <button
                     class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <a [routerLink]="'/' + routes.REPORTE_MANTENIMIENTOS">
-                        Mantenimientos
+                        Calendario de Mantenimientos
                     </a>
                 </button>
             </div>

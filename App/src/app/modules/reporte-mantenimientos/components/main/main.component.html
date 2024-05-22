@@ -45,12 +45,10 @@
             <div class="pl-5 flex flex-col gap-4">
                 @for (mantenimiento of item.mantenimientos; track $index) {
                 <article
-                    pTooltip="Doble Click para ver detalles del mantenimiento"
-                    (dblclick)="openModalMantenimiento(mantenimiento)"
                     [id]="'mantenimiento-' + mantenimiento.id"
-                    class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
+                    class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-2"
                 >
-                    <span class="flex flex-wrap gap-4">
+                    <span class="flex flex-wrap justify-between gap-4">
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Razón</span>
                             <span class="text-md font-semibold">{{
@@ -73,14 +71,14 @@
                                     ?.nombre
                             }}</span>
                         </span>
-                        <span class="flex flex-col">
+                        <!-- <span class="flex flex-col">
                             <span class="text-sm text-gray-500"
                                 >Descripción</span
                             >
                             <span class="text-md font-semibold">{{
                                 mantenimiento.descripcion
                             }}</span>
-                        </span>
+                        </span> -->
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500"
                                 >Fecha de inicio</span
@@ -116,8 +114,21 @@
                                 )?.descripcion
                             }}</span>
                         </span>
+                        <span class="flex flex-col">
+                            <button
+                                pButton
+                                (click)="
+                                    mantenimientoSeleccionado = mantenimiento;
+                                    panelVerDetalle.toggle($event)
+                                "
+                                class="bg-primary-500 text-white font-semibold flex justify-center items-center cursor-pointer p-2"
+                            >
+                                Más detalles
+                            </button>
+                        </span>
                     </span>
                 </article>
+                <hr />
                 } @empty {
                 <article class="bg-gray-200 p-4 text-center">
                     No hay mantenimientos registrados
@@ -135,12 +146,10 @@
             <div class="pl-5 flex flex-col gap-4">
                 @for (mantenimiento of item.mantenimientos; track $index) {
                 <article
-                    pTooltip="Doble Click para ver detalles del mantenimiento"
-                    (dblclick)="openModalMantenimiento(mantenimiento)"
                     [id]="'mantenimiento-' + mantenimiento.id"
                     class="hover:bg-gray-200 transition-colors duration-150 ease-in-out p-3"
                 >
-                    <span class="flex flex-wrap gap-4">
+                    <span class="flex flex-wrap justify-between gap-4">
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500">Razón</span>
                             <span class="text-md font-semibold">{{
@@ -163,14 +172,14 @@
                                     ?.nombre
                             }}</span>
                         </span> -->
-                        <span class="flex flex-col">
+                        <!-- <span class="flex flex-col">
                             <span class="text-sm text-gray-500"
                                 >Descripción</span
                             >
                             <span class="text-md font-semibold">{{
                                 mantenimiento.descripcion
                             }}</span>
-                        </span>
+                        </span> -->
                         <span class="flex flex-col">
                             <span class="text-sm text-gray-500"
                                 >Fecha de inicio</span
@@ -204,8 +213,21 @@
                                 )?.descripcion
                             }}</span>
                         </span>
+                        <span class="flex flex-col">
+                            <button
+                                pButton
+                                (click)="
+                                    mantenimientoSeleccionado = mantenimiento;
+                                    panelVerDetalle.toggle($event)
+                                "
+                                class="bg-primary-500 text-white font-semibold flex justify-center items-center cursor-pointer p-2"
+                            >
+                                Más detalles
+                            </button>
+                        </span>
                     </span>
                 </article>
+                <hr />
                 } @empty {
                 <article class="bg-gray-200 p-4 text-center">
                     No hay mantenimientos registrados
@@ -216,3 +238,21 @@
         }
     </section>
 </app-layout>
+
+<p-overlayPanel #panelVerDetalle>
+    <main class="flex flex-col gap-2 max-w-64">
+        <div class="flex flex-col gap-1">
+            <label for="" class="font-semibold">Descripción</label>
+            <span style="word-wrap: break-word; overflow-wrap: break-word">
+                {{ mantenimientoSeleccionado?.descripcion }}
+            </span>
+        </div>
+        <button
+            (click)="openModalMantenimiento(mantenimientoSeleccionado)"
+            pButton
+            class="bg-primary-500 p-1 text-sm flex justify-center items-center text-white"
+        >
+            Editar
+        </button>
+    </main>
+</p-overlayPanel>
