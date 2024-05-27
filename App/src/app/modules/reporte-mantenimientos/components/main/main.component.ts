@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import {
+    Ambiente,
     BaseDeDatos,
     EstadoMantenimiento,
     Mantenimiento,
@@ -26,6 +27,7 @@ export class MainComponent {
     basesDeDatos: BaseDeDatos[] = [];
     servidores: Servidor[] = [];
     usuarios: Usuario[] = [];
+    ambientes: Ambiente[] = [];
 
     // Listas
     listaServidores: ItemListServidor[] = [];
@@ -41,6 +43,7 @@ export class MainComponent {
         this.getEstadosMantenimiento();
         this.getMantenimientos();
         this.getUsuarios();
+        this.getAmbientes();
     }
 
     getMantenimientos() {
@@ -101,6 +104,12 @@ export class MainComponent {
         });
     }
 
+    getAmbientes() {
+        this.generalService.AMBIENTES.get().subscribe((res) => {
+            this.ambientes = res;
+        });
+    }
+
     getRazonById(id: number) {
         return this.razones.find((razon) => razon.id === id);
     }
@@ -119,6 +128,21 @@ export class MainComponent {
 
     getEstadoMantenimientoById(id: number) {
         return this.estadosMantenimiento.find((estado) => estado.id === id);
+    }
+
+    getAmbienteById(id: number) {
+        return this.ambientes.find((ambiente) => ambiente.id === id);
+    }
+
+    getServidorByBaseDeDatosId(id: number) {
+        const base = this.getBaseDeDatosById(id);
+        return this.getServidorById(base.idServidor);
+    }
+
+    getAmbienteByBaseDeDatosId(id: number) {
+        const base = this.getBaseDeDatosById(id);
+
+        return this.getAmbienteById(base.idAmbiente);
     }
 
     setMantenimientosByServidor() {

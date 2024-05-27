@@ -68,7 +68,7 @@
                         </span>
                         <span class="flex flex-col w-1/6 p-1">
                             <span class="text-xs xl:text-sm text-gray-500">
-                                Fecha de inicio
+                                Fecha y Hora de inicio
                             </span>
                             <span class="text-md xl:text-md font-semibold">{{
                                 mantenimiento.fechaInicio
@@ -77,7 +77,7 @@
                         </span>
                         <span class="flex flex-col w-1/6 p-1">
                             <span class="text-xs xl:text-sm text-gray-500">
-                                Fecha de fin
+                                Fecha y Hora de fin
                             </span>
                             <span class="text-md xl:text-md font-semibold">{{
                                 mantenimiento.fechaFin
@@ -160,7 +160,7 @@
                         </span>
                         <span class="flex flex-col w-1/6 p-1">
                             <span class="text-xs xl:text-sm text-gray-500">
-                                Fecha de inicio
+                                Fecha y Hora de inicio
                             </span>
                             <span class="text-md xl:text-md font-semibold">{{
                                 mantenimiento.fechaInicio | date : "dd/MM/yyyy"
@@ -168,7 +168,7 @@
                         </span>
                         <span class="flex flex-col w-1/6 p-1">
                             <span class="text-xs xl:text-sm text-gray-500">
-                                Fecha de fin
+                                Fecha y Hora de fin
                             </span>
                             <span class="text-md xl:text-md font-semibold">{{
                                 mantenimiento.fechaFin | date : "dd/MM/yyyy"
@@ -227,6 +227,29 @@
                 {{ mantenimientoSeleccionado?.descripcion }}
             </span>
         </div>
+        @if (mantenimientoSeleccionado?.idBaseDeDatos) {
+        <div class="flex flex-col gap-1">
+            <label for="" class="font-semibold">Ambiente</label>
+            <span style="word-wrap: break-word; overflow-wrap: break-word">
+                {{
+                    getAmbienteByBaseDeDatosId(
+                        mantenimientoSeleccionado?.idBaseDeDatos
+                    )?.descripcion
+                }}
+            </span>
+        </div>
+
+        <div class="flex flex-col gap-1">
+            <label for="" class="font-semibold">Servidor</label>
+            <span style="word-wrap: break-word; overflow-wrap: break-word">
+                {{
+                    getServidorByBaseDeDatosId(
+                        mantenimientoSeleccionado?.idBaseDeDatos
+                    )?.nombre
+                }}
+            </span>
+        </div>
+        }
         <div class="flex flex-col gap-1">
             <label for="" class="font-semibold">Requiere Perfil</label>
             <span style="word-wrap: break-word; overflow-wrap: break-word">

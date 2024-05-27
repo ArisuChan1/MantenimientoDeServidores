@@ -9,6 +9,10 @@ import {
     EstadoMantenimiento,
     Motor,
     Razon,
+    BaseDeDatos,
+    Servidor,
+    Usuario,
+    Mantenimiento,
 } from 'src/app/interfaces/types';
 import { GeneralService } from 'src/app/services/general.service';
 import { AlertaService } from 'src/app/services/alerta.service';
@@ -75,6 +79,11 @@ export class MainComponent {
         descripcion: '',
     };
 
+    basesDeDatos: BaseDeDatos[] = [];
+    servidores: Servidor[] = [];
+    mantenimientos: Mantenimiento[] = [];
+    usuarios: Usuario[] = [];
+
     VISIBLE_DIALOGS = {
         AMBIENTE: {
             key: 'AMBIENTE',
@@ -127,6 +136,13 @@ export class MainComponent {
         this.getEstadosMantenimiento();
         this.getMotores();
         this.getRazones();
+        this.getServidores();
+        this.getBasesDeDatos();
+        this.getUsuarios();
+        this.getnManteminientos();
+        this.alerta.info(
+            'Bienvenido a la sección de mantenimiento de catálogos'
+        );
     }
 
     getAmbientes(): void {
@@ -183,10 +199,47 @@ export class MainComponent {
         });
     }
 
+    getUsuarios(): void {
+        this.generalService.USUARIOS.get().subscribe((data) => {
+            this.usuarios = data;
+        });
+    }
+
+    getBasesDeDatos(): void {
+        this.generalService.BASE_DE_DATOS.get().subscribe((data) => {
+            this.basesDeDatos = data;
+        });
+    }
+
+    getServidores(): void {
+        this.generalService.SERVIDORES.get().subscribe((data) => {
+            this.servidores = data;
+        });
+    }
+
+    getnManteminientos(): void {
+        this.generalService.MANTENIMIENTOS.get().subscribe((data) => {
+            this.mantenimientos = data;
+        });
+    }
+
     addAmbiente(): void {
         // 1. Validar
         if (!this.newAmbiente.descripcion) {
             alert('Debe ingresar una descripción');
+            return;
+        }
+
+        // Si el nuevo ambiente, tiene la descripción, repetida, no se agrega
+        const ambienteRepetido = this.ambientes
+            .filter((x) => !(x.id === this.newAmbiente.id))
+            .find(
+                (ambiente) =>
+                    ambiente.descripcion === this.newAmbiente.descripcion
+            );
+
+        if (ambienteRepetido) {
+            this.alerta.warn('Ya existe un ambiente con esa descripción');
             return;
         }
 
@@ -209,7 +262,17 @@ export class MainComponent {
             return;
         }
 
-        this.VISIBLE_DIALOGS.CIUDAD.value = false;
+        // Si la nueva ciudad, tiene la descripción, repetida, no se agrega
+        const ciudadRepetida = this.ciudades
+            .filter((x) => !(x.id === this.newCiudad.id))
+            .find(
+                (ciudad) => ciudad.descripcion === this.newCiudad.descripcion
+            );
+
+        if (ciudadRepetida) {
+            this.alerta.warn('Ya existe una ciudad con esa descripción');
+            return;
+        }
 
         // Si tiene id, es una actualización
         if (this.newCiudad.id) {
@@ -217,6 +280,7 @@ export class MainComponent {
             return;
         }
 
+        this.VISIBLE_DIALOGS.CIUDAD.value = false;
         this.generalService.CIUDADES.post(this.newCiudad).subscribe(() => {
             this.getCiudades();
         });
@@ -229,6 +293,16 @@ export class MainComponent {
             return;
         }
 
+        // Si el nuevo rol, tiene la descripción, repetida, no se agrega
+        const rolRepetido = this.roles
+            .filter((x) => !(x.id === this.newRol.id))
+            .find((rol) => rol.descripcion === this.newRol.descripcion);
+
+        if (rolRepetido) {
+            this.alerta.warn('Ya existe un rol con esa descripción');
+            return;
+        }
+
         // Si tiene id, es una actualización
         if (this.newRol.id) {
             this.updateRol(this.newRol);
@@ -236,7 +310,6 @@ export class MainComponent {
         }
 
         this.VISIBLE_DIALOGS.ROL.value = false;
-
         this.generalService.ROLES.post(this.newRol).subscribe(() => {
             this.getRoles();
         });
@@ -249,6 +322,22 @@ export class MainComponent {
             return;
         }
 
+        // Si el nuevo sistema operativo, tiene la descripción, repetida, no se agrega
+        const sistemaOperativoRepetido = this.sistemasOperativos
+            .filter((x) => !(x.id === this.newSistemaOperativo.id))
+            .find(
+                (sistemaOperativo) =>
+                    sistemaOperativo.descripcion ===
+                    this.newSistemaOperativo.descripcion
+            );
+
+        if (sistemaOperativoRepetido) {
+            this.alerta.warn(
+                'Ya existe un sistema operativo con esa descripción'
+            );
+            return;
+        }
+
         // Si tiene id, es una actualización
         if (this.newSistemaOperativo.id) {
             this.updateSistemaOperativo(this.newSistemaOperativo);
@@ -256,7 +345,6 @@ export class MainComponent {
         }
 
         this.VISIBLE_DIALOGS.SISTEMA_OPERATIVO.value = false;
-
         this.generalService.SISTEMAS_OPERATIVOS.post(
             this.newSistemaOperativo
         ).subscribe(() => {
@@ -268,6 +356,22 @@ export class MainComponent {
         // 1. Validar
         if (!this.newTipoServidor.descripcion) {
             alert('Debe ingresar una descripción');
+            return;
+        }
+
+        // Si el nuevo tipo de servidor, tiene la descripción, repetida, no se agrega
+        const tipoServidorRepetido = this.tiposServidores
+            .filter((x) => !(x.id === this.newTipoServidor.id))
+            .find(
+                (tipoServidor) =>
+                    tipoServidor.descripcion ===
+                    this.newTipoServidor.descripcion
+            );
+
+        if (tipoServidorRepetido) {
+            this.alerta.warn(
+                'Ya existe un tipo de servidor con esa descripción'
+            );
             return;
         }
 
@@ -293,6 +397,18 @@ export class MainComponent {
             return;
         }
 
+        // Si el nuevo estado, tiene la descripción, repetida, no se agrega
+        const estadoRepetido = this.estados
+            .filter((x) => !(x.id === this.newEstado.id))
+            .find(
+                (estado) => estado.descripcion === this.newEstado.descripcion
+            );
+
+        if (estadoRepetido) {
+            this.alerta.warn('Ya existe un estado con esa descripción');
+            return;
+        }
+
         // Si tiene id, es una actualización
         if (this.newEstado.id) {
             this.updateEstado(this.newEstado);
@@ -310,6 +426,22 @@ export class MainComponent {
         // 1. Validar
         if (!this.newEstadoMantenimiento.descripcion) {
             alert('Debe ingresar una descripción');
+            return;
+        }
+
+        // Si el nuevo estado de mantenimiento, tiene la descripción, repetida, no se agrega
+        const estadoMantenimientoRepetido = this.estadosMantenimiento
+            .filter((x) => !(x.id === this.newEstadoMantenimiento.id))
+            .find(
+                (estadoMantenimiento) =>
+                    estadoMantenimiento.descripcion ===
+                    this.newEstadoMantenimiento.descripcion
+            );
+
+        if (estadoMantenimientoRepetido) {
+            this.alerta.warn(
+                'Ya existe un estado de mantenimiento con esa descripción'
+            );
             return;
         }
 
@@ -335,6 +467,16 @@ export class MainComponent {
             return;
         }
 
+        // Si el nuevo motor, tiene la descripción, repetida, no se agrega
+        const motorRepetido = this.motores
+            .filter((x) => !(x.id === this.newMotor.id))
+            .find((motor) => motor.descripcion === this.newMotor.descripcion);
+
+        if (motorRepetido) {
+            this.alerta.warn('Ya existe un motor con esa descripción');
+            return;
+        }
+
         // Si tiene id, es una actualización
         if (this.newMotor.id) {
             this.updateMotor(this.newMotor);
@@ -352,6 +494,16 @@ export class MainComponent {
         // 1. Validar
         if (!this.newRazon.descripcion) {
             alert('Debe ingresar una descripción');
+            return;
+        }
+
+        // Si la nueva razón, tiene la descripción, repetida, no se agrega
+        const razonRepetida = this.razones
+            .filter((x) => !(x.id === this.newRazon.id))
+            .find((razon) => razon.descripcion === this.newRazon.descripcion);
+
+        if (razonRepetida) {
+            this.alerta.warn('Ya existe una razón con esa descripción');
             return;
         }
 
@@ -443,6 +595,21 @@ export class MainComponent {
     }
 
     deleteAmbiente(ambiente: Ambiente): void {
+        // Si el ambiente está siendo usado por algún servidor, no se puede eliminar
+        const servidoresConAmbiente = this.servidores.filter(
+            (servidor) => servidor.idAmbiente === ambiente.id
+        );
+        const basesDeDatosConAmbiente = this.basesDeDatos.filter(
+            (baseDeDatos) => baseDeDatos.idAmbiente === ambiente.id
+        );
+
+        if (servidoresConAmbiente.length || basesDeDatosConAmbiente.length) {
+            this.alerta.warn(
+                'No se puede eliminar el ambiente, ya que está siendo usado por algún servidor o base de datos'
+            );
+            return;
+        }
+
         this.generalService.AMBIENTES.delete(ambiente.id).subscribe(() => {
             this.getAmbientes();
             this.VISIBLE_DIALOGS.AMBIENTE.value = false;
@@ -450,6 +617,18 @@ export class MainComponent {
     }
 
     deleteCiudad(ciudad: Ciudad): void {
+        // Si la ciudad está siendo usada por algún servidor, no se puede eliminar
+        const servidoresConCiudad = this.servidores.filter(
+            (servidor) => servidor.idCiudad === ciudad.id
+        );
+
+        if (servidoresConCiudad.length) {
+            this.alerta.warn(
+                'No se puede eliminar la ciudad, ya que está siendo usada por algún servidor'
+            );
+            return;
+        }
+
         this.generalService.CIUDADES.delete(ciudad.id).subscribe(() => {
             this.getCiudades();
             this.VISIBLE_DIALOGS.CIUDAD.value = false;
@@ -457,6 +636,18 @@ export class MainComponent {
     }
 
     deleteRol(rol: Rol): void {
+        // Si el rol está siendo usado por algún usuario, no se puede eliminar
+        const usuariosConRol = this.usuarios.filter(
+            (usuario) => usuario.idRol === rol.id
+        );
+
+        if (usuariosConRol.length) {
+            this.alerta.warn(
+                'No se puede eliminar el rol, ya que está siendo usado por algún usuario'
+            );
+            return;
+        }
+
         this.generalService.ROLES.delete(rol.id).subscribe(() => {
             this.getRoles();
             this.VISIBLE_DIALOGS.ROL.value = false;
@@ -464,6 +655,18 @@ export class MainComponent {
     }
 
     deleteSistemaOperativo(sistemaOperativo: SistemaOperativo): void {
+        // Si el sistema operativo está siendo usado por algún servidor, no se puede eliminar
+        const servidoresConSistemaOperativo = this.servidores.filter(
+            (servidor) => servidor.idSistemaOperativo === sistemaOperativo.id
+        );
+
+        if (servidoresConSistemaOperativo.length) {
+            this.alerta.warn(
+                'No se puede eliminar el sistema operativo, ya que está siendo usado por algún servidor'
+            );
+            return;
+        }
+
         this.generalService.SISTEMAS_OPERATIVOS.delete(
             sistemaOperativo.id
         ).subscribe(() => {
@@ -473,6 +676,18 @@ export class MainComponent {
     }
 
     deleteTipoServidor(tipoServidor: TipoServidor): void {
+        // Si el tipo de servidor está siendo usado por algún servidor, no se puede eliminar
+        const servidoresConTipoServidor = this.servidores.filter(
+            (servidor) => servidor.idTipo === tipoServidor.id
+        );
+
+        if (servidoresConTipoServidor.length) {
+            this.alerta.warn(
+                'No se puede eliminar el tipo de servidor, ya que está siendo usado por algún servidor'
+            );
+            return;
+        }
+
         this.generalService.TIPOS_SERVIDORES.delete(tipoServidor.id).subscribe(
             () => {
                 this.getTiposServidores();
@@ -482,6 +697,21 @@ export class MainComponent {
     }
 
     deleteEstado(estado: Estado): void {
+        // Si el estado está siendo usado por algún servidor o base de datos, no se puede eliminar
+        const servidoresConEstado = this.servidores.filter(
+            (servidor) => servidor.idEstado === estado.id
+        );
+        const basesDeDatosConEstado = this.basesDeDatos.filter(
+            (baseDeDatos) => baseDeDatos.idEstado === estado.id
+        );
+
+        if (servidoresConEstado.length || basesDeDatosConEstado.length) {
+            this.alerta.warn(
+                'No se puede eliminar el estado, ya que está siendo usado por algún servidor o base de datos'
+            );
+            return;
+        }
+
         this.generalService.ESTADOS.delete(estado.id).subscribe(() => {
             this.getEstados();
             this.VISIBLE_DIALOGS.ESTADO.value = false;
@@ -489,6 +719,18 @@ export class MainComponent {
     }
 
     deleteEstadoMantenimiento(estadoMantenimiento: EstadoMantenimiento): void {
+        // Si el estado de mantenimiento está siendo usado por algún mantenimiento, no se puede eliminar
+        const mantenimientosConEstadoMantenimiento = this.mantenimientos.filter(
+            (servidor) => servidor.idEstado === estadoMantenimiento.id
+        );
+
+        if (mantenimientosConEstadoMantenimiento.length) {
+            this.alerta.warn(
+                'No se puede eliminar el estado de mantenimiento, ya que está siendo usado por algún mantenimiento'
+            );
+            return;
+        }
+
         this.generalService.ESTADOS_MANTENIMIENTO.delete(
             estadoMantenimiento.id
         ).subscribe(() => {
@@ -498,6 +740,18 @@ export class MainComponent {
     }
 
     deleteMotor(motor: Motor): void {
+        // Si el motor está siendo usado por alguna base de datos, no se puede eliminar
+        const servidoresConMotor = this.basesDeDatos.filter(
+            (db) => db.idMotor === motor.id
+        );
+
+        if (servidoresConMotor.length) {
+            this.alerta.warn(
+                'No se puede eliminar el motor, ya que está siendo usado por alguna base de datos'
+            );
+            return;
+        }
+
         this.generalService.MOTORES.delete(motor.id).subscribe(() => {
             this.getMotores();
             this.VISIBLE_DIALOGS.MOTOR.value = false;
@@ -505,6 +759,18 @@ export class MainComponent {
     }
 
     deleteRazon(razon: Razon): void {
+        // Si la razón está siendo usada por algún mantenimiento, no se puede eliminar
+        const mantenimientosConRazon = this.mantenimientos.filter(
+            (mantenimiento) => mantenimiento.idRazon === razon.id
+        );
+
+        if (mantenimientosConRazon.length) {
+            this.alerta.warn(
+                'No se puede eliminar la razón, ya que está siendo usada por algún mantenimiento'
+            );
+            return;
+        }
+
         this.generalService.RAZONES.delete(razon.id).subscribe(() => {
             this.getRazones();
             this.VISIBLE_DIALOGS.RAZON.value = false;
@@ -578,49 +844,49 @@ export class MainComponent {
     }
 
     openUpdateAmbiente(ambiente: Ambiente): void {
-        this.newAmbiente = ambiente;
+        this.newAmbiente = structuredClone(ambiente);
         this.openDialog('AMBIENTE');
     }
 
     openUpdateCiudad(ciudad: Ciudad): void {
-        this.newCiudad = ciudad;
+        this.newCiudad = structuredClone(ciudad);
         this.openDialog('CIUDAD');
     }
 
     openUpdateRol(rol: Rol): void {
-        this.newRol = rol;
+        this.newRol = structuredClone(rol);
         this.openDialog('ROL');
     }
 
     openUpdateSistemaOperativo(sistemaOperativo: SistemaOperativo): void {
-        this.newSistemaOperativo = sistemaOperativo;
+        this.newSistemaOperativo = structuredClone(sistemaOperativo);
         this.openDialog('SISTEMA_OPERATIVO');
     }
 
     openUpdateTipoServidor(tipoServidor: TipoServidor): void {
-        this.newTipoServidor = tipoServidor;
+        this.newTipoServidor = structuredClone(tipoServidor);
         this.openDialog('TIPO_SERVIDOR');
     }
 
     openUpdateEstado(estado: Estado): void {
-        this.newEstado = estado;
+        this.newEstado = structuredClone(estado);
         this.openDialog('ESTADO');
     }
 
     openUpdateEstadoMantenimiento(
         estadoMantenimiento: EstadoMantenimiento
     ): void {
-        this.newEstadoMantenimiento = estadoMantenimiento;
+        this.newEstadoMantenimiento = structuredClone(estadoMantenimiento);
         this.openDialog('ESTADO_MANTENIMIENTO');
     }
 
     openUpdateMotor(motor: Motor): void {
-        this.newMotor = motor;
+        this.newMotor = structuredClone(motor);
         this.openDialog('MOTOR');
     }
 
     openUpdateRazon(razon: Razon): void {
-        this.newRazon = razon;
+        this.newRazon = structuredClone(razon);
         this.openDialog('RAZON');
     }
 
