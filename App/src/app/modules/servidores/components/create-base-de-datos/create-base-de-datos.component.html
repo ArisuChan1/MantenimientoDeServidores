@@ -113,6 +113,14 @@
         >
         </p-inputSwitch>
     </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Aplica Mantenimiento?</label>
+        <p-inputSwitch
+            [(ngModel)]="newBaseDeDatos.aplicaMantenimiento"
+            inputId="inputId"
+        >
+        </p-inputSwitch>
+    </div>
 
     <!-- Mensaje de que debe llenar todos los campos -->
     @if ( !validateCharactersFor(newBaseDeDatos.nombre, 1) ||
