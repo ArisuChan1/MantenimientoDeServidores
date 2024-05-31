@@ -51,7 +51,7 @@ export class BasesDeDatosServidorComponent {
 
     getBasesDeDatos() {
         this.generalService.BASE_DE_DATOS.get().subscribe((res) => {
-            this.basesDeDatos = res.filter((db) => db.aplicaMantenimiento);
+            this.basesDeDatos = res;
             this.setBasesDeDatosByServidor();
         });
     }

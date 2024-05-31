@@ -68,17 +68,6 @@ export class MainComponent {
                     this.getEstadoMantenimientoById(mantenimiento.idEstado)
                 );
             });
-        this.mantenimientosByYear = this.mantenimientosByYear.filter(
-            (mantenimiento) => {
-                const baseDeDatos = this.getBaseDeDatosById(
-                    mantenimiento.idBaseDeDatos
-                );
-                if (baseDeDatos) {
-                    return baseDeDatos.aplicaMantenimiento;
-                }
-                return true;
-            }
-        );
         this.setMantenimientosByServidor();
         this.setMantenimientosByBaseDeDatos();
     }
@@ -91,7 +80,7 @@ export class MainComponent {
 
     getBasesDeDatos() {
         this.generalService.BASE_DE_DATOS.get().subscribe((res) => {
-            this.basesDeDatos = res.filter((db) => db.aplicaMantenimiento);
+            this.basesDeDatos = res;
             this.filterMantenimientos();
         });
     }
