@@ -75,6 +75,20 @@
             optionValue="id"
         ></p-dropdown>
     </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Servidor</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="servidores"
+            [(ngModel)]="newBaseDeDatos.idServidor"
+            styleClass="w-full border border-gray-300 rounded-lg {{
+                !newBaseDeDatos.idServidor ? 'border-red-500' : ''
+            }}"
+            placeholder="Seleccionar Servidor"
+            optionLabel="nombre"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
     @if (newBaseDeDatos.id) {
     <div class="flex flex-col gap-1">
         <label for="">Estado</label>
@@ -105,6 +119,7 @@
             optionValue="id"
         ></p-dropdown>
     </div>
+    <!--
     <div class="flex flex-col gap-1">
         <label for="">¿Requiere perfil?</label>
         <p-inputSwitch
@@ -113,6 +128,7 @@
         >
         </p-inputSwitch>
     </div>
+    -->
     <div class="flex flex-col gap-1">
         <label for="">Aplica Mantenimiento?</label>
         <p-inputSwitch

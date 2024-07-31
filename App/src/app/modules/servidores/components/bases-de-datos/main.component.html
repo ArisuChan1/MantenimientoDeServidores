@@ -2,6 +2,13 @@
     <section class="px-4 flex flex-col gap-4">
         <header class="flex justify-between">
             <h1 class="text-2xl font-semibold">Bases de Datos</h1>
+            <button
+                (click)="openCreateBaseDeDatosDialog()"
+                pButton
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            >
+                Nueva base de datos
+            </button>
         </header>
         <main class="flex flex-col gap-3">
             @for (item of listaBasesDeDatos; track $index) {
@@ -57,6 +64,20 @@
                                 }}</span>
                             </span>
                             <span class="flex gap-4 w-2/12">
+                                <button
+                                    (click)="deleteBaseDeDatos(db)"
+                                    pButton
+                                    class="bg-red-500 p-2 text-white rounded-lg"
+                                >
+                                    Eliminar
+                                </button>
+                                <button
+                                    (click)="openUpdateBaseDeDatosDialog(db)"
+                                    pButton
+                                    class="bg-orange-500 p-2 text-white rounded-lg"
+                                >
+                                    Editar
+                                </button>
                                 <button
                                     (click)="openDialogMantenimientos(db)"
                                     pButton

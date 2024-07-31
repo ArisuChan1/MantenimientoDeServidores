@@ -40,9 +40,12 @@ export class CreateBaseDeDatosComponent {
 
     data: {
         id: number;
+        idServidor: number;
         servidor: Servidor;
         baseDeDatos: BaseDeDatos;
     } | null = null;
+
+    servidores: Servidor[] = [];
 
     constructor(
         private dialogRef: DynamicDialogRef,
@@ -55,10 +58,21 @@ export class CreateBaseDeDatosComponent {
         this.getMotores();
         this.getEstados();
         this.getBasesDeDatos();
+        this.getServidores();
+    }
+
+    getServidores() {
+        this.generalService.SERVIDORES.get().subscribe((res) => {
+            this.servidores = res;
+        });
     }
 
     getDataFromConfig() {
         this.data = this.dialogConfig.data;
+
+        if (this.data?.idServidor) {
+            this.newBaseDeDatos.idServidor = this.data.idServidor;
+        }
 
         if (this.data?.servidor) {
             this.newBaseDeDatos.idServidor = this.data.servidor.id;
@@ -125,12 +139,14 @@ export class CreateBaseDeDatosComponent {
             return;
         }
 
-        if (!this.data) {
+        if (!this.data && !this.newBaseDeDatos.idServidor) {
             alert('No se ha seleccionado un servidor');
             return;
         }
 
-        this.newBaseDeDatos.idServidor = this.data.id;
+        if (this.data?.id > 0) {
+            this.newBaseDeDatos.idServidor = this.data.id;
+        }
 
         if (this.newBaseDeDatos.id) this.update();
         else this.save();

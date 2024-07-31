@@ -14,6 +14,7 @@ import { CreateServidorComponent } from '../create-servidor/create-servidor.comp
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
 import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { AlertaService } from 'src/app/services/alerta.service';
+import { CreateBaseDeDatosComponent } from '../create-base-de-datos/create-base-de-datos.component';
 
 @Component({
     selector: 'app-bases-de-datos',
@@ -108,6 +109,41 @@ export class BasesdeDatosComponent {
         this.generalService.SERVIDORES.delete(id).subscribe(() => {
             this.getServidores();
         });
+    }
+
+    openCreateBaseDeDatosDialog() {
+        const dialog = this.dialogService.open(CreateBaseDeDatosComponent, {
+            header: 'Crear base de datos',
+            width: '70%',
+        });
+        dialog.onClose.subscribe(() => {
+            this.getBasesDeDatos();
+        });
+    }
+
+    openUpdateBaseDeDatosDialog(baseDeDatos: BaseDeDatos) {
+        const dialog = this.dialogService.open(CreateBaseDeDatosComponent, {
+            data: { idServidor: baseDeDatos.idServidor, baseDeDatos },
+            header: 'Actualizar base de datos',
+            width: '70%',
+        });
+        dialog.onClose.subscribe(() => {
+            this.getBasesDeDatos();
+        });
+    }
+
+    deleteBaseDeDatos(baseDeDatos: BaseDeDatos) {
+        this.generalService.BASE_DE_DATOS.delete(baseDeDatos.id).subscribe(
+            () => {
+                this.basesDeDatos = this.basesDeDatos.filter(
+                    (bd) => bd.id !== baseDeDatos.id
+                );
+                this.setBasesDeDatosByServidor();
+            },
+            () => {
+                this.alerta.error('No se pudo eliminar la base de datos');
+            }
+        );
     }
 }
 
