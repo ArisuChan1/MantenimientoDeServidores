@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApiTodoList.Interceptors;
 using WebApiTodoList.Models;
 
 namespace WebApiTodoList.Contexts
@@ -22,6 +23,13 @@ namespace WebApiTodoList.Contexts
         public DbSet<SistemaOperativo> SistemasOperativos { get; set;}
         public DbSet<TipoServidor> TiposServidores { get; set;}
         public DbSet<Usuario> Usuarios { get; set;}
+        public DbSet<ChangeLog> ChangeLogs { get; set; }
+
+        private static readonly ChangeLoggingInterceptor _interceptor
+        = new();
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder.AddInterceptors(_interceptor);
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
