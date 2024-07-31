@@ -12,12 +12,14 @@ import { CreateServidorComponent } from '../create-servidor/create-servidor.comp
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
 import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { AlertaService } from 'src/app/services/alerta.service';
+import { routesConfig } from 'src/app/routes/routesConfig';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
 })
 export class MainComponent {
+    routes = routesConfig;
     servidores: Servidor[] = [];
     listaServidores: ItemList[] = [];
 

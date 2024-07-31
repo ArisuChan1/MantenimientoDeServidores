@@ -75,7 +75,11 @@
                             </span>
                             <span class="flex gap-4">
                                 <button
-                                    (click)="openDialogBasesDeDatos(servidor)"
+                                    [routerLink]="
+                                        '/' +
+                                        routes.SERVIDORES +
+                                        '/bases-de-datos'
+                                    "
                                     pButton
                                     class="bg-blue-500 p-2 text-white rounded-lg"
                                 >

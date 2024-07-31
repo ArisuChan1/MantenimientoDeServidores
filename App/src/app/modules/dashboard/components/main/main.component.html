@@ -23,7 +23,13 @@
                 <button
                     class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out"
                 >
-                    <a [routerLink]="'/' + routes.SERVIDORES">Bases de Datos</a>
+                    <a
+                        [routerLink]="
+                            '/' + routes.SERVIDORES + '/bases-de-datos'
+                        "
+                    >
+                        Bases de Datos
+                    </a>
                 </button>
                 <button
                     class="p-2 border rounded-full flex items-center justify-center text-white bg-primary-500 hover:bg-white hover:text-primary-500 hover:border-primary-500 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
