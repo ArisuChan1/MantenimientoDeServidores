@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+    DialogService,
+    DynamicDialogConfig,
+    DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import {
     BaseDeDatos,
     EstadoMantenimiento,
@@ -12,6 +16,7 @@ import {
 import { AlertaService } from 'src/app/services/alerta.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { SESSION_KEY_USER } from 'src/config/config';
+import { EditPerfilComponent } from '../edit-perfil/edit-perfil.component';
 
 @Component({
     selector: 'app-create-mantenimiento',
@@ -29,7 +34,17 @@ export class CreateMantenimientoComponent {
         idBaseDeDatos: 0,
         automatica: false,
         requierePerfil: false,
+        planB: '',
+        codigoPerfil: null,
+        agenciasAfectadas: null,
+        afectacionAS400: null,
+        autorizacionTarjetasDebito: null,
+        soporteProveedores: null,
+        personalInvolucrado: null,
+        puntosDeVerificacion: null,
+        idUsuarioResponsable: 0,
     };
+
     estados: EstadoMantenimiento[] = [];
     razones: Razon[] = [];
     opciones = [
@@ -54,16 +69,20 @@ export class CreateMantenimientoComponent {
         mantenimiento: Mantenimiento;
     } | null = null;
 
+    usuarios: Usuario[] = [];
+
     constructor(
         private generalService: GeneralService,
         private alerta: AlertaService,
         private dialogRef: DynamicDialogRef,
-        private dialogConfig: DynamicDialogConfig
+        private dialogConfig: DynamicDialogConfig,
+        private dialogService: DialogService
     ) {
         this.getRazones();
         this.getEstados();
         this.getServidores();
         this.getBasesDeDatos();
+        this.getUsuarios();
         this.getDataFromConfig();
     }
 
@@ -91,6 +110,12 @@ export class CreateMantenimientoComponent {
         });
     }
 
+    getUsuarios() {
+        this.generalService.USUARIOS.get().subscribe((res) => {
+            this.usuarios = res;
+        });
+    }
+
     getDataFromConfig() {
         this.data = this.dialogConfig.data;
 
@@ -114,8 +139,21 @@ export class CreateMantenimientoComponent {
                 fechaInicio: new Date(this.data.mantenimiento.fechaInicio),
                 fechaFin: new Date(this.data.mantenimiento.fechaFin),
                 idUsuario: this.data.mantenimiento.idUsuario,
+                idUsuarioResponsable:
+                    this.data.mantenimiento.idUsuarioResponsable,
                 automatica: this.data.mantenimiento.automatica,
                 requierePerfil: this.data.mantenimiento.requierePerfil,
+                planB: this.data.mantenimiento.planB,
+                codigoPerfil: this.data.mantenimiento.codigoPerfil,
+                agenciasAfectadas: this.data.mantenimiento.agenciasAfectadas,
+                afectacionAS400: this.data.mantenimiento.afectacionAS400,
+                autorizacionTarjetasDebito:
+                    this.data.mantenimiento.autorizacionTarjetasDebito,
+                soporteProveedores: this.data.mantenimiento.soporteProveedores,
+                personalInvolucrado:
+                    this.data.mantenimiento.personalInvolucrado,
+                puntosDeVerificacion:
+                    this.data.mantenimiento.puntosDeVerificacion,
             };
         }
     }
@@ -137,6 +175,23 @@ export class CreateMantenimientoComponent {
         this.dialogRef.close();
     }
 
+    openModalEditPerfil() {
+        const ref = this.dialogService.open(EditPerfilComponent, {
+            header: 'Editar perfil',
+            data: {
+                idMantenimiento: this.data?.id,
+                mantenimiento: this.newMantenimiento,
+            },
+        });
+
+        ref.onClose.subscribe((mantenimiento: MantenimientoPostOrUpdate) => {
+            if (!mantenimiento) {
+                return;
+            }
+            this.newMantenimiento = mantenimiento;
+        });
+    }
+
     createOrUpdateMantenimiento() {
         const usuario = JSON.parse(
             sessionStorage.getItem(SESSION_KEY_USER) || '{}'
@@ -156,11 +211,6 @@ export class CreateMantenimientoComponent {
         if (this.opcionSeleccionada.value === 'baseDeDatos') {
             this.newMantenimiento.idServidor = null;
         }
-
-        console.log(
-            '🚀 ~ file: create-mantenimiento.component.ts ~ line 123 ~ CreateMantenimientoComponent ~ createOrUpdateMantenimiento ~ this.newMantenimiento',
-            this.validateForm()
-        );
 
         if (!this.validateForm()) {
             alert('Faltan campos por llenar');

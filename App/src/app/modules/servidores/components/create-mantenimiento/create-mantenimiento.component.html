@@ -53,8 +53,19 @@
         </div>
     </div>
 
+    <div class="flex flex-col gap-1">
+        <label for="">Plan en Caso de Fallas</label>
+        <textarea
+            pInputText
+            [(ngModel)]="newMantenimiento.planB"
+            type="text"
+            placeholder="Plan en caso de fallas"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+
     <div class="flex gap-1 justify-between w-full">
-        <div class="flex flex-col gap-1 {{ !data?.id ? 'w-full' : '' }}">
+        <div class="flex flex-col gap-1 w-2/3">
             <label for="">Razon</label>
             <p-dropdown
                 appendTo="body"
@@ -66,21 +77,48 @@
                 optionValue="id"
             ></p-dropdown>
         </div>
-        @if (data?.id) {
-        <div class="flex flex-col gap-1">
-            <label for="">Estado</label>
+        <div class="flex flex-col justify-end items-end gap-1 w-1/3">
+            <label for="">¿Automatico?</label>
+            <p-inputSwitch [(ngModel)]="newMantenimiento.automatica">
+            </p-inputSwitch>
+        </div>
+    </div>
+
+    <div class="flex gap-1 justify-between w-full">
+        <div class="flex flex-col gap-1 w-2/3">
+            <label for="">Responsable</label>
             <p-dropdown
                 appendTo="body"
-                [options]="estados"
-                [(ngModel)]="newMantenimiento.idEstado"
+                [options]="usuarios"
+                [(ngModel)]="newMantenimiento.idUsuarioResponsable"
                 styleClass="w-full border border-gray-300 rounded-lg"
-                placeholder="Seleccionar Estado"
-                optionLabel="descripcion"
+                placeholder="Seleccionar Responsable"
+                optionLabel="nombreCompleto"
                 optionValue="id"
             ></p-dropdown>
         </div>
-        }
+        <div class="flex flex-col justify-end items-end gap-1 w-1/3">
+            <label for="">¿Requiere perfil?</label>
+            <p-inputSwitch
+                [(ngModel)]="newMantenimiento.requierePerfil"
+            ></p-inputSwitch>
+        </div>
     </div>
+
+    @if (data?.id) {
+    <div class="flex flex-col gap-1">
+        <label for="">Estado</label>
+        <p-dropdown
+            appendTo="body"
+            [options]="estados"
+            [(ngModel)]="newMantenimiento.idEstado"
+            styleClass="w-full border border-gray-300 rounded-lg"
+            placeholder="Seleccionar Estado"
+            optionLabel="descripcion"
+            optionValue="id"
+        ></p-dropdown>
+    </div>
+    }
 
     <div class="flex flex-col gap-1">
         <label for="">Fecha y Hora de Inicio</label>
@@ -105,40 +143,43 @@
             [minDate]="newMantenimiento.fechaInicio"
         ></p-calendar>
     </div>
-    <div class="flex flex-col gap-1">
-        <label for="">¿Automatico?</label>
-        <p-inputSwitch [(ngModel)]="newMantenimiento.automatica">
-        </p-inputSwitch>
-    </div>
-    <div class="flex flex-col gap-1">
-        <label for="">¿Requiere perfil?</label>
-        <p-inputSwitch
-            [(ngModel)]="newMantenimiento.requierePerfil"
-        ></p-inputSwitch>
-    </div>
-    <!-- Botones de Agregar -->
-    <div class="flex justify-end gap-2">
-        <button
-            (click)="close()"
-            pButton
-            label="Cancelar"
-            class="bg-gray-300 p-2 text-black rounded-lg"
-        ></button>
 
-        @if (data.id) {
-        <button
-            (click)="createOrUpdateMantenimiento()"
-            pButton
-            label="Actualizar"
-            class="bg-primary-500 p-2 text-white rounded-lg"
-        ></button>
-        } @else {
-        <button
-            (click)="createOrUpdateMantenimiento()"
-            pButton
-            label="Agregar"
-            class="bg-primary-500 p-2 text-white rounded-lg"
-        ></button>
-        }
+    <!-- Botones de Agregar -->
+    <div class="flex justify-between gap-2">
+        <span class="">
+            @if (newMantenimiento.requierePerfil) {
+            <button
+                (click)="openModalEditPerfil()"
+                pButton
+                label="Perfil"
+                class="bg-cyan-500 p-2 text-white rounded-lg"
+            ></button>
+
+            }
+        </span>
+        <span class="flex gap-2">
+            <button
+                (click)="close()"
+                pButton
+                label="Cancelar"
+                class="bg-gray-300 p-2 text-black rounded-lg"
+            ></button>
+
+            @if (data.id) {
+            <button
+                (click)="createOrUpdateMantenimiento()"
+                pButton
+                label="Actualizar"
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            ></button>
+            } @else {
+            <button
+                (click)="createOrUpdateMantenimiento()"
+                pButton
+                label="Agregar"
+                class="bg-primary-500 p-2 text-white rounded-lg"
+            ></button>
+            }
+        </span>
     </div>
 </article>

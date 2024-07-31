@@ -70,9 +70,18 @@ export interface Mantenimiento {
     fechaInicio: Date;
     fechaFin: Date;
     idUsuario: number;
+    idUsuarioResponsable: number;
     idEstado: number;
     automatica: boolean;
+    planB: string;
     requierePerfil: boolean;
+    codigoPerfil: string | null;
+    agenciasAfectadas: string | null;
+    afectacionAS400: string | null;
+    autorizacionTarjetasDebito: string | null;
+    soporteProveedores: string | null;
+    personalInvolucrado: string | null;
+    puntosDeVerificacion: string | null;
 }
 
 export interface RolXPermiso {

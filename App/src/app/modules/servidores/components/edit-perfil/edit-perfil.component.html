@@ -1,0 +1,99 @@
+<article class="flex flex-col gap-3">
+    <div class="flex flex-col gap-1">
+        <label for="">Código de Perfil</label>
+        <input
+            pInputText
+            [(ngModel)]="mantenimiento.codigoPerfil"
+            type="text"
+            placeholder="Código de Perfil"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        />
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Agencias Afectadas</label>
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.agenciasAfectadas"
+            type="text"
+            placeholder="Agencias Afectadas"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Afectación AS400 (IBM I)</label>
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.afectacionAS400"
+            type="text"
+            placeholder="Afectación AS400 (IBM I)"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for=""
+            >Autorización de tarjetas de Debito / Credito en POS/ATMS</label
+        >
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.autorizacionTarjetasDebito"
+            type="text"
+            placeholder="Autorización de tarjetas de Debito / Credito en POS/ATMS"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Soporte Proveedores</label>
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.soporteProveedores"
+            type="text"
+            placeholder="Soporte Proveedores"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Personal Involucrado</label>
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.personalInvolucrado"
+            type="text"
+            placeholder="Personal Involucrado"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="">Puntos de Verificación</label>
+        <textarea
+            pInputText
+            [(ngModel)]="mantenimiento.puntosDeVerificacion"
+            type="text"
+            placeholder="Puntos de Verificación"
+            class="p-2 border border-gray-300 rounded-lg h-full"
+        ></textarea>
+    </div>
+    <!-- Botones de Agregar -->
+    <div class="flex justify-end gap-2">
+        <button
+            (click)="close()"
+            pButton
+            label="Cancelar"
+            class="bg-gray-300 p-2 text-black rounded-lg"
+        ></button>
+
+        @if (this.idMantenimiento) {
+        <button
+            (click)="updateMantenimiento()"
+            pButton
+            label="Actualizar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        } @else {
+        <button
+            (click)="sendData()"
+            pButton
+            label="Guardar"
+            class="bg-primary-500 p-2 text-white rounded-lg"
+        ></button>
+        }
+    </div>
+</article>

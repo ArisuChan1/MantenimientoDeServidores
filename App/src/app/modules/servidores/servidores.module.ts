@@ -12,6 +12,7 @@ import { CreateMantenimientoComponent } from './components/create-mantenimiento/
 import { BasesDeDatosServidorComponent } from './components/bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { CreateBaseDeDatosComponent } from './components/create-base-de-datos/create-base-de-datos.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { EditPerfilComponent } from './components/edit-perfil/edit-perfil.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { DialogService } from 'primeng/dynamicdialog';
         CreateMantenimientoComponent,
         BasesDeDatosServidorComponent,
         CreateBaseDeDatosComponent,
+        EditPerfilComponent,
     ],
     providers: [DialogService],
 })

@@ -43,16 +43,25 @@
                 {{ mantenimiento.descripcion }}
             </p>
         </div>
+        <div class="flex flex-col flex-wrap gap-1 w-full">
+            <span class="text-sm text-gray-500">Plan en caso de fallas</span>
+            <p
+                class="text-lg font-semibold w-full text-ellipsis"
+                style="overflow-wrap: anywhere"
+            >
+                {{ mantenimiento.planB }}
+            </p>
+        </div>
         <div class="flex flex-col gap-1">
             <span class="text-sm text-gray-500">Fecha de inicio</span>
             <span class="text-lg font-semibold">{{
-                mantenimiento.fechaInicio | date : "dd/MM/yyyy"
+                mantenimiento.fechaInicio | date : "dd/MM/yyyy HH:mm"
             }}</span>
         </div>
         <div class="flex flex-col gap-1">
             <span class="text-sm text-gray-500">Fecha de fin</span>
             <span class="text-lg font-semibold">{{
-                mantenimiento.fechaFin | date : "dd/MM/yyyy"
+                mantenimiento.fechaFin | date : "dd/MM/yyyy HH:mm"
             }}</span>
         </div>
         <div class="flex flex-col gap-1">
