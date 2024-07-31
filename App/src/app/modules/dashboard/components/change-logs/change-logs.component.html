@@ -1,0 +1,36 @@
+<!-- {
+    "id": 0,
+    "tableName": "string",
+    "changeType": "string",
+    "changeDate": "2024-07-31T04:36:56.526Z",
+    "oldValues": "string",
+    "newValues": "string",
+    "user": "string"
+  } -->
+
+<p-table [value]="changeLogs" [paginator]="true" [rows]="7">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Tabla</th>
+            <th>Tipo de cambio</th>
+            <th>Fecha de cambio</th>
+            <th>Valores antiguos</th>
+            <th>Nuevos valores</th>
+            <th>Usuario</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-changeLog>
+        <tr>
+            <td>{{ changeLog.tableName }}</td>
+            <td>{{ changeLog.changeType }}</td>
+            <td>{{ changeLog.changeDate }}</td>
+            <td [pTooltip]="changeLog.oldValues">
+                {{ changeLog.oldValues | slice : 0 : 35 }}
+            </td>
+            <td [pTooltip]="changeLog.newValues">
+                {{ changeLog.newValues | slice : 0 : 35 }}
+            </td>
+            <td>{{ changeLog.user }}</td>
+        </tr>
+    </ng-template>
+</p-table>

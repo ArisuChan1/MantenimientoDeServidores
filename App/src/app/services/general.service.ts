@@ -37,6 +37,7 @@ import {
     Usuario,
     UsuarioPostOrUpdate,
     MantenimientoPostOrUpdate,
+    ChangeLog,
 } from 'src/app/interfaces/types';
 import { SESSION_KEY_USER, WEB_API_URL } from 'src/config/config';
 
@@ -75,6 +76,7 @@ const URL_SERVIDORES = `${WEB_API_URL}/Servidores`;
 const URL_SISTEMAS_OPERATIVOS = `${WEB_API_URL}/SistemasOperativos`;
 const URL_TIPOS_SERVIDORES = `${WEB_API_URL}/TiposServidores`;
 const URL_USUARIOS = `${WEB_API_URL}/Usuarios`;
+const URL_CHANGE_LOG = `${WEB_API_URL}/ChangeLog`;
 
 @Injectable({
     providedIn: 'root',
@@ -301,5 +303,9 @@ export class GeneralService {
         put: (id: number, usuario: UsuarioPostOrUpdate) =>
             this.http.put(`${URL_USUARIOS}/${id}`, { ...usuario, id }),
         delete: (id: number) => this.http.delete(`${URL_USUARIOS}/${id}`),
+    };
+
+    CHANGE_LOGS = {
+        get: () => this.http.get<ChangeLog[]>(URL_CHANGE_LOG),
     };
 }

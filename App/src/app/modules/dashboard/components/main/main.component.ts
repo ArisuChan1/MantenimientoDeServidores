@@ -3,6 +3,8 @@ import { BaseDeDatos, Mantenimiento, Servidor } from 'src/app/interfaces/types';
 import { routesConfig } from 'src/app/routes/routesConfig';
 import { GeneralService } from 'src/app/services/general.service';
 import Chart from 'chart.js/auto';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ChangeLogsComponent } from '../change-logs/change-logs.component';
 
 @Component({
     selector: 'app-main',
@@ -19,8 +21,11 @@ export class MainComponent {
     mantenimientosDbAutomaticosRunning: Mantenimiento[] = [];
 
     barChart: Chart<'bar', any[], any>;
-    pastelChart;
-    constructor(private generalService: GeneralService) {
+    pastelChart: Chart<'doughnut', number[], string>;
+    constructor(
+        private generalService: GeneralService,
+        private dialogService: DialogService
+    ) {
         this.getBasesDeDatos();
         this.getServidores();
         this.getMantenimientos();
@@ -195,5 +200,11 @@ export class MainComponent {
 
     getNumberFormatted(value: number) {
         return value.toString().padStart(4, '0');
+    }
+
+    openModalHistorialCambios() {
+        this.dialogService.open(ChangeLogsComponent, {
+            header: 'Historial de cambios',
+        });
     }
 }

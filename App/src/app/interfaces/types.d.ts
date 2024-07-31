@@ -92,6 +92,16 @@ export interface RolXPermiso {
     idUsuarioAsigno: 0;
 }
 
+export interface ChangeLog {
+    id: number;
+    tableName: string;
+    changeType: string;
+    changeDate: Date;
+    oldValues: string;
+    newValues: string;
+    user: string;
+}
+
 // Interfaces para Post or Put
 export type UsuarioPostOrUpdate = Omit<Usuario, 'id'>;
 export type RolPostOrUpdate = Omit<Rol, 'id'>;

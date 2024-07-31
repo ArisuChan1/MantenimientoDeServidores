@@ -227,6 +227,13 @@
                 {{ mantenimientoSeleccionado?.descripcion }}
             </span>
         </div>
+        <div class="flex flex-col gap-1">
+            <label for="" class="font-semibold">Plan en caso de fallos</label>
+            <span style="word-wrap: break-word; overflow-wrap: break-word">
+                {{ mantenimientoSeleccionado?.planB }}
+            </span>
+        </div>
+
         @if (mantenimientoSeleccionado?.idBaseDeDatos) {
         <div class="flex flex-col gap-1">
             <label for="" class="font-semibold">Ambiente</label>
@@ -250,6 +257,12 @@
             </span>
         </div>
         }
+        <div class="flex flex-col gap-1">
+            <label for="" class="font-semibold">Es automatico</label>
+            <span style="word-wrap: break-word; overflow-wrap: break-word">
+                {{ mantenimientoSeleccionado?.automatica ? "Sí" : "No" }}
+            </span>
+        </div>
         <div class="flex flex-col gap-1">
             <label for="" class="font-semibold">Requiere Perfil</label>
             <span style="word-wrap: break-word; overflow-wrap: break-word">
