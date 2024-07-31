@@ -1,6 +1,85 @@
 <app-layout>
     <main class="flex gap-4 justify-between px-4">
-        <section class="bg-blue-300 flex-auto">Zona de reportería</section>
+        <section class="flex-auto flex flex-col gap-1">
+            <div class="flex gap-2">
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{ getNumberFormatted(servidores.length) }}
+                    </h1>
+                    <small> Servidores registrados </small>
+                </span>
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{
+                            getNumberFormatted(
+                                mantenimientosWPerfilCompleted.length
+                            )
+                        }}
+                    </h1>
+                    <small>
+                        Mantenimientos que requieren perfil ejecutados
+                    </small>
+                </span>
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{
+                            getNumberFormatted(
+                                mantenimientosDBAutomaticosMesActual.length
+                            )
+                        }}
+                    </h1>
+                    <small>
+                        Mantenimientos de base de datos automáticos exitosos
+                        ejecutados en el presente mes
+                    </small>
+                </span>
+            </div>
+            <div class="flex gap-2">
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{ getNumberFormatted(basesDeDatos.length) }}
+                    </h1>
+                    <small> Bases de datos registradas </small>
+                </span>
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{
+                            getNumberFormatted(
+                                mantenimientosWPerfilPending.length
+                            )
+                        }}
+                    </h1>
+                    <small>
+                        Mantenimientos que requieren perfil pendientes
+                    </small>
+                </span>
+                <span
+                    class="w-1/3 h-28 bg-slate-200 p-2 rounded-md flex flex-col justify-center items-center"
+                >
+                    <h1 class="text-3xl font-bold">
+                        {{
+                            getNumberFormatted(
+                                mantenimientosDbAutomaticosRunning.length
+                            )
+                        }}
+                    </h1>
+                    <small>
+                        Mantenimientos de base de datos automáticos ejecutandose
+                        actualmente
+                    </small>
+                </span>
+            </div>
+        </section>
 
         <section class="flex flex-col gap-3 w-1/4 items-center">
             <strong class="text-center">

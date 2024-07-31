@@ -91,7 +91,7 @@ export class BasesdeDatosComponent {
             header,
             width: '70%',
             data: {
-                id: baseDeDatos.id,
+                idBaseDeDatos: baseDeDatos.id,
                 baseDeDatos,
             },
         });

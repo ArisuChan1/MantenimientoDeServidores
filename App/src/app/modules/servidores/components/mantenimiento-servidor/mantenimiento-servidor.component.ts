@@ -173,6 +173,8 @@ export class MantenimientoServidorComponent {
             header: 'Actualizar mantenimiento',
             data: {
                 id: mantenimiento.id,
+                idServidor: mantenimiento.idServidor,
+                idBaseDeDatos: mantenimiento.idBaseDeDatos,
                 mantenimiento: mantenimiento,
             },
         });

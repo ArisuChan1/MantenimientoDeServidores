@@ -116,7 +116,7 @@ export class BasesDeDatosServidorComponent {
             header,
             width: '70%',
             data: {
-                id: baseDeDatos.id,
+                idBaseDeDatos: baseDeDatos.id,
                 baseDeDatos,
             },
         });
