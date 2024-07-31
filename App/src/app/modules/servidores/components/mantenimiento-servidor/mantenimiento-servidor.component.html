@@ -77,6 +77,15 @@
             }}</span>
         </div>
         <div class="flex gap-4">
+            @if (mantenimiento.requierePerfil) {
+            <button
+                (click)="openModalEditPerfil(mantenimiento)"
+                pButton
+                class="bg-cyan-500 p-2 text-white rounded-lg"
+            >
+                Perfil
+            </button>
+            }
             <button
                 (click)="openDialogUpdateMantenimiento(mantenimiento)"
                 pButton

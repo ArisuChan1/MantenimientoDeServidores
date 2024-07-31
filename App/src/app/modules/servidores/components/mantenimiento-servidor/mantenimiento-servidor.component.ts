@@ -19,6 +19,7 @@ import {
 import { AlertaService } from 'src/app/services/alerta.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { CreateMantenimientoComponent } from '../create-mantenimiento/create-mantenimiento.component';
+import { EditPerfilComponent } from '../edit-perfil/edit-perfil.component';
 
 @Component({
     selector: 'app-mantenimiento-servidor',
@@ -165,6 +166,16 @@ export class MantenimientoServidorComponent {
         });
         dialog.onClose.subscribe(() => {
             this.getMantenimientos();
+        });
+    }
+
+    openModalEditPerfil(mantenimiento: Mantenimiento) {
+        this.dialogService.open(EditPerfilComponent, {
+            header: 'Editar perfil',
+            data: {
+                idMantenimiento: mantenimiento.id,
+                mantenimiento: mantenimiento,
+            },
         });
     }
 
