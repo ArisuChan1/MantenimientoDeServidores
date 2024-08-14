@@ -10,10 +10,12 @@ import { CreateBaseDeDatosComponent } from '../create-base-de-datos/create-base-
 import { GeneralService } from 'src/app/services/general.service';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-bases-de-datos-servidor',
     templateUrl: './bases-de-datos-servidor.component.html',
+    providers: [ConfirmationService],
 })
 export class BasesDeDatosServidorComponent {
     data: {
@@ -29,7 +31,8 @@ export class BasesDeDatosServidorComponent {
         private generalService: GeneralService,
         private dialogService: DialogService,
         private dialogConfig: DynamicDialogConfig,
-        private alerta: AlertaService
+        private alerta: AlertaService,
+        private confirmationService: ConfirmationService
     ) {
         this.getDataFromConfig();
         this.getAmbientes();
@@ -97,17 +100,32 @@ export class BasesDeDatosServidorComponent {
     }
 
     deleteBaseDeDatos(baseDeDatos: BaseDeDatos) {
-        this.generalService.BASE_DE_DATOS.delete(baseDeDatos.id).subscribe(
-            () => {
-                this.basesDeDatos = this.basesDeDatos.filter(
-                    (bd) => bd.id !== baseDeDatos.id
+        this.confirmationService.confirm({
+            header: 'Eliminar base de datos',
+            message: '¿Estás seguro de que deseas eliminar la base de datos?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.BASE_DE_DATOS.delete(
+                    baseDeDatos.id
+                ).subscribe(
+                    () => {
+                        this.basesDeDatos = this.basesDeDatos.filter(
+                            (bd) => bd.id !== baseDeDatos.id
+                        );
+                        this.setBasesDeDatosByServidor();
+                    },
+                    () => {
+                        this.alerta.error(
+                            'No se pudo eliminar la base de datos'
+                        );
+                    }
                 );
-                this.setBasesDeDatosByServidor();
             },
-            () => {
-                this.alerta.error('No se pudo eliminar la base de datos');
-            }
-        );
+        });
     }
 
     openDialogMantenimientos(baseDeDatos: BaseDeDatos) {

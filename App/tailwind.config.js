@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: ["./src/**/*.{html,ts}"],
+    // corePlugins: {
+    //     // deshabilitar algunos plugins de Tailwind si no son necesarios
+    //     preflight: false, // desactiva los estilos base de Tailwind
+    // },
     theme: {
         extend: {
             colors: {

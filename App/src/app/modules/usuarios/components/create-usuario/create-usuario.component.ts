@@ -64,6 +64,37 @@ export class CreateUsuarioComponent {
     }
 
     save() {
+        const aliasExistente = this.usuarios.find(
+            (usuario) => usuario.alias === this.newUsuario.alias
+        );
+
+        const correoExistente = this.usuarios.find(
+            (usuario) => usuario.correo === this.newUsuario.correo
+        );
+
+        // reemplazar espacios en blanco por guiones bajos
+
+        const nombreExistente = this.usuarios.find(
+            (usuario) =>
+                usuario.nombreCompleto.toLowerCase().replace(/\s/g, '') ===
+                this.newUsuario.nombreCompleto.toLowerCase().replace(/\s/g, '')
+        );
+
+        if (aliasExistente) {
+            alert('El alias ya se encuentra en uso');
+            return;
+        }
+
+        if (correoExistente) {
+            alert('El correo ya se encuentra en uso');
+            return;
+        }
+
+        if (nombreExistente) {
+            alert('El nombre ya se encuentra en uso');
+            return;
+        }
+
         this.generalService.USUARIOS.post(this.newUsuario).subscribe({
             next: () => {
                 this.close();
@@ -79,6 +110,38 @@ export class CreateUsuarioComponent {
             alert('No se ha seleccionado un usuario');
             return;
         }
+
+        const aliasExistente = this.usuarios.find(
+            (usuario) => usuario.alias === this.newUsuario.alias
+        );
+
+        const correoExistente = this.usuarios.find(
+            (usuario) => usuario.correo === this.newUsuario.correo
+        );
+
+        // reemplazar espacios en blanco por guiones bajos
+
+        const nombreExistente = this.usuarios.find(
+            (usuario) =>
+                usuario.nombreCompleto.toLowerCase().replace(/\s/g, '') ===
+                this.newUsuario.nombreCompleto.toLowerCase().replace(/\s/g, '')
+        );
+
+        if (aliasExistente) {
+            alert('El alias ya se encuentra en uso');
+            return;
+        }
+
+        if (correoExistente) {
+            alert('El correo ya se encuentra en uso');
+            return;
+        }
+
+        if (nombreExistente) {
+            alert('El nombre ya se encuentra en uso');
+            return;
+        }
+
         this.generalService.USUARIOS.put(
             this.data.id,
             this.newUsuario

@@ -13,10 +13,12 @@ import { MantenimientoServidorComponent } from '../mantenimiento-servidor/manten
 import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { routesConfig } from 'src/app/routes/routesConfig';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
+    providers: [ConfirmationService],
 })
 export class MainComponent {
     routes = routesConfig;
@@ -31,7 +33,8 @@ export class MainComponent {
     constructor(
         private generalService: GeneralService,
         private dialogService: DialogService,
-        private alerta: AlertaService
+        private alerta: AlertaService,
+        private confirmationService: ConfirmationService
     ) {
         this.getServidores();
         this.getCiudades();
@@ -152,8 +155,19 @@ export class MainComponent {
     }
 
     deleteServidor(id: number) {
-        this.generalService.SERVIDORES.delete(id).subscribe(() => {
-            this.getServidores();
+        this.confirmationService.confirm({
+            header: 'Eliminar servidor',
+            message: '¿Estás seguro de que deseas eliminar el servidor?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.SERVIDORES.delete(id).subscribe(() => {
+                    this.getServidores();
+                });
+            },
         });
     }
 }

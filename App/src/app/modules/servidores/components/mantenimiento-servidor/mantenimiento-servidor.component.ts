@@ -20,10 +20,12 @@ import { AlertaService } from 'src/app/services/alerta.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { CreateMantenimientoComponent } from '../create-mantenimiento/create-mantenimiento.component';
 import { EditPerfilComponent } from '../edit-perfil/edit-perfil.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-mantenimiento-servidor',
     templateUrl: './mantenimiento-servidor.component.html',
+    providers: [ConfirmationService],
 })
 export class MantenimientoServidorComponent {
     sistemasOperativos: SistemaOperativo[] = [];
@@ -49,7 +51,8 @@ export class MantenimientoServidorComponent {
         private alerta: AlertaService,
         private dialogService: DialogService,
         private dialogRef: DynamicDialogRef,
-        private dialogConfig: DynamicDialogConfig
+        private dialogConfig: DynamicDialogConfig,
+        private confirmationService: ConfirmationService
     ) {
         this.getDataFromConfig();
         this.getSistemasOperativos();
@@ -195,8 +198,19 @@ export class MantenimientoServidorComponent {
     }
 
     deleteMantenimiento(id: number) {
-        this.generalService.MANTENIMIENTOS.delete(id).subscribe(() => {
-            this.getMantenimientos();
+        this.confirmationService.confirm({
+            header: 'Eliminar mantenimiento',
+            message: '¿Estás seguro de que deseas eliminar el mantenimiento?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.MANTENIMIENTOS.delete(id).subscribe(() => {
+                    this.getMantenimientos();
+                });
+            },
         });
     }
 

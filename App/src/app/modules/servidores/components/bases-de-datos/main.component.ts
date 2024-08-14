@@ -15,10 +15,13 @@ import { MantenimientoServidorComponent } from '../mantenimiento-servidor/manten
 import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-de-datos-servidor.component';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { CreateBaseDeDatosComponent } from '../create-base-de-datos/create-base-de-datos.component';
+import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-bases-de-datos',
     templateUrl: './main.component.html',
+    providers: [ConfirmationService],
 })
 export class BasesdeDatosComponent {
     servidores: Servidor[] = [];
@@ -32,16 +35,29 @@ export class BasesdeDatosComponent {
     tipos: TipoServidor[] = [];
     motores: Motor[] = [];
 
+    idServidor: number | null = null;
+
     constructor(
         private generalService: GeneralService,
         private dialogService: DialogService,
-        private alerta: AlertaService
+        private alerta: AlertaService,
+        private activatedRoute: ActivatedRoute,
+        private confirmationService: ConfirmationService
     ) {
+        this.getServidorIdFromRoute();
         this.getServidores();
         this.getBasesDeDatos();
         this.getAmbientes();
         this.getMotores();
         this.alerta.info('Seleccione un servidor para ver más detalles');
+    }
+
+    getServidorIdFromRoute() {
+        return this.activatedRoute.paramMap.subscribe((params) => {
+            const idServidor = Number(params.get('idServidor'));
+            this.idServidor = idServidor;
+            this.setBasesDeDatosByServidor();
+        });
     }
 
     getServidores() {
@@ -76,7 +92,14 @@ export class BasesdeDatosComponent {
 
     setBasesDeDatosByServidor() {
         const lista: ItemListBaseDeDatos[] = [];
-        this.servidores.forEach((servidor) => {
+        let servidores = structuredClone(this.servidores);
+        if (this.idServidor && !isNaN(this.idServidor)) {
+            servidores = servidores.filter(
+                (servidor) => servidor.id === this.idServidor
+            );
+        }
+
+        servidores.forEach((servidor) => {
             const basesDeDatos = this.basesDeDatos.filter(
                 (base) => base.idServidor === servidor.id
             );
@@ -133,17 +156,32 @@ export class BasesdeDatosComponent {
     }
 
     deleteBaseDeDatos(baseDeDatos: BaseDeDatos) {
-        this.generalService.BASE_DE_DATOS.delete(baseDeDatos.id).subscribe(
-            () => {
-                this.basesDeDatos = this.basesDeDatos.filter(
-                    (bd) => bd.id !== baseDeDatos.id
+        this.confirmationService.confirm({
+            header: 'Eliminar base de datos',
+            message: '¿Estás seguro de que deseas eliminar la base de datos?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.BASE_DE_DATOS.delete(
+                    baseDeDatos.id
+                ).subscribe(
+                    () => {
+                        this.basesDeDatos = this.basesDeDatos.filter(
+                            (bd) => bd.id !== baseDeDatos.id
+                        );
+                        this.setBasesDeDatosByServidor();
+                    },
+                    () => {
+                        this.alerta.error(
+                            'No se pudo eliminar la base de datos'
+                        );
+                    }
                 );
-                this.setBasesDeDatosByServidor();
             },
-            () => {
-                this.alerta.error('No se pudo eliminar la base de datos');
-            }
-        );
+        });
     }
 }
 

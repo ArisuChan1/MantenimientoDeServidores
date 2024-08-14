@@ -107,8 +107,8 @@ export class CreateServidorComponent {
         if (
             this.servidores
                 .filter((s) => s.id !== this.data?.id)
-                .map((s) => s.nombre)
-                .includes(this.newServidor.nombre)
+                .map((s) => s.nombre.toLowerCase().trim())
+                .includes(this.newServidor.nombre.toLowerCase().trim())
         ) {
             alert('Ya existe un servidor con ese nombre');
             return false;

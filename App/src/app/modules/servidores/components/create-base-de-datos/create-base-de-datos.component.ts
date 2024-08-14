@@ -111,8 +111,8 @@ export class CreateBaseDeDatosComponent {
         if (
             this.basesDeDatos
                 .filter((bd) => bd.id !== this.newBaseDeDatos.id)
-                .map((bd) => bd.nombre)
-                .includes(this.newBaseDeDatos.nombre)
+                .map((bd) => bd.nombre.toLowerCase().trim())
+                .includes(this.newBaseDeDatos.nombre.toLowerCase().trim())
         ) {
             alert('Ya existe una base de datos con ese nombre');
             return false;

@@ -14,6 +14,10 @@ import { BasesdeDatosComponent } from './components/bases-de-datos/main.componen
                 path: 'bases-de-datos',
                 component: BasesdeDatosComponent,
             },
+            {
+                path: 'bases-de-datos/:idServidor',
+                component: BasesdeDatosComponent,
+            },
         ]),
     ],
     exports: [RouterModule],

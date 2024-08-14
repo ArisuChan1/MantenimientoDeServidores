@@ -16,10 +16,12 @@ import {
 } from 'src/app/interfaces/types';
 import { GeneralService } from 'src/app/services/general.service';
 import { AlertaService } from 'src/app/services/alerta.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
+    providers: [ConfirmationService],
 })
 export class MainComponent {
     ambientes: Ambiente[] = [];
@@ -125,7 +127,8 @@ export class MainComponent {
 
     constructor(
         private generalService: GeneralService,
-        private alerta: AlertaService
+        private alerta: AlertaService,
+        private confirmationService: ConfirmationService
     ) {
         this.getAmbientes();
         this.getCiudades();
@@ -235,7 +238,8 @@ export class MainComponent {
             .filter((x) => !(x.id === this.newAmbiente.id))
             .find(
                 (ambiente) =>
-                    ambiente.descripcion === this.newAmbiente.descripcion
+                    ambiente.descripcion.toLowerCase().trim() ===
+                    this.newAmbiente.descripcion.toLowerCase().trim()
             );
 
         if (ambienteRepetido) {
@@ -266,7 +270,9 @@ export class MainComponent {
         const ciudadRepetida = this.ciudades
             .filter((x) => !(x.id === this.newCiudad.id))
             .find(
-                (ciudad) => ciudad.descripcion === this.newCiudad.descripcion
+                (ciudad) =>
+                    ciudad.descripcion.toLowerCase().trim() ===
+                    this.newCiudad.descripcion.toLowerCase().trim()
             );
 
         if (ciudadRepetida) {
@@ -296,7 +302,11 @@ export class MainComponent {
         // Si el nuevo rol, tiene la descripción, repetida, no se agrega
         const rolRepetido = this.roles
             .filter((x) => !(x.id === this.newRol.id))
-            .find((rol) => rol.descripcion === this.newRol.descripcion);
+            .find(
+                (rol) =>
+                    rol.descripcion.toLowerCase().trim() ===
+                    this.newRol.descripcion.toLowerCase().trim()
+            );
 
         if (rolRepetido) {
             this.alerta.warn('Ya existe un rol con esa descripción');
@@ -327,8 +337,8 @@ export class MainComponent {
             .filter((x) => !(x.id === this.newSistemaOperativo.id))
             .find(
                 (sistemaOperativo) =>
-                    sistemaOperativo.descripcion ===
-                    this.newSistemaOperativo.descripcion
+                    sistemaOperativo.descripcion.toLowerCase().trim() ===
+                    this.newSistemaOperativo.descripcion.toLowerCase().trim()
             );
 
         if (sistemaOperativoRepetido) {
@@ -364,8 +374,8 @@ export class MainComponent {
             .filter((x) => !(x.id === this.newTipoServidor.id))
             .find(
                 (tipoServidor) =>
-                    tipoServidor.descripcion ===
-                    this.newTipoServidor.descripcion
+                    tipoServidor.descripcion.toLowerCase().trim() ===
+                    this.newTipoServidor.descripcion.toLowerCase().trim()
             );
 
         if (tipoServidorRepetido) {
@@ -401,7 +411,9 @@ export class MainComponent {
         const estadoRepetido = this.estados
             .filter((x) => !(x.id === this.newEstado.id))
             .find(
-                (estado) => estado.descripcion === this.newEstado.descripcion
+                (estado) =>
+                    estado.descripcion.toLowerCase().trim() ===
+                    this.newEstado.descripcion.toLowerCase().trim()
             );
 
         if (estadoRepetido) {
@@ -434,8 +446,8 @@ export class MainComponent {
             .filter((x) => !(x.id === this.newEstadoMantenimiento.id))
             .find(
                 (estadoMantenimiento) =>
-                    estadoMantenimiento.descripcion ===
-                    this.newEstadoMantenimiento.descripcion
+                    estadoMantenimiento.descripcion.toLowerCase().trim() ===
+                    this.newEstadoMantenimiento.descripcion.toLowerCase().trim()
             );
 
         if (estadoMantenimientoRepetido) {
@@ -470,7 +482,11 @@ export class MainComponent {
         // Si el nuevo motor, tiene la descripción, repetida, no se agrega
         const motorRepetido = this.motores
             .filter((x) => !(x.id === this.newMotor.id))
-            .find((motor) => motor.descripcion === this.newMotor.descripcion);
+            .find(
+                (motor) =>
+                    motor.descripcion.toLowerCase().trim() ===
+                    this.newMotor.descripcion.toLowerCase().trim()
+            );
 
         if (motorRepetido) {
             this.alerta.warn('Ya existe un motor con esa descripción');
@@ -500,7 +516,11 @@ export class MainComponent {
         // Si la nueva razón, tiene la descripción, repetida, no se agrega
         const razonRepetida = this.razones
             .filter((x) => !(x.id === this.newRazon.id))
-            .find((razon) => razon.descripcion === this.newRazon.descripcion);
+            .find(
+                (razon) =>
+                    razon.descripcion.toLowerCase().trim() ===
+                    this.newRazon.descripcion.toLowerCase().trim()
+            );
 
         if (razonRepetida) {
             this.alerta.warn('Ya existe una razón con esa descripción');
@@ -521,6 +541,20 @@ export class MainComponent {
     }
 
     updateAmbiente(ambiente: Ambiente): void {
+        // Si el ambiente tiene la descripción repetida, no se actualiza
+        const ambienteRepetido = this.ambientes
+            .filter((x) => !(x.id === ambiente.id))
+            .find(
+                (a) =>
+                    a.descripcion.toLowerCase().trim() ===
+                    ambiente.descripcion.toLowerCase().trim()
+            );
+
+        if (ambienteRepetido) {
+            this.alerta.warn('Ya existe un ambiente con esa descripción');
+            return;
+        }
+
         this.generalService.AMBIENTES.put(ambiente.id, ambiente).subscribe(
             () => {
                 this.getAmbientes();
@@ -530,6 +564,20 @@ export class MainComponent {
     }
 
     updateCiudad(ciudad: Ciudad): void {
+        // Si la ciudad tiene la descripción repetida, no se actualiza
+        const ciudadRepetida = this.ciudades
+            .filter((x) => !(x.id === ciudad.id))
+            .find(
+                (c) =>
+                    c.descripcion.toLowerCase().trim() ===
+                    ciudad.descripcion.toLowerCase().trim()
+            );
+
+        if (ciudadRepetida) {
+            this.alerta.warn('Ya existe una ciudad con esa descripción');
+            return;
+        }
+
         this.generalService.CIUDADES.put(ciudad.id, ciudad).subscribe(() => {
             this.getCiudades();
             this.VISIBLE_DIALOGS.CIUDAD.value = false;
@@ -537,6 +585,20 @@ export class MainComponent {
     }
 
     updateRol(rol: Rol): void {
+        // Si el rol tiene la descripción repetida, no se actualiza
+        const rolRepetido = this.roles
+            .filter((x) => !(x.id === rol.id))
+            .find(
+                (r) =>
+                    r.descripcion.toLowerCase().trim() ===
+                    rol.descripcion.toLowerCase().trim()
+            );
+
+        if (rolRepetido) {
+            this.alerta.warn('Ya existe un rol con esa descripción');
+            return;
+        }
+
         this.generalService.ROLES.put(rol.id, rol).subscribe(() => {
             this.getRoles();
             this.VISIBLE_DIALOGS.ROL.value = false;
@@ -544,6 +606,22 @@ export class MainComponent {
     }
 
     updateSistemaOperativo(sistemaOperativo: SistemaOperativo): void {
+        // Si el sistema operativo tiene la descripción repetida, no se actualiza
+        const sistemaOperativoRepetido = this.sistemasOperativos
+            .filter((x) => !(x.id === sistemaOperativo.id))
+            .find(
+                (s) =>
+                    s.descripcion.toLowerCase().trim() ===
+                    sistemaOperativo.descripcion.toLowerCase().trim()
+            );
+
+        if (sistemaOperativoRepetido) {
+            this.alerta.warn(
+                'Ya existe un sistema operativo con esa descripción'
+            );
+            return;
+        }
+
         this.generalService.SISTEMAS_OPERATIVOS.put(
             sistemaOperativo.id,
             sistemaOperativo
@@ -554,6 +632,22 @@ export class MainComponent {
     }
 
     updateTipoServidor(tipoServidor: TipoServidor): void {
+        // Si el tipo de servidor tiene la descripción repetida, no se actualiza
+        const tipoServidorRepetido = this.tiposServidores
+            .filter((x) => !(x.id === tipoServidor.id))
+            .find(
+                (ts) =>
+                    ts.descripcion.toLowerCase().trim() ===
+                    tipoServidor.descripcion.toLowerCase().trim()
+            );
+
+        if (tipoServidorRepetido) {
+            this.alerta.warn(
+                'Ya existe un tipo de servidor con esa descripción'
+            );
+            return;
+        }
+
         this.generalService.TIPOS_SERVIDORES.put(
             tipoServidor.id,
             tipoServidor
@@ -564,6 +658,20 @@ export class MainComponent {
     }
 
     updateEstado(estado: Estado): void {
+        // Si el estado tiene la descripción repetida, no se actualiza
+        const estadoRepetido = this.estados
+            .filter((x) => !(x.id === estado.id))
+            .find(
+                (e) =>
+                    e.descripcion.toLowerCase().trim() ===
+                    estado.descripcion.toLowerCase().trim()
+            );
+
+        if (estadoRepetido) {
+            this.alerta.warn('Ya existe un estado con esa descripción');
+            return;
+        }
+
         this.generalService.ESTADOS.put(estado.id, estado).subscribe(() => {
             this.getEstados();
             this.VISIBLE_DIALOGS.ESTADO.value = false;
@@ -571,6 +679,22 @@ export class MainComponent {
     }
 
     updateEstadoMantenimiento(estadoMantenimiento: EstadoMantenimiento): void {
+        // Si el estado de mantenimiento tiene la descripción repetida, no se actualiza
+        const estadoMantenimientoRepetido = this.estadosMantenimiento
+            .filter((x) => !(x.id === estadoMantenimiento.id))
+            .find(
+                (em) =>
+                    em.descripcion.toLowerCase().trim() ===
+                    estadoMantenimiento.descripcion.toLowerCase().trim()
+            );
+
+        if (estadoMantenimientoRepetido) {
+            this.alerta.warn(
+                'Ya existe un estado de mantenimiento con esa descripción'
+            );
+            return;
+        }
+
         this.generalService.ESTADOS_MANTENIMIENTO.put(
             estadoMantenimiento.id,
             estadoMantenimiento
@@ -581,6 +705,20 @@ export class MainComponent {
     }
 
     updateMotor(motor: Motor): void {
+        // Si el motor tiene la descripción repetida, no se actualiza
+        const motorRepetido = this.motores
+            .filter((x) => !(x.id === motor.id))
+            .find(
+                (m) =>
+                    m.descripcion.toLowerCase().trim() ===
+                    motor.descripcion.toLowerCase().trim()
+            );
+
+        if (motorRepetido) {
+            this.alerta.warn('Ya existe un motor con esa descripción');
+            return;
+        }
+
         this.generalService.MOTORES.put(motor.id, motor).subscribe(() => {
             this.getMotores();
             this.VISIBLE_DIALOGS.MOTOR.value = false;
@@ -588,6 +726,20 @@ export class MainComponent {
     }
 
     updateRazon(razon: Razon): void {
+        // Si la razón tiene la descripción repetida, no se actualiza
+        const razonRepetida = this.razones
+            .filter((x) => !(x.id === razon.id))
+            .find(
+                (r) =>
+                    r.descripcion.toLowerCase().trim() ===
+                    razon.descripcion.toLowerCase().trim()
+            );
+
+        if (razonRepetida) {
+            this.alerta.warn('Ya existe una razón con esa descripción');
+            return;
+        }
+
         this.generalService.RAZONES.put(razon.id, razon).subscribe(() => {
             this.getRazones();
             this.VISIBLE_DIALOGS.RAZON.value = false;
@@ -610,9 +762,21 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.AMBIENTES.delete(ambiente.id).subscribe(() => {
-            this.getAmbientes();
-            this.VISIBLE_DIALOGS.AMBIENTE.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar ambiente',
+            message: '¿Estás seguro de que deseas eliminar el ambiente?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.AMBIENTES.delete(ambiente.id).subscribe(
+                    () => {
+                        this.getAmbientes();
+                    }
+                );
+            },
         });
     }
 
@@ -629,9 +793,20 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.CIUDADES.delete(ciudad.id).subscribe(() => {
-            this.getCiudades();
-            this.VISIBLE_DIALOGS.CIUDAD.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar ciudad',
+            message: '¿Estás seguro de que deseas eliminar la ciudad?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.CIUDADES.delete(ciudad.id).subscribe(() => {
+                    this.getCiudades();
+                    this.VISIBLE_DIALOGS.CIUDAD.value = false;
+                });
+            },
         });
     }
 
@@ -648,9 +823,20 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.ROLES.delete(rol.id).subscribe(() => {
-            this.getRoles();
-            this.VISIBLE_DIALOGS.ROL.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar rol',
+            message: '¿Estás seguro de que deseas eliminar el rol?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.ROLES.delete(rol.id).subscribe(() => {
+                    this.getRoles();
+                    this.VISIBLE_DIALOGS.ROL.value = false;
+                });
+            },
         });
     }
 
@@ -667,11 +853,23 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.SISTEMAS_OPERATIVOS.delete(
-            sistemaOperativo.id
-        ).subscribe(() => {
-            this.getSistemasOperativos();
-            this.VISIBLE_DIALOGS.SISTEMA_OPERATIVO.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar sistema operativo',
+            message:
+                '¿Estás seguro de que deseas eliminar el sistema operativo?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.SISTEMAS_OPERATIVOS.delete(
+                    sistemaOperativo.id
+                ).subscribe(() => {
+                    this.getSistemasOperativos();
+                    this.VISIBLE_DIALOGS.SISTEMA_OPERATIVO.value = false;
+                });
+            },
         });
     }
 
@@ -688,12 +886,24 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.TIPOS_SERVIDORES.delete(tipoServidor.id).subscribe(
-            () => {
-                this.getTiposServidores();
-                this.VISIBLE_DIALOGS.TIPO_SERVIDOR.value = false;
-            }
-        );
+        this.confirmationService.confirm({
+            header: 'Eliminar tipo de servidor',
+            message:
+                '¿Estás seguro de que deseas eliminar el tipo de servidor?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.TIPOS_SERVIDORES.delete(
+                    tipoServidor.id
+                ).subscribe(() => {
+                    this.getTiposServidores();
+                    this.VISIBLE_DIALOGS.TIPO_SERVIDOR.value = false;
+                });
+            },
+        });
     }
 
     deleteEstado(estado: Estado): void {
@@ -712,9 +922,20 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.ESTADOS.delete(estado.id).subscribe(() => {
-            this.getEstados();
-            this.VISIBLE_DIALOGS.ESTADO.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar estado',
+            message: '¿Estás seguro de que deseas eliminar el estado?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.ESTADOS.delete(estado.id).subscribe(() => {
+                    this.getEstados();
+                    this.VISIBLE_DIALOGS.ESTADO.value = false;
+                });
+            },
         });
     }
 
@@ -731,11 +952,23 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.ESTADOS_MANTENIMIENTO.delete(
-            estadoMantenimiento.id
-        ).subscribe(() => {
-            this.getEstadosMantenimiento();
-            this.VISIBLE_DIALOGS.ESTADO_MANTENIMIENTO.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar estado de mantenimiento',
+            message:
+                '¿Estás seguro de que deseas eliminar el estado de mantenimiento?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.ESTADOS_MANTENIMIENTO.delete(
+                    estadoMantenimiento.id
+                ).subscribe(() => {
+                    this.getEstadosMantenimiento();
+                    this.VISIBLE_DIALOGS.ESTADO_MANTENIMIENTO.value = false;
+                });
+            },
         });
     }
 
@@ -752,9 +985,20 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.MOTORES.delete(motor.id).subscribe(() => {
-            this.getMotores();
-            this.VISIBLE_DIALOGS.MOTOR.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar motor',
+            message: '¿Estás seguro de que deseas eliminar el motor?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.MOTORES.delete(motor.id).subscribe(() => {
+                    this.getMotores();
+                    this.VISIBLE_DIALOGS.MOTOR.value = false;
+                });
+            },
         });
     }
 
@@ -771,9 +1015,20 @@ export class MainComponent {
             return;
         }
 
-        this.generalService.RAZONES.delete(razon.id).subscribe(() => {
-            this.getRazones();
-            this.VISIBLE_DIALOGS.RAZON.value = false;
+        this.confirmationService.confirm({
+            header: 'Eliminar razón',
+            message: '¿Estás seguro de que deseas eliminar la razón?',
+            acceptButtonStyleClass: 'bg-red-700 text-white rounded-md p-2 m-2',
+            rejectButtonStyleClass:
+                'bg-gray-200 text-gray-800 rounded-md p-2 m-2',
+            acceptLabel: 'Eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.generalService.RAZONES.delete(razon.id).subscribe(() => {
+                    this.getRazones();
+                    this.VISIBLE_DIALOGS.RAZON.value = false;
+                });
+            },
         });
     }
 
