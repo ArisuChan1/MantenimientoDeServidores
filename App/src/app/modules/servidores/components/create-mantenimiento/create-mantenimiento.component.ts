@@ -18,6 +18,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { SESSION_KEY_USER } from 'src/config/config';
 import { EditPerfilComponent } from '../edit-perfil/edit-perfil.component';
 import { ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-create-mantenimiento',
@@ -72,12 +73,15 @@ export class CreateMantenimientoComponent {
 
     usuarios: Usuario[] = [];
 
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
         private alerta: AlertaService,
         private dialogRef: DynamicDialogRef,
         private dialogConfig: DynamicDialogConfig,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private authService: AuthService
     ) {
         this.getRazones();
         this.getEstados();
@@ -85,6 +89,11 @@ export class CreateMantenimientoComponent {
         this.getBasesDeDatos();
         this.getUsuarios();
         this.getDataFromConfig();
+        this.setUsuarioActual();
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getEstados() {

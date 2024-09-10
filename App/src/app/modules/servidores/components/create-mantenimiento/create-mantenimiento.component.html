@@ -165,7 +165,7 @@
                 class="bg-gray-300 p-2 text-black rounded-lg"
             ></button>
 
-            @if (data.id) {
+            @if (usuarioActual?.idRol === 1) { @if (data.id) {
             <button
                 (click)="createOrUpdateMantenimiento()"
                 pButton
@@ -179,7 +179,7 @@
                 label="Agregar"
                 class="bg-primary-500 p-2 text-white rounded-lg"
             ></button>
-            }
+            } }
         </span>
     </div>
 </article>

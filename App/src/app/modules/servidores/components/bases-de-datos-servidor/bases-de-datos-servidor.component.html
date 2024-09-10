@@ -2,6 +2,7 @@
 
 <header class="flex justify-between gap-2">
     <h1 class="text-2xl font-semibold"></h1>
+    @if (usuarioActual?.idRol === 1) {
     <button
         (click)="openCreateBaseDeDatosDialog()"
         pButton
@@ -9,6 +10,7 @@
     >
         Nueva base de datos
     </button>
+    }
 </header>
 
 <div class="flex flex-wrap justify-start mt-4 gap-4">
@@ -51,6 +53,7 @@
             >
                 Mantenimientos
             </button>
+            @if (usuarioActual?.idRol === 1) {
             <button
                 (click)="openUpdateBaseDeDatosDialog(baseDeDatos)"
                 pButton
@@ -65,6 +68,7 @@
             >
                 Eliminar
             </button>
+            }
         </div>
     </div>
     }

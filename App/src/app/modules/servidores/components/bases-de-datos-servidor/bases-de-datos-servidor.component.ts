@@ -5,12 +5,14 @@ import {
     BaseDeDatos,
     Motor,
     Servidor,
+    Usuario,
 } from 'src/app/interfaces/types';
 import { CreateBaseDeDatosComponent } from '../create-base-de-datos/create-base-de-datos.component';
 import { GeneralService } from 'src/app/services/general.service';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { MantenimientoServidorComponent } from '../mantenimiento-servidor/mantenimiento-servidor.component';
 import { ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-bases-de-datos-servidor',
@@ -27,17 +29,25 @@ export class BasesDeDatosServidorComponent {
     ambientes: Ambiente[] = [];
     motores: Motor[] = [];
 
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
         private dialogService: DialogService,
         private dialogConfig: DynamicDialogConfig,
         private alerta: AlertaService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private authService: AuthService
     ) {
         this.getDataFromConfig();
         this.getAmbientes();
         this.getMotores();
         this.getBasesDeDatos();
+        this.setUsuarioActual();
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getMotores() {

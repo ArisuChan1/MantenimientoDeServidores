@@ -2,6 +2,7 @@
 
 <header class="flex justify-between gap-2">
     <h1 class="text-2xl font-semibold"></h1>
+    @if (usuarioActual?.idRol === 1) {
     <button
         (click)="openDialogCreateMantenimiento()"
         pButton
@@ -9,6 +10,7 @@
     >
         Nuevo mantenimiento
     </button>
+    }
 </header>
 <div class="flex flex-wrap justify-start mt-4 gap-2 box-border w-full">
     @for (mantenimiento of manteniemientosByServidor; track $index) {
@@ -87,7 +89,7 @@
             >
                 Perfil
             </button>
-            }
+            } @if (usuarioActual?.idRol === 1) {
             <button
                 (click)="openDialogUpdateMantenimiento(mantenimiento)"
                 pButton
@@ -95,6 +97,7 @@
             >
                 Editar
             </button>
+            } @if (usuarioActual?.idRol === 1) {
             <button
                 (click)="deleteMantenimiento(mantenimiento.id)"
                 pButton
@@ -102,6 +105,7 @@
             >
                 Eliminar
             </button>
+            }
         </div>
     </article>
     }

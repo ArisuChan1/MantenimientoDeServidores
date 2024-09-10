@@ -80,7 +80,7 @@
             class="bg-gray-300 p-2 text-black rounded-lg"
         ></button>
 
-        @if (this.idMantenimiento) {
+        @if (usuarioActual?.idRol === 1) { @if (this.idMantenimiento) {
         <button
             (click)="updateMantenimiento()"
             pButton
@@ -94,6 +94,6 @@
             label="Guardar"
             class="bg-primary-500 p-2 text-white rounded-lg"
         ></button>
-        }
+        } }
     </div>
 </article>

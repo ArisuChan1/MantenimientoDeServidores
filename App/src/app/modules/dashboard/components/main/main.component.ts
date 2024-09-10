@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
-import { BaseDeDatos, Mantenimiento, Servidor } from 'src/app/interfaces/types';
+import {
+    BaseDeDatos,
+    Mantenimiento,
+    Servidor,
+    Usuario,
+} from 'src/app/interfaces/types';
 import { routesConfig } from 'src/app/routes/routesConfig';
 import { GeneralService } from 'src/app/services/general.service';
 import Chart from 'chart.js/auto';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ChangeLogsComponent } from '../change-logs/change-logs.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-main',
@@ -22,13 +28,22 @@ export class MainComponent {
 
     barChart: Chart<'bar', any[], any>;
     pastelChart: Chart<'doughnut', number[], string>;
+
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private authService: AuthService
     ) {
         this.getBasesDeDatos();
         this.getServidores();
         this.getMantenimientos();
+        this.setUsuarioActual();
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getBasesDeDatos() {

@@ -21,6 +21,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { CreateMantenimientoComponent } from '../create-mantenimiento/create-mantenimiento.component';
 import { EditPerfilComponent } from '../edit-perfil/edit-perfil.component';
 import { ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-mantenimiento-servidor',
@@ -46,14 +47,18 @@ export class MantenimientoServidorComponent {
         baseDeDatos: BaseDeDatos | null;
     } | null = null;
 
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
         private alerta: AlertaService,
         private dialogService: DialogService,
         private dialogRef: DynamicDialogRef,
         private dialogConfig: DynamicDialogConfig,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private authService: AuthService
     ) {
+        this.setUsuarioActual();
         this.getDataFromConfig();
         this.getSistemasOperativos();
         this.getAmbientes();
@@ -71,6 +76,10 @@ export class MantenimientoServidorComponent {
         this.data = this.dialogConfig.data;
         if (this.data) {
         }
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getRazones() {

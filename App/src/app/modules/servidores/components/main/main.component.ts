@@ -5,6 +5,7 @@ import {
     Servidor,
     SistemaOperativo,
     TipoServidor,
+    Usuario,
 } from 'src/app/interfaces/types';
 import { GeneralService } from 'src/app/services/general.service';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -14,6 +15,7 @@ import { BasesDeDatosServidorComponent } from '../bases-de-datos-servidor/bases-
 import { AlertaService } from 'src/app/services/alerta.service';
 import { routesConfig } from 'src/app/routes/routesConfig';
 import { ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-main',
@@ -30,18 +32,26 @@ export class MainComponent {
     ambientes: Ambiente[] = [];
     tipos: TipoServidor[] = [];
 
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
         private dialogService: DialogService,
         private alerta: AlertaService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private authService: AuthService
     ) {
         this.getServidores();
         this.getCiudades();
         this.getSistemasOperativos();
         this.getAmbientes();
         this.getTipos();
+        this.setUsuarioActual();
         this.alerta.info('Seleccione un servidor para ver más detalles');
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getServidores() {

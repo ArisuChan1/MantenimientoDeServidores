@@ -7,6 +7,7 @@ import {
     Servidor,
     SistemaOperativo,
     TipoServidor,
+    Usuario,
 } from 'src/app/interfaces/types';
 import { GeneralService } from 'src/app/services/general.service';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -17,6 +18,7 @@ import { AlertaService } from 'src/app/services/alerta.service';
 import { CreateBaseDeDatosComponent } from '../create-base-de-datos/create-base-de-datos.component';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-bases-de-datos',
@@ -37,19 +39,27 @@ export class BasesdeDatosComponent {
 
     idServidor: number | null = null;
 
+    usuarioActual: Usuario;
+
     constructor(
         private generalService: GeneralService,
         private dialogService: DialogService,
         private alerta: AlertaService,
         private activatedRoute: ActivatedRoute,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private authService: AuthService
     ) {
         this.getServidorIdFromRoute();
+        this.setUsuarioActual();
         this.getServidores();
         this.getBasesDeDatos();
         this.getAmbientes();
         this.getMotores();
         this.alerta.info('Seleccione un servidor para ver más detalles');
+    }
+
+    setUsuarioActual() {
+        this.usuarioActual = this.authService.getUsuario();
     }
 
     getServidorIdFromRoute() {
